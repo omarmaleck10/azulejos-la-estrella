@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azulejos La Estrella — Especialistas en Baño desde 1973</title>
+<meta name="description" content="Tienda especializada en productos de baño: sanitarios, mamparas, grifería, muebles, azulejos y más. Recogida en tienda. Sevilla.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rojo: #D0021B;
+  --rojo-oscuro: #A50015;
+  --rojo-claro: #FF1A33;
+  --negro: #0D0D0D;
+  --carbon: #1A1A1A;
+  --gris-oscuro: #2D2D2D;
+  --gris-medio: #666666;
+  --gris-claro: #E0E0E0;
+  --gris-bg: #F7F7F7;
+  --blanco: #FFFFFF;
+  --font: 'Poppins', sans-serif;
+  --radio: 4px;
+  --sombra: 0 2px 16px rgba(0,0,0,0.10);
+  --sombra-rojo: 0 4px 20px rgba(208,2,27,0.30);
+  --trans: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--blanco);color:var(--negro);overflow-x:hidden;line-height:1.6}
+
+/* ── LOADER ── */
+#loader{position:fixed;inset:0;background:var(--negro);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity .5s,visibility .5s}
+#loader.out{opacity:0;visibility:hidden}
+.loader-logo{color:var(--blanco);font-size:28px;font-weight:800;letter-spacing:-1px}
+.loader-logo span{color:var(--rojo)}
+.loader-bar{width:200px;height:2px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.loader-fill{height:100%;background:var(--rojo);animation:fill 1.2s ease-out forwards}
+@keyframes fill{from{width:0}to{width:100%}}
+
+/* ── TOPBAR ── */
+#topbar{background:var(--negro);padding:8px 24px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.6)}
+.topbar-left{display:flex;gap:20px;align-items:center}
+.topbar-left a,.topbar-right a{color:rgba(255,255,255,.7);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:5px}
+.topbar-left a:hover,.topbar-right a:hover{color:var(--rojo)}
+.topbar-right{display:flex;gap:16px;align-items:center}
+.topbar-badge{background:var(--rojo);color:var(--blanco);font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px}
+
+/* ── HEADER ── */
+header{background:var(--blanco);border-bottom:2px solid var(--negro);position:sticky;top:0;z-index:100;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:68px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+.logo-icon{width:36px;height:36px;background:var(--rojo);display:flex;align-items:center;justify-content:center;color:var(--blanco);font-weight:900;font-size:18px;border-radius:var(--radio)}
+.logo-text .name{font-size:18px;font-weight:800;color:var(--negro);letter-spacing:-.5px}
+.logo-text .since{font-size:10px;color:var(--gris-medio);letter-spacing:1px;text-transform:uppercase}
+nav{display:flex;align-items:center;gap:2px}
+nav button{background:none;border:none;cursor:pointer;font-family:var(--font);font-size:13px;font-weight:500;color:var(--gris-oscuro);padding:8px 14px;border-radius:var(--radio);transition:var(--trans);white-space:nowrap;position:relative}
+nav button:hover,nav button.active{color:var(--rojo);background:rgba(208,2,27,.06)}
+nav button.active::after{content:'';position:absolute;bottom:-2px;left:14px;right:14px;height:2px;background:var(--rojo);border-radius:2px}
+.header-actions{display:flex;align-items:center;gap:6px}
+.search-bar{display:flex;align-items:center;background:var(--gris-bg);border:1px solid var(--gris-claro);border-radius:100px;padding:6px 14px;gap:8px;transition:var(--trans)}
+.search-bar:focus-within{border-color:var(--rojo);background:var(--blanco)}
+.search-bar input{border:none;background:none;font-family:var(--font);font-size:13px;width:180px;outline:none;color:var(--negro)}
+.search-bar input::placeholder{color:var(--gris-medio)}
+.search-bar button{background:none;border:none;cursor:pointer;color:var(--gris-medio);font-size:16px;padding:0;line-height:1}
+.btn-icon{background:none;border:none;cursor:pointer;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--negro);font-size:19px;transition:var(--trans);position:relative}
+.btn-icon:hover{background:var(--gris-bg);color:var(--rojo)}
+.cart-badge{position:absolute;top:2px;right:2px;background:var(--rojo);color:var(--blanco);font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center}
+.cart-badge.show{display:flex}
+.btn-call{background:var(--rojo);color:var(--blanco);border:none;cursor:pointer;font-family:var(--font);font-size:12px;font-weight:600;padding:9px 18px;border-radius:100px;transition:var(--trans);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.btn-call:hover{background:var(--rojo-oscuro);transform:translateY(-1px);box-shadow:var(--sombra-rojo)}
+.mobile-btn{display:none;background:none;border:none;cursor:pointer;font-size:22px;color:var(--negro)}
+
+/* ── PAGES ── */
+.page{display:none;animation:fadeIn .35s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ════════════════
+   HOME
+════════════════ */
+.hero{position:relative;height:82vh;min-height:520px;overflow:hidden;background:var(--negro)}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.45;transition:opacity 1.2s}
+.hero-slides .hero-bg{opacity:0;position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 1.2s}
+.hero-slides .hero-bg.active{opacity:.45}
+.hero-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 7vw;max-width:720px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--rojo);color:var(--blanco);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px;width:fit-content}
+.hero h1{font-size:clamp(36px,5.5vw,72px);font-weight:900;color:var(--blanco);line-height:1.05;margin-bottom:20px}
+.hero h1 em{color:var(--rojo);font-style:normal}
+.hero p{font-size:16px;color:rgba(255,255,255,.7);max-width:440px;margin-bottom:36px;font-weight:300}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-hero-primary{background:var(--rojo);color:var(--blanco);border:none;cursor:pointer;font-family:var(--font);font-size:14px;font-weight:600;padding:14px 32px;border-radius:100px;transition:var(--trans)}
+.btn-hero-primary:hover{background:var(--rojo-claro);box-shadow:var(--sombra-rojo);transform:translateY(-2px)}
+.btn-hero-secondary{background:rgba(255,255,255,.1);color:var(--blanco);border:1.5px solid rgba(255,255,255,.3);cursor:pointer;font-family:var(--font);font-size:14px;font-weight:500;padding:14px 32px;border-radius:100px;transition:var(--trans);backdrop-filter:blur(4px)}
+.btn-hero-secondary:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.6)}
+.hero-dots{position:absolute;bottom:28px;left:7vw;z-index:3;display:flex;gap:6px}
+.hero-dot{width:28px;height:3px;background:rgba(255,255,255,.3);cursor:pointer;border-radius:2px;transition:var(--trans)}
+.hero-dot.active{background:var(--rojo);width:48px}
+.hero-badge{position:absolute;right:7vw;bottom:40px;z-index:3;background:var(--blanco);padding:16px 20px;border-radius:var(--radio);text-align:center;box-shadow:var(--sombra)}
+.hero-badge .num{font-size:32px;font-weight:800;color:var(--rojo);line-height:1}
+.hero-badge .lbl{font-size:11px;color:var(--gris-medio);font-weight:500}
+
+/* TRUST BAR */
+.trust-bar{background:var(--negro);padding:16px 32px;display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.6);font-size:12px;font-weight:400}
+.trust-item .ico{font-size:16px}
+.trust-item strong{color:var(--blanco);font-weight:600}
+
+/* SECTION STYLES */
+.section{padding:72px 32px}
+.section-sm{padding:48px 32px}
+.max-w{max-width:1320px;margin:0 auto}
+.s-label{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--rojo);display:block;margin-bottom:8px}
+.s-title{font-size:clamp(26px,3.5vw,44px);font-weight:800;color:var(--negro);line-height:1.1;margin-bottom:12px}
+.s-sub{font-size:14px;color:var(--gris-medio);max-width:520px;font-weight:400}
+.s-header{margin-bottom:44px}
+.s-header-flex{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:44px;gap:20px;flex-wrap:wrap}
+
+/* CATEGORIES */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.cat-card{position:relative;overflow:hidden;cursor:pointer;border-radius:var(--radio);aspect-ratio:4/5;background:var(--negro);border:2px solid transparent;transition:var(--trans)}
+.cat-card:hover{border-color:var(--rojo);transform:translateY(-3px);box-shadow:var(--sombra-rojo)}
+.cat-card:first-child{grid-column:span 2;aspect-ratio:auto;min-height:320px}
+.cat-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.55);transition:transform .5s ease}
+.cat-card:hover .cat-bg{transform:scale(1.06);filter:brightness(.4)}
+.cat-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+.cat-icon{font-size:28px;margin-bottom:8px}
+.cat-name{font-size:20px;font-weight:700;color:var(--blanco);line-height:1.1}
+.cat-count{font-size:11px;color:rgba(255,255,255,.6);margin-top:4px;font-weight:400}
+.cat-arrow{width:32px;height:32px;border:1.5px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--blanco);font-size:13px;margin-top:10px;transition:var(--trans);opacity:0;transform:translateX(-6px)}
+.cat-card:hover .cat-arrow{opacity:1;transform:translateX(0);background:var(--rojo);border-color:var(--rojo)}
+
+/* PRODUCT CARDS */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.prod-card{background:var(--blanco);border:1.5px solid var(--gris-claro);border-radius:var(--radio);overflow:hidden;cursor:pointer;transition:var(--trans);position:relative}
+.prod-card:hover{border-color:var(--rojo);box-shadow:var(--sombra-rojo);transform:translateY(-2px)}
+.prod-img{width:100%;aspect-ratio:1;background-size:cover;background-position:center;position:relative;overflow:hidden}
+.prod-img-inner{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .4s ease}
+.prod-card:hover .prod-img-inner{transform:scale(1.05)}
+.prod-badge{position:absolute;top:10px;left:10px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:100px}
+.badge-new{background:var(--negro);color:var(--blanco)}
+.badge-outlet{background:var(--rojo);color:var(--blanco)}
+.badge-top{background:#FF6B00;color:var(--blanco)}
+.prod-quick{position:absolute;top:10px;right:10px;background:var(--blanco);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:var(--sombra);opacity:0;transform:translateX(6px);transition:var(--trans)}
+.prod-card:hover .prod-quick{opacity:1;transform:translateX(0)}
+.prod-quick:hover{background:var(--rojo);color:var(--blanco)}
+.prod-info{padding:14px}
+.prod-cat{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gris-medio);font-weight:500}
+.prod-name{font-size:14px;font-weight:600;color:var(--negro);margin:3px 0 6px;line-height:1.25}
+.prod-brand{font-size:11px;color:var(--gris-medio);margin-bottom:8px}
+.prod-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.prod-price{font-size:19px;font-weight:700;color:var(--negro)}
+.prod-price-unit{font-size:11px;color:var(--gris-medio);font-weight:400}
+.prod-price-old{font-size:12px;color:var(--gris-medio);text-decoration:line-through;margin-left:4px}
+.btn-add{background:var(--negro);color:var(--blanco);border:none;cursor:pointer;font-family:var(--font);font-size:11px;font-weight:600;padding:7px 14px;border-radius:100px;transition:var(--trans);white-space:nowrap}
+.btn-add:hover{background:var(--rojo)}
+
+/* WHY */
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.why-card{background:var(--blanco);border:1.5px solid var(--gris-claro);padding:28px 22px;border-radius:var(--radio);transition:var(--trans)}
+.why-card:hover{border-color:var(--rojo);box-shadow:var(--sombra-rojo)}
+.why-ico{width:48px;height:48px;background:var(--rojo);border-radius:var(--radio);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
+.why-title{font-size:16px;font-weight:700;margin-bottom:6px}
+.why-desc{font-size:13px;color:var(--gris-medio);line-height:1.6}
+
+/* PROCESS */
+.process-section{background:var(--negro);padding:72px 32px;color:var(--blanco)}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;position:relative}
+.process-steps::before{content:'';position:absolute;top:20px;left:calc(12.5% + 8px);right:calc(12.5% + 8px);height:2px;background:linear-gradient(90deg,var(--rojo),rgba(208,2,27,.2));z-index:0}
+.process-step{text-align:center;position:relative;z-index:1}
+.step-num{width:40px;height:40px;border:2px solid var(--rojo);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--rojo);margin:0 auto 14px;background:var(--negro)}
+.step-title{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--blanco)}
+.step-desc{font-size:12px;color:rgba(255,255,255,.5);line-height:1.5}
+
+/* REVIEWS */
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.review-card{background:var(--blanco);border:1.5px solid var(--gris-claro);padding:24px;border-radius:var(--radio);transition:var(--trans)}
+.review-card:hover{border-color:var(--rojo)}
+.review-stars{color:var(--rojo);font-size:13px;letter-spacing:2px;margin-bottom:10px}
+.review-text{font-size:13px;color:var(--gris-oscuro);line-height:1.65;margin-bottom:14px;font-style:italic}
+.review-author{font-weight:600;font-size:13px}
+.review-meta{font-size:11px;color:var(--gris-medio);margin-top:2px}
+
+/* BANNER CTA */
+.cta-banner{background:var(--rojo);padding:56px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.cta-banner h2{font-size:clamp(22px,3vw,36px);font-weight:800;color:var(--blanco)}
+.cta-banner p{font-size:14px;color:rgba(255,255,255,.75);margin-top:6px;font-weight:400}
+.btn-white{background:var(--blanco);color:var(--rojo);border:none;cursor:pointer;font-family:var(--font);font-size:13px;font-weight:700;padding:14px 32px;border-radius:100px;transition:var(--trans);white-space:nowrap}
+.btn-white:hover{background:var(--negro);color:var(--blanco);transform:translateY(-2px)}
+
+/* ════════════════
+   CATALOG PAGE
+════════════════ */
+.catalog-hero{background:var(--negro);padding:40px 32px 32px}
+.catalog-layout{display:grid;grid-template-columns:264px 1fr;gap:28px;padding:28px 32px;max-width:1400px;margin:0 auto}
+.filters{background:var(--blanco);border:1.5px solid var(--gris-claro);border-radius:var(--radio);padding:20px;height:fit-content;position:sticky;top:84px}
+.filter-section{margin-bottom:24px}
+.filter-section:last-child{margin-bottom:0}
+.filter-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--negro);margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--gris-claro)}
+.filter-opt{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer}
+.filter-opt input[type=checkbox]{width:15px;height:15px;accent-color:var(--rojo);cursor:pointer}
+.filter-opt label{font-size:13px;cursor:pointer;font-weight:400;color:var(--gris-oscuro)}
+.filter-opt:hover label{color:var(--rojo)}
+.filter-opt .cnt{margin-left:auto;font-size:11px;color:var(--gris-medio)}
+.color-filter{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.color-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:var(--trans)}
+.color-dot:hover,.color-dot.active{border-color:var(--rojo);transform:scale(1.1)}
+.catalog-main{}
+.catalog-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.catalog-count{font-size:14px;color:var(--gris-medio);font-weight:400}
+.catalog-count strong{color:var(--negro);font-weight:700}
+.catalog-sort{background:var(--blanco);border:1.5px solid var(--gris-claro);padding:8px 12px;font-size:13px;color:var(--negro);font-family:var(--font);border-radius:var(--radio);cursor:pointer}
+.catalog-sort:focus{outline:none;border-color:var(--rojo)}
+.view-btns{display:flex;gap:4px}
+.view-btn{background:none;border:1.5px solid var(--gris-claro);width:32px;height:32px;cursor:pointer;border-radius:var(--radio);display:flex;align-items:center;justify-content:center;font-size:14px;transition:var(--trans)}
+.view-btn.active{background:var(--rojo);border-color:var(--rojo);color:var(--blanco)}
+.active-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.f-tag{background:var(--negro);color:var(--blanco);font-size:11px;padding:4px 12px;border-radius:100px;display:flex;align-items:center;gap:6px;cursor:pointer;transition:var(--trans)}
+.f-tag:hover{background:var(--rojo)}
+
+/* ════════════════
+   PRODUCT DETAIL
+════════════════ */
+.detail-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:48px 32px;max-width:1200px;margin:0 auto}
+.detail-gallery .main-img{width:100%;aspect-ratio:1;background-size:cover;background-position:center;border-radius:var(--radio);border:1.5px solid var(--gris-claro);margin-bottom:10px;overflow:hidden;position:relative}
+.detail-thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.d-thumb{width:68px;height:68px;background-size:cover;background-position:center;border-radius:var(--radio);cursor:pointer;border:2px solid transparent;transition:var(--trans)}
+.d-thumb.active,.d-thumb:hover{border-color:var(--rojo)}
+.d-crumb{font-size:12px;color:var(--gris-medio);margin-bottom:16px;display:flex;gap:5px;flex-wrap:wrap}
+.d-crumb span{cursor:pointer;transition:color .2s}
+.d-crumb span:hover{color:var(--rojo)}
+.d-name{font-size:clamp(22px,3vw,34px);font-weight:800;line-height:1.1;margin-bottom:6px}
+.d-brand{font-size:12px;color:var(--gris-medio);margin-bottom:10px;font-weight:500}
+.d-ref{font-size:11px;color:var(--gris-medio);letter-spacing:1px;margin-bottom:14px;background:var(--gris-bg);display:inline-block;padding:3px 10px;border-radius:100px}
+.d-rating{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.d-price{font-size:36px;font-weight:800;color:var(--negro);margin-bottom:4px}
+.d-price-note{font-size:13px;color:var(--gris-medio);margin-bottom:20px}
+.d-sep{border:none;border-top:1.5px solid var(--gris-claro);margin:20px 0}
+.d-specs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.d-spec{font-size:12px}
+.d-spec-key{color:var(--gris-medio);text-transform:uppercase;letter-spacing:.5px;font-size:10px;font-weight:600}
+.d-spec-val{font-weight:600;font-size:13px;color:var(--negro);margin-top:1px}
+.qty-wrap{margin-bottom:18px}
+.qty-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gris-medio);margin-bottom:8px}
+.qty-box{display:inline-flex;align-items:center;border:1.5px solid var(--gris-claro);border-radius:100px;overflow:hidden}
+.qty-btn{width:38px;height:38px;background:none;border:none;cursor:pointer;font-size:18px;font-weight:300;display:flex;align-items:center;justify-content:center;transition:var(--trans);color:var(--negro)}
+.qty-btn:hover{background:var(--gris-bg)}
+.qty-inp{width:52px;height:38px;text-align:center;border:none;font-family:var(--font);font-size:15px;font-weight:600;background:none;color:var(--negro)}
+.qty-inp:focus{outline:none}
+.d-cta{display:flex;gap:10px;margin-bottom:16px}
+.btn-add-lg{flex:1;background:var(--rojo);color:var(--blanco);border:none;cursor:pointer;font-family:var(--font);font-size:13px;font-weight:700;padding:15px 24px;border-radius:100px;transition:var(--trans)}
+.btn-add-lg:hover{background:var(--rojo-oscuro);box-shadow:var(--sombra-rojo)}
+.btn-fav{width:48px;height:48px;background:none;border:1.5px solid var(--gris-claro);border-radius:50%;cursor:pointer;font-size:18px;transition:var(--trans);display:flex;align-items:center;justify-content:center}
+.btn-fav:hover{border-color:var(--rojo);background:rgba(208,2,27,.05)}
+.pickup-info{background:var(--gris-bg);border:1.5px solid var(--gris-claro);padding:14px 16px;border-radius:var(--radio);font-size:13px;line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+.pickup-info .pi-icon{font-size:20px;flex-shrink:0}
+.pickup-info strong{color:var(--rojo)}
+
+/* ════════════════
+   CART + CHECKOUT
+════════════════ */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;opacity:0;visibility:hidden;transition:var(--trans)}
+.cart-overlay.open{opacity:1;visibility:visible}
+.cart-drawer{position:fixed;right:-100%;top:0;bottom:0;width:420px;background:var(--blanco);z-index:201;display:flex;flex-direction:column;transition:right .4s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.18)}
+.cart-drawer.open{right:0}
+.cart-dh{padding:20px;border-bottom:1.5px solid var(--gris-claro);display:flex;align-items:center;justify-content:space-between}
+.cart-dh-title{font-size:18px;font-weight:800}
+.cart-db{flex:1;overflow-y:auto;padding:16px 20px}
+.cart-df{padding:20px;border-top:1.5px solid var(--gris-claro);background:var(--gris-bg)}
+.cart-empty{text-align:center;padding:56px 20px;color:var(--gris-medio)}
+.cart-empty-ico{font-size:48px;opacity:.25;margin-bottom:10px}
+.cart-item-d{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--gris-claro);align-items:flex-start}
+.ci-img{width:72px;height:72px;background-size:cover;background-position:center;border-radius:var(--radio);flex-shrink:0;border:1px solid var(--gris-claro)}
+.ci-info{flex:1}
+.ci-name{font-size:13px;font-weight:600;margin-bottom:2px}
+.ci-cat{font-size:11px;color:var(--gris-medio)}
+.ci-controls{display:flex;align-items:center;gap:6px;margin-top:6px}
+.ci-qb{background:var(--gris-bg);border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:var(--trans)}
+.ci-qb:hover{background:var(--rojo);color:var(--blanco)}
+.ci-qty{font-size:13px;font-weight:600;min-width:20px;text-align:center}
+.ci-unit{font-size:10px;color:var(--gris-medio)}
+.ci-rm{background:none;border:none;cursor:pointer;color:var(--gris-medio);font-size:12px;margin-left:auto}
+.ci-rm:hover{color:var(--rojo)}
+.ci-price{font-size:16px;font-weight:700;white-space:nowrap;padding-top:2px}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cart-total-label{font-size:14px;color:var(--gris-medio)}
+.cart-total-val{font-size:24px;font-weight:800}
+.cart-pickup-note{background:rgba(208,2,27,.06);border:1px solid rgba(208,2,27,.15);padding:10px 12px;border-radius:var(--radio);font-size:12px;line-height:1.5;margin-bottom:14px;color:var(--gris-oscuro)}
+.cart-pickup-note strong{color:var(--rojo)}
+.btn-checkout{width:100%;background:var(--rojo);color:var(--blanco);border:none;cursor:pointer;font-family:var(--font);font-size:14px;font-weight:700;padding:16px;border-radius:100px;transition:var(--trans)}
+.btn-checkout:hover{background:var(--rojo-oscuro);box-shadow:var(--sombra-rojo)}
+
+/* CHECKOUT PAGE */
+.checkout-layout{display:grid;grid-template-columns:1fr 360px;gap:28px;padding:40px 32px;max-width:1200px;margin:0 auto}
+.checkout-section-title{font-size:20px;font-weight:800;margin-bottom:16px}
+.checkout-items{margin-bottom:36px}
+.f-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f-label{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--gris-medio)}
+.f-input{padding:11px 14px;border:1.5px solid var(--gris-claro);border-radius:var(--radio);font-family:var(--font);font-size:13px;color:var(--negro);transition:var(--trans)}
+.f-input:focus{outline:none;border-color:var(--rojo)}
+.f-select{padding:11px 14px;border:1.5px solid var(--gris-claro);border-radius:var(--radio);font-family:var(--font);font-size:13px;color:var(--negro);background:var(--blanco);cursor:pointer}
+.f-textarea{padding:11px 14px;border:1.5px solid var(--gris-claro);border-radius:var(--radio);font-family:var(--font);font-size:13px;resize:vertical}
+.f-textarea:focus{outline:none;border-color:var(--rojo)}
+.pay-opts{display:flex;flex-direction:column;gap:8px}
+.pay-opt{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid var(--gris-claro);border-radius:var(--radio);cursor:pointer;transition:var(--trans)}
+.pay-opt:hover{border-color:var(--rojo)}
+.pay-opt input{accent-color:var(--rojo);cursor:pointer}
+.pay-opt label{cursor:pointer;font-size:13px;font-weight:500}
+.order-summary{background:var(--negro);color:var(--blanco);padding:28px;border-radius:var(--radio);position:sticky;top:84px;height:fit-content}
+.os-title{font-size:18px;font-weight:800;margin-bottom:20px}
+.os-line{display:flex;justify-content:space-between;font-size:13px;margin-bottom:10px;color:rgba(255,255,255,.6)}
+.os-line strong{color:var(--blanco)}
+.os-total{display:flex;justify-content:space-between;font-size:22px;font-weight:800;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);margin-top:12px;color:var(--rojo)}
+.os-note{background:rgba(208,2,27,.15);border:1px solid rgba(208,2,27,.25);padding:12px;border-radius:var(--radio);font-size:12px;line-height:1.5;margin:16px 0;color:rgba(255,255,255,.7)}
+.os-note strong{color:var(--rojo);display:block;margin-bottom:3px}
+
+/* CONFIRM */
+.confirm-wrap{max-width:600px;margin:72px auto;padding:0 32px;text-align:center}
+.confirm-ico{width:80px;height:80px;background:var(--rojo);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 28px}
+.confirm-title{font-size:36px;font-weight:800;margin-bottom:12px}
+.confirm-sub{font-size:15px;color:var(--gris-medio);line-height:1.65;margin-bottom:28px}
+.confirm-box{background:var(--gris-bg);border:1.5px solid var(--gris-claro);padding:24px;border-radius:var(--radio);text-align:left;margin-bottom:28px}
+.confirm-order-num{font-size:11px;color:var(--gris-medio);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.confirm-order-id{font-size:32px;font-weight:900;color:var(--rojo)}
+
+/* ADMIN */
+.admin-layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 70px)}
+.admin-sidebar{background:var(--negro);padding:24px 0}
+.admin-logo-area{padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px}
+.admin-logo-name{font-size:15px;font-weight:800;color:var(--blanco)}
+.admin-logo-sub{font-size:11px;color:rgba(255,255,255,.35)}
+.admin-nav-section{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);padding:12px 20px 6px;font-weight:600}
+.admin-nav-item{display:flex;align-items:center;gap:10px;padding:11px 20px;color:rgba(255,255,255,.55);cursor:pointer;font-size:13px;transition:var(--trans);border-left:2px solid transparent}
+.admin-nav-item:hover{color:var(--blanco);background:rgba(255,255,255,.04)}
+.admin-nav-item.active{color:var(--blanco);border-left-color:var(--rojo);background:rgba(208,2,27,.08)}
+.admin-nav-item .ico{font-size:16px}
+.admin-main{background:#F4F4F4;padding:28px}
+.admin-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.admin-title{font-size:26px;font-weight:800}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--blanco);border:1.5px solid var(--gris-claro);padding:20px;border-radius:var(--radio)}
+.stat-card.highlight{background:var(--rojo);border-color:var(--rojo)}
+.stat-card.highlight .stat-label{color:rgba(255,255,255,.6)}
+.stat-card.highlight .stat-val{color:var(--blanco)}
+.stat-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gris-medio);font-weight:600;margin-bottom:6px}
+.stat-val{font-size:30px;font-weight:800;color:var(--negro)}
+.stat-change{font-size:11px;color:var(--gris-medio);margin-top:3px}
+.orders-tbl{background:var(--blanco);border:1.5px solid var(--gris-claro);border-radius:var(--radio);overflow:hidden}
+.orders-tbl-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1.5px solid var(--gris-claro)}
+.orders-tbl-title{font-size:16px;font-weight:700}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:10px 14px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gris-medio);background:#FAFAFA;border-bottom:1.5px solid var(--gris-claro);font-weight:600}
+td{padding:12px 14px;font-size:13px;border-bottom:1px solid var(--gris-claro);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(208,2,27,.02)}
+.status{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:600;letter-spacing:.3px}
+.s-new{background:rgba(52,152,219,.12);color:#3498db}
+.s-prep{background:rgba(255,107,0,.12);color:#FF6B00}
+.s-ready{background:rgba(39,174,96,.12);color:#27ae60}
+.s-done{background:rgba(102,102,102,.12);color:#666}
+.admin-sel{font-size:12px;border:1px solid var(--gris-claro);padding:3px 8px;border-radius:var(--radio);font-family:var(--font);cursor:pointer}
+
+/* FOOTER */
+footer{background:var(--negro);color:rgba(255,255,255,.55);padding:56px 32px 28px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.footer-brand-logo{font-size:20px;font-weight:800;color:var(--blanco);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.footer-brand-logo .ico{background:var(--rojo);padding:4px 8px;border-radius:var(--radio)}
+.footer-desc{font-size:13px;line-height:1.7;max-width:260px}
+.footer-col-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blanco);font-weight:600;margin-bottom:14px}
+.footer-links{display:flex;flex-direction:column;gap:8px}
+.footer-links a{color:rgba(255,255,255,.55);text-decoration:none;font-size:13px;transition:color .2s}
+.footer-links a:hover{color:var(--rojo)}
+.footer-contact-row{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:8px}
+.footer-contact-row a{color:rgba(255,255,255,.55);text-decoration:none}
+.footer-contact-row a:hover{color:var(--rojo)}
+.footer-bottom{padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:10px}
+.footer-bottom a{color:rgba(255,255,255,.35);text-decoration:none}
+.footer-bottom a:hover{color:var(--rojo)}
+
+/* FLOATING BUTTONS */
+.float-wa{position:fixed;bottom:24px;right:24px;z-index:150;background:#25D366;color:var(--blanco);border:none;width:52px;height:52px;border-radius:50%;cursor:pointer;font-size:26px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:var(--trans)}
+.float-wa:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.6)}
+.float-wa-tooltip{position:absolute;right:60px;background:var(--negro);color:var(--blanco);font-size:12px;font-weight:500;padding:6px 12px;border-radius:100px;white-space:nowrap;opacity:0;transition:var(--trans);pointer-events:none}
+.float-wa:hover .float-wa-tooltip{opacity:1}
+
+/* CHATBOT */
+.chatbot-toggle{position:fixed;bottom:86px;right:24px;z-index:150;background:var(--rojo);color:var(--blanco);border:none;width:52px;height:52px;border-radius:50%;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:var(--sombra-rojo);transition:var(--trans)}
+.chatbot-toggle:hover{transform:scale(1.1)}
+.chatbot-window{position:fixed;bottom:150px;right:24px;width:340px;background:var(--blanco);border:1.5px solid var(--gris-claro);border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:160;display:none;flex-direction:column;overflow:hidden;max-height:480px}
+.chatbot-window.open{display:flex}
+.chatbot-header{background:var(--rojo);padding:14px 16px;display:flex;align-items:center;gap:10px}
+.chatbot-avatar{width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
+.chatbot-info .chatbot-name{font-size:13px;font-weight:700;color:var(--blanco)}
+.chatbot-info .chatbot-status{font-size:11px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:4px}
+.chatbot-status-dot{width:7px;height:7px;border-radius:50%;background:#4ade80}
+.chatbot-close{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.7);font-size:18px;margin-left:auto;transition:color .2s}
+.chatbot-close:hover{color:var(--blanco)}
+.chatbot-body{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--gris-bg)}
+.chatbot-msg{max-width:80%;border-radius:12px;padding:10px 14px;font-size:13px;line-height:1.5}
+.chatbot-msg.bot{background:var(--blanco);color:var(--negro);border:1px solid var(--gris-claro);align-self:flex-start;border-radius:12px 12px 12px 3px}
+.chatbot-msg.user{background:var(--rojo);color:var(--blanco);align-self:flex-end;border-radius:12px 12px 3px 12px}
+.chatbot-msg.typing{background:var(--blanco);border:1px solid var(--gris-claro);align-self:flex-start}
+.typing-dots{display:flex;gap:4px;padding:4px 0}
+.typing-dot{width:7px;height:7px;background:var(--gris-medio);border-radius:50%;animation:bounce .9s infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}
+.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chatbot-quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chatbot-qbtn{background:var(--blanco);border:1.5px solid var(--rojo);color:var(--rojo);font-family:var(--font);font-size:11px;font-weight:600;padding:5px 12px;border-radius:100px;cursor:pointer;transition:var(--trans)}
+.chatbot-qbtn:hover{background:var(--rojo);color:var(--blanco)}
+.chatbot-footer{padding:10px 12px;border-top:1px solid var(--gris-claro);display:flex;gap:8px;align-items:center}
+.chatbot-input{flex:1;border:1.5px solid var(--gris-claro);border-radius:100px;padding:8px 14px;font-family:var(--font);font-size:13px;color:var(--negro)}
+.chatbot-input:focus{outline:none;border-color:var(--rojo)}
+.chatbot-send{background:var(--rojo);color:var(--blanco);border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:var(--trans);flex-shrink:0}
+.chatbot-send:hover{background:var(--rojo-oscuro)}
+
+/* NOSOTROS / CONTACT */
+.about-hero-section{background:var(--negro);padding:64px 32px}
+.montaje-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:64px 32px;max-width:1200px;margin:0 auto}
+
+/* UTILS */
+.btn-primary{background:var(--rojo);color:var(--blanco);border:none;cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;padding:11px 24px;border-radius:100px;transition:var(--trans)}
+.btn-primary:hover{background:var(--rojo-oscuro);box-shadow:var(--sombra-rojo)}
+.btn-outline{background:transparent;color:var(--negro);border:1.5px solid var(--negro);cursor:pointer;font-family:var(--font);font-size:13px;font-weight:600;padding:11px 24px;border-radius:100px;transition:var(--trans)}
+.btn-outline:hover{border-color:var(--rojo);color:var(--rojo)}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--negro);color:var(--blanco);padding:12px 24px;border-radius:100px;font-size:13px;font-weight:500;box-shadow:var(--sombra);transition:var(--trans);z-index:999;opacity:0;border-left:3px solid var(--rojo);white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.text-center{text-align:center}
+.bg-gray{background:var(--gris-bg)}
+.bg-dark{background:var(--negro)}
+@media(max-width:1100px){
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .cat-card:first-child{grid-column:span 1;min-height:200px}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .detail-layout{grid-template-columns:1fr;gap:28px}
+  .checkout-layout{grid-template-columns:1fr}
+  .montaje-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .catalog-layout{grid-template-columns:1fr;padding:16px}
+  .filters{position:static}
+  .admin-layout{grid-template-columns:1fr}
+  .admin-sidebar{display:none}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  header{padding:0 16px;height:60px}
+  nav{display:none}
+  .mobile-btn{display:block}
+  .search-bar{display:none}
+  #topbar{display:none}
+  .hero-content{padding:0 20px}
+  .section{padding:44px 20px}
+  .process-section{padding:44px 20px}
+  .trust-bar{padding:14px 20px;gap:20px}
+  .prod-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .reviews-grid{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr 1fr}
+  .process-steps::before{display:none}
+  .hero-badge{display:none}
+  .cta-banner{flex-direction:column}
+  .footer-grid{grid-template-columns:1fr}
+  .detail-layout{padding:20px 16px}
+  .checkout-layout{padding:20px 16px}
+  .catalog-layout{padding:12px}
+  .chatbot-window{width:calc(100vw - 48px);right:24px}
+  .f-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">La <span>Estrella</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="topbar-left">
+    <span>📍 Tres tiendas en Sevilla — Recogida en tienda gratuita</span>
+    <a href="tel:+34955292129">📞 955 292 129</a>
+  </div>
+  <div class="topbar-right">
+    <a href="https://wa.me/34675083003" target="_blank">💬 WhatsApp</a>
+    <span class="topbar-badge">OUTLET activo</span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" onclick="goTo('home')">
+    <div class="logo-icon">★</div>
+    <div class="logo-text">
+      <div class="name">Azulejos La Estrella</div>
+      <div class="since">Baño & Pavimentos · Sevilla</div>
+    </div>
+  </a>
+  <nav id="mainnav">
+    <button onclick="goTo('home')" id="nav-home" class="active">Inicio</button>
+    <button onclick="goTo('catalog','Sanitarios')" id="nav-catalog">Catálogo</button>
+    <button onclick="goTo('montaje')" id="nav-montaje">Servicio Montaje</button>
+    <button onclick="goTo('about')" id="nav-about">Nosotros</button>
+    <button onclick="goTo('contact')" id="nav-contact">Contacto</button>
+    <button onclick="goTo('admin')" id="nav-admin" style="color:var(--gris-medio);font-size:12px;">⚙ Admin</button>
+  </nav>
+  <div class="header-actions">
+    <div class="search-bar">
+      <button>🔍</button>
+      <input type="text" id="search-input" placeholder="Buscar productos..." oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter')goTo('search')">
+    </div>
+    <button class="btn-icon" onclick="openCart()" title="Carrito">
+      🛒<span class="cart-badge" id="cart-badge">0</span>
+    </button>
+    <button class="btn-call" onclick="window.location='tel:+34955292129'">📞 Llamar</button>
+    <button class="mobile-btn" onclick="toggleMobile()">☰</button>
+  </div>
+</header>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-dh">
+    <div class="cart-dh-title">Tu pedido</div>
+    <button class="btn-icon" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-db" id="cart-body"></div>
+  <div class="cart-df" id="cart-footer" style="display:none">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-val" id="cart-total-val">0,00 €</span>
+    </div>
+    <div class="cart-pickup-note">
+      <strong>📦 Recogida en tienda gratis</strong><br>
+      Pide y recoge en cualquiera de nuestras 3 tiendas en Sevilla.
+    </div>
+    <button class="btn-checkout" onclick="closeCart();goTo('checkout')">Hacer pedido →</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FLOATING BUTTONS -->
+<button class="float-wa" onclick="window.open('https://wa.me/34675083003','_blank')" title="WhatsApp">
+  <span class="float-wa-tooltip">Escríbenos por WhatsApp</span>
+  💬
+</button>
+<button class="chatbot-toggle" onclick="toggleChat()" title="Asistente IA" id="chat-toggle">🤖</button>
+
+<!-- CHATBOT WINDOW -->
+<div class="chatbot-window" id="chatbot">
+  <div class="chatbot-header">
+    <div class="chatbot-avatar">🤖</div>
+    <div class="chatbot-info">
+      <div class="chatbot-name">Asistente La Estrella</div>
+      <div class="chatbot-status"><span class="chatbot-status-dot"></span> En línea</div>
+    </div>
+    <button class="chatbot-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chatbot-body" id="chatbot-body"></div>
+  <div class="chatbot-footer">
+    <input class="chatbot-input" id="chatbot-input" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chatbot-send" onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════╗
+     ║            HOME PAGE                    ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-slides" id="hero-slides">
+      <div class="hero-bg active" style="background-image:url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1600&q=80')"></div>
+      <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1584622781564-1d987f7333c1?w=1600&q=80')"></div>
+      <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=1600&q=80')"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-tag">★ Especialistas en Baño desde 1973</div>
+      <h1>Todo para tu<br>baño <em>perfecto</em></h1>
+      <p>Sanitarios, griferías, mamparas, muebles, azulejos y pavimentos. Pide online y recoge en tienda en Sevilla.</p>
+      <div class="hero-btns">
+        <button class="btn-hero-primary" onclick="goTo('catalog','Sanitarios')">Ver catálogo completo</button>
+        <button class="btn-hero-secondary" onclick="goTo('montaje')">Servicio de montaje</button>
+      </div>
+    </div>
+    <div class="hero-dots" id="hero-dots">
+      <div class="hero-dot active" onclick="setSlide(0)"></div>
+      <div class="hero-dot" onclick="setSlide(1)"></div>
+      <div class="hero-dot" onclick="setSlide(2)"></div>
+    </div>
+    <div class="hero-badge">
+      <div class="num">4.6★</div>
+      <div class="lbl">+200 reseñas</div>
+    </div>
+  </div>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item"><span class="ico">★</span><div><strong>+50 años</strong> de experiencia</div></div>
+    <div class="trust-item"><span class="ico">🏪</span><div><strong>3 tiendas</strong> en Sevilla</div></div>
+    <div class="trust-item"><span class="ico">📦</span><div><strong>Recogida</strong> gratuita en tienda</div></div>
+    <div class="trust-item"><span class="ico">🔧</span><div><strong>Servicio</strong> de montaje</div></div>
+    <div class="trust-item"><span class="ico">💳</span><div><strong>Pago</strong> en tienda u online</div></div>
+    <div class="trust-item"><span class="ico">🎯</span><div><strong>Asesoramiento</strong> especializado</div></div>
+  </div>
+
+  <!-- CATEGORÍAS -->
+  <div class="section max-w">
+    <div class="s-header">
+      <span class="s-label">Explora</span>
+      <h2 class="s-title">Todas las categorías</h2>
+      <p class="s-sub">Desde azulejos hasta griferías, todo lo que necesitas para tu proyecto de baño o reforma.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="goTo('catalog','Sanitarios')">
+        <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=900&q=80')"></div>
+        <div class="cat-content"><div class="cat-icon">🚽</div><div class="cat-name">Sanitarios</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+      </div>
+      <div class="cat-card" onclick="goTo('catalog','Mamparas')">
+        <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1620626011761-996317702782?w=700&q=80')"></div>
+        <div class="cat-content"><div class="cat-icon">🚿</div><div class="cat-name">Mamparas</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+      </div>
+      <div class="cat-card" onclick="goTo('catalog','Grifería')">
+        <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=700&q=80')"></div>
+        <div class="cat-content"><div class="cat-icon">🔧</div><div class="cat-name">Grifería</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+      </div>
+      <div class="cat-card" onclick="goTo('catalog','Muebles de baño')">
+        <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=700&q=80')"></div>
+        <div class="cat-content"><div class="cat-icon">🪞</div><div class="cat-name">Muebles de baño</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+      </div>
+      <div class="cat-card" onclick="goTo('catalog','Accesorios de baño')">
+        <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=700&q=80')"></div>
+        <div class="cat-content"><div class="cat-icon">🪥</div><div class="cat-name">Accesorios de baño</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+      </div>
+      <div class="cat-card" onclick="goTo('catalog','Azulejos Interior')">
+        <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=700&q=80')"></div>
+        <div class="cat-content"><div class="cat-icon">⬛</div><div class="cat-name">Azulejos Interior</div><div class="cat-count">25 productos · precio/m²</div><div class="cat-arrow">→</div></div>
+      </div>
+      <div class="cat-card" onclick="goTo('catalog','Pavimentos Exterior')">
+        <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=700&q=80')"></div>
+        <div class="cat-content"><div class="cat-icon">🌿</div><div class="cat-name">Pavimentos Exterior</div><div class="cat-count">25 productos · precio/m²</div><div class="cat-arrow">→</div></div>
+      </div>
+      <div class="cat-card" onclick="goTo('catalog','Outlet')">
+        <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80')"></div>
+        <div class="cat-content"><div class="cat-icon">🏷️</div><div class="cat-name">Outlet</div><div class="cat-count">Hasta –40% descuento</div><div class="cat-arrow">→</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESTACADOS -->
+  <div class="section bg-gray">
+    <div class="max-w">
+      <div class="s-header-flex">
+        <div><span class="s-label">Más vendidos</span><h2 class="s-title">Productos destacados</h2></div>
+        <button class="btn-outline" onclick="goTo('catalog','Sanitarios')">Ver todo el catálogo →</button>
+      </div>
+      <div class="prod-grid" id="home-prods"></div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="process-section">
+    <div class="max-w">
+      <div class="text-center">
+        <span class="s-label">¿Cómo funciona?</span>
+        <h2 class="s-title" style="color:var(--blanco)">Pide online,<br>recoge en tienda</h2>
+      </div>
+      <div class="process-steps">
+        <div class="process-step"><div class="step-num">1</div><div class="step-title">Elige productos</div><div class="step-desc">Navega el catálogo con filtros avanzados</div></div>
+        <div class="process-step"><div class="step-num">2</div><div class="step-title">Selecciona tienda</div><div class="step-desc">Elige cuál de nuestras 3 tiendas prefieres</div></div>
+        <div class="process-step"><div class="step-num">3</div><div class="step-title">Confirma pedido</div><div class="step-desc">Paga online o en tienda al recoger</div></div>
+        <div class="process-step"><div class="step-num">4</div><div class="step-title">Recoge y disfruta</div><div class="step-desc">Te avisamos cuando esté listo. Sin colas</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <div class="section max-w">
+    <div class="s-header text-center">
+      <span class="s-label">¿Por qué elegirnos?</span>
+      <h2 class="s-title">Más de 50 años<br>siendo tu referencia</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-ico">🏆</div><div class="why-title">Marcas premium</div><div class="why-desc">Roca, Grohe, Hansgrohe, Duravit, Villeroy & Boch, Porcelanosa y más.</div></div>
+      <div class="why-card"><div class="why-ico">👷</div><div class="why-title">Montaje incluido</div><div class="why-desc">Servicio de instalación profesional en toda la provincia de Sevilla.</div></div>
+      <div class="why-card"><div class="why-ico">📦</div><div class="why-title">Stock garantizado</div><div class="why-desc">Confirmamos disponibilidad antes de que vengas. Sin sorpresas.</div></div>
+      <div class="why-card"><div class="why-ico">💰</div><div class="why-title">Mejores precios</div><div class="why-desc">Precio de almacén directo. Outlet permanente con hasta 40% de descuento.</div></div>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="section bg-gray">
+    <div class="max-w">
+      <div class="s-header"><span class="s-label">Google Reviews · 4.6★</span><h2 class="s-title">Lo que dicen<br>nuestros clientes</h2></div>
+      <div class="reviews-grid">
+        <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Excelente atención, me asesoraron perfectamente para elegir los azulejos del baño. Pedí online y en 24h estaba todo listo para recoger. Muy recomendable."</div><div class="review-author">María G.</div><div class="review-meta">Google · hace 2 semanas</div></div>
+        <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Llevamos reformando el baño completo con ellos: sanitarios, mampara, griferías y mueble. Todo de calidad y al mejor precio que encontré en Sevilla."</div><div class="review-author">Carlos M.</div><div class="review-meta">Google · hace 1 mes</div></div>
+        <div class="review-card"><div class="review-stars">★★★★☆</div><div class="review-text">"Gran variedad de azulejos y muy buen precio. El sistema de pedido online es cómodo. El servicio de montaje también es muy profesional."</div><div class="review-author">Ana R.</div><div class="review-meta">Google · hace 3 semanas</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <div><h2>¿Tienes un proyecto de reforma?</h2><p>Pídenos presupuesto sin compromiso. Asesoramiento gratis para particulares y profesionales.</p></div>
+    <button class="btn-white" onclick="goTo('contact')">Solicitar presupuesto →</button>
+  </div>
+
+</div><!-- /page-home -->
+
+
+<!-- ╔══════════════════════════════════════════╗
+     ║          CATALOG PAGE                   ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page" id="page-catalog">
+  <div class="catalog-hero">
+    <div class="max-w">
+      <span class="s-label">Catálogo</span>
+      <h1 class="s-title" style="color:var(--blanco)" id="cat-page-title">Sanitarios</h1>
+      <p style="color:rgba(255,255,255,.55);font-size:14px;margin-top:6px" id="cat-page-sub">Inodoros, bidés, cisternas y más de las mejores marcas</p>
+    </div>
+  </div>
+  <div class="catalog-layout">
+    <!-- FILTERS PANEL -->
+    <div class="filters">
+      <div class="filter-section">
+        <div class="filter-title">Categoría</div>
+        <div id="cat-filter-list"></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-title">Precio</div>
+        <div class="filter-opt"><input type="checkbox" id="fp1" onchange="applyFilters()"><label for="fp1">Hasta 100€</label></div>
+        <div class="filter-opt"><input type="checkbox" id="fp2" onchange="applyFilters()"><label for="fp2">100€ – 300€</label></div>
+        <div class="filter-opt"><input type="checkbox" id="fp3" onchange="applyFilters()"><label for="fp3">300€ – 600€</label></div>
+        <div class="filter-opt"><input type="checkbox" id="fp4" onchange="applyFilters()"><label for="fp4">Más de 600€</label></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-title">Marca</div>
+        <div id="brand-filter-list"></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-title">Color</div>
+        <div class="color-filter" id="color-filter-list"></div>
+      </div>
+      <div class="filter-section">
+        <div class="filter-opt"><input type="checkbox" id="foutlet" onchange="applyFilters()"><label for="foutlet">Solo ofertas</label></div>
+      </div>
+      <button class="btn-outline" style="width:100%;margin-top:8px;border-radius:4px" onclick="clearFilters()">Limpiar filtros</button>
+    </div>
+    <!-- PRODUCTS -->
+    <div class="catalog-main">
+      <div class="catalog-bar">
+        <div class="catalog-count"><strong id="prod-count">0</strong> productos encontrados</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <select class="catalog-sort" onchange="sortProds(this.value)">
+            <option value="featured">Destacados</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="name">Nombre A-Z</option>
+          </select>
+        </div>
+      </div>
+      <div class="prod-grid" id="catalog-prods"></div>
+    </div>
+  </div>
+</div><!-- /page-catalog -->
+
+
+<!-- ╔══════════════════════════════════════════╗
+     ║         PRODUCT DETAIL                  ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page" id="page-product">
+  <div class="detail-layout max-w">
+    <div class="detail-gallery">
+      <div class="main-img" id="d-main-img" style="background-image:url('')"></div>
+      <div class="detail-thumbs" id="d-thumbs"></div>
+    </div>
+    <div class="detail-info">
+      <div class="d-crumb">
+        <span onclick="goTo('home')">Inicio</span> /
+        <span onclick="goTo('catalog',currentCat)" id="d-cat-crumb">–</span>
+      </div>
+      <h1 class="d-name" id="d-name">–</h1>
+      <div class="d-brand" id="d-brand">–</div>
+      <div class="d-ref" id="d-ref">REF: –</div>
+      <div class="d-rating"><span style="color:var(--rojo);letter-spacing:2px">★★★★★</span><span style="font-size:12px;color:var(--gris-medio)">4.7 · 8 valoraciones</span></div>
+      <div class="d-price" id="d-price">–</div>
+      <div class="d-price-note" id="d-price-note">IVA incluido</div>
+      <hr class="d-sep">
+      <div class="d-specs" id="d-specs"></div>
+      <hr class="d-sep">
+      <div class="qty-wrap">
+        <div class="qty-label" id="qty-label">Cantidad (ud.)</div>
+        <div class="qty-box">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <input class="qty-inp" type="number" id="d-qty" value="1" min="1">
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+      <div class="d-cta">
+        <button class="btn-add-lg" id="d-add-btn">Añadir al pedido 🛒</button>
+        <button class="btn-fav">♡</button>
+      </div>
+      <div class="pickup-info">
+        <div class="pi-icon">🏪</div>
+        <div>
+          <strong>Recogida en tienda gratis</strong><br>
+          Pide aquí y recoge en cualquiera de nuestras 3 tiendas. Te avisamos cuando esté listo. Pago en tienda o con tarjeta online.
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-product -->
+
+
+<!-- ╔══════════════════════════════════════════╗
+     ║           CHECKOUT                      ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page" id="page-checkout">
+  <div style="background:var(--negro);padding:36px 32px 28px">
+    <div class="max-w">
+      <h1 style="font-size:36px;font-weight:800;color:var(--blanco)">Confirmar pedido</h1>
+      <p style="color:rgba(255,255,255,.45);font-size:14px;margin-top:6px">Recogida en tienda gratuita · Sin costes adicionales</p>
+    </div>
+  </div>
+  <div class="checkout-layout max-w" style="padding-top:36px">
+    <div>
+      <div class="checkout-section-title">Productos del pedido</div>
+      <div class="checkout-items" id="co-items"></div>
+      <div class="checkout-section-title">Tus datos</div>
+      <div style="margin-top:14px">
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Nombre *</label><input class="f-input" id="co-name" placeholder="Tu nombre"></div>
+          <div class="f-group"><label class="f-label">Apellidos</label><input class="f-input" id="co-surname" placeholder="Apellidos"></div>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Email *</label><input class="f-input" id="co-email" type="email" placeholder="tu@email.com"></div>
+          <div class="f-group"><label class="f-label">Teléfono *</label><input class="f-input" id="co-phone" type="tel" placeholder="6XX XXX XXX"></div>
+        </div>
+        <div class="f-group"><label class="f-label">Tienda de recogida *</label>
+          <select class="f-select" id="co-store">
+            <option value="">— Selecciona una tienda —</option>
+            <option>C. Pino Central, 21 · Pol. El Pino, Sevilla</option>
+            <option>Av. Dólmenes de Valencina, 7 · Valencina</option>
+            <option>Pol. La Matilla s/n · A-49 Km28 · Carrión de los Céspedes</option>
+          </select>
+        </div>
+        <div class="f-group"><label class="f-label">Forma de pago *</label>
+          <div class="pay-opts">
+            <div class="pay-opt"><input type="radio" id="pay1" name="pay" value="store" checked><label for="pay1">💵 Pago en tienda al recoger (efectivo o tarjeta)</label></div>
+            <div class="pay-opt"><input type="radio" id="pay2" name="pay" value="online"><label for="pay2">💳 Pago online con tarjeta (Stripe)</label></div>
+          </div>
+        </div>
+        <div class="f-group"><label class="f-label">Notas para almacén</label><textarea class="f-textarea" id="co-notes" rows="3" placeholder="Ej: necesito formatos 60×120, reforma urgente..."></textarea></div>
+      </div>
+    </div>
+    <div class="order-summary">
+      <div class="os-title">Resumen</div>
+      <div id="os-lines"></div>
+      <div class="os-total"><span>Total</span><span id="os-total">0,00 €</span></div>
+      <div class="os-note"><strong>🏪 Recogida en tienda gratis</strong>Preparamos tu pedido y te avisamos cuando está listo. Sin esperas.</div>
+      <button class="btn-checkout" onclick="submitOrder()">Confirmar pedido →</button>
+      <p style="font-size:11px;color:rgba(255,255,255,.3);text-align:center;margin-top:10px">Al confirmar aceptas los términos y condiciones.</p>
+    </div>
+  </div>
+</div><!-- /page-checkout -->
+
+
+<!-- CONFIRM -->
+<div class="page" id="page-confirm">
+  <div class="confirm-wrap">
+    <div class="confirm-ico">✓</div>
+    <h1 class="confirm-title">¡Pedido confirmado!</h1>
+    <p class="confirm-sub">Hemos recibido tu pedido. El equipo de almacén lo preparará y te avisará cuando esté listo para recoger.</p>
+    <div class="confirm-box">
+      <div class="confirm-order-num">Número de pedido</div>
+      <div class="confirm-order-id" id="co-order-id">#LE-0001</div>
+      <hr style="border:none;border-top:1px solid var(--gris-claro);margin:14px 0">
+      <div id="co-details" style="font-size:13px;line-height:1.8;color:var(--gris-oscuro)"></div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn-primary" onclick="goTo('catalog','Sanitarios')">Seguir comprando</button>
+      <button class="btn-outline" onclick="goTo('home')">Volver al inicio</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════╗
+     ║         MONTAJE PAGE                    ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page" id="page-montaje">
+  <div class="about-hero-section">
+    <div class="max-w">
+      <span class="s-label">Servicio</span>
+      <h1 class="s-title" style="color:var(--blanco)">Montaje profesional<br>en toda Sevilla</h1>
+      <p style="color:rgba(255,255,255,.55);margin-top:10px;font-size:15px;max-width:500px">Nuestro equipo de instaladores cualificados se encarga de todo. Tú elige los productos, nosotros los instalamos.</p>
+    </div>
+  </div>
+  <div class="section max-w">
+    <div class="montaje-grid">
+      <div>
+        <span class="s-label">Lo que incluye</span>
+        <h2 class="s-title">Un servicio completo<br>de principio a fin</h2>
+        <p style="font-size:14px;color:var(--gris-medio);line-height:1.7;margin-top:12px;margin-bottom:24px">Nos ocupamos de la instalación de todos los productos que compres en nuestra tienda: sanitarios, mamparas, grifería, muebles de baño, azulejos y pavimentos.</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--radio)">
+            <span style="font-size:22px">🔩</span>
+            <div><div style="font-weight:700;margin-bottom:3px">Instalación de sanitarios</div><div style="font-size:13px;color:var(--gris-medio)">Inodoros, bidés, lavabos y bañeras. Conexión a fontanería existente.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--radio)">
+            <span style="font-size:22px">🚿</span>
+            <div><div style="font-weight:700;margin-bottom:3px">Colocación de mamparas</div><div style="font-size:13px;color:var(--gris-medio)">Frontales, angulares y a medida. Ajuste perfecto y sellado garantizado.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--radio)">
+            <span style="font-size:22px">🧱</span>
+            <div><div style="font-weight:700;margin-bottom:3px">Alicatado y solado</div><div style="font-size:13px;color:var(--gris-medio)">Colocación de azulejos y pavimentos, tanto interior como exterior.</div></div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--radio)">
+            <span style="font-size:22px">🪞</span>
+            <div><div style="font-weight:700;margin-bottom:3px">Muebles y accesorios</div><div style="font-size:13px;color:var(--gris-medio)">Montaje e instalación de muebles de baño, espejos y accesorios.</div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--negro);padding:32px;border-radius:var(--radio);color:var(--blanco)">
+          <h3 style="font-size:22px;font-weight:800;margin-bottom:20px">Solicita presupuesto</h3>
+          <div class="f-group"><label class="f-label" style="color:rgba(255,255,255,.5)">Nombre</label><input class="f-input" placeholder="Tu nombre" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--blanco)"></div>
+          <div class="f-group"><label class="f-label" style="color:rgba(255,255,255,.5)">Teléfono</label><input class="f-input" placeholder="6XX XXX XXX" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--blanco)"></div>
+          <div class="f-group"><label class="f-label" style="color:rgba(255,255,255,.5)">Tipo de trabajo</label>
+            <select class="f-select" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--blanco)">
+              <option>Reforma baño completo</option>
+              <option>Instalación sanitarios</option>
+              <option>Colocación azulejos</option>
+              <option>Mampara / Grifería</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="f-group"><label class="f-label" style="color:rgba(255,255,255,.5)">Descripción</label><textarea class="f-textarea" rows="3" placeholder="Describe tu proyecto..." style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--blanco)"></textarea></div>
+          <button class="btn-primary" style="width:100%;padding:14px;margin-top:4px" onclick="showToast('✓ Solicitud enviada. Te contactaremos pronto.')">Solicitar presupuesto gratis →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-montaje -->
+
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="about-hero-section">
+    <div class="max-w">
+      <span class="s-label">Nuestra historia</span>
+      <h1 class="s-title" style="color:var(--blanco)">Desde 1973 siendo<br>tu referencia en Sevilla</h1>
+    </div>
+  </div>
+  <div class="section max-w">
+    <div class="montaje-grid">
+      <div>
+        <span class="s-label">Quiénes somos</span>
+        <h2 class="s-title">Familia, experiencia<br>y confianza</h2>
+        <p style="font-size:14px;color:var(--gris-medio);line-height:1.75;margin-top:12px">Azulejos La Estrella nació en 1973 como un pequeño almacén familiar especializado en azulejos y pavimentos. Hoy, más de 50 años después, somos el referente en la provincia de Sevilla en todo lo relacionado con el baño y los revestimientos.</p>
+        <p style="font-size:14px;color:var(--gris-medio);line-height:1.75;margin-top:10px">Contamos con tres tiendas en Sevilla capital, Valencina de la Concepción y Carrión de los Céspedes, un equipo de 20 profesionales y más de 300 referencias en catálogo de las mejores marcas.</p>
+        <div style="display:flex;gap:28px;margin-top:28px;flex-wrap:wrap">
+          <div><div style="font-size:40px;font-weight:900;color:var(--rojo)">+50</div><div style="font-size:12px;color:var(--gris-medio)">Años de exp.</div></div>
+          <div><div style="font-size:40px;font-weight:900;color:var(--rojo)">3</div><div style="font-size:12px;color:var(--gris-medio)">Tiendas</div></div>
+          <div><div style="font-size:40px;font-weight:900;color:var(--rojo)">300+</div><div style="font-size:12px;color:var(--gris-medio)">Referencias</div></div>
+          <div><div style="font-size:40px;font-weight:900;color:var(--rojo)">20</div><div style="font-size:12px;color:var(--gris-medio)">Profesionales</div></div>
+        </div>
+      </div>
+      <div style="background:var(--gris-bg);border-radius:var(--radio);overflow:hidden;display:grid;grid-template-rows:1fr 1fr;gap:8px;padding:8px">
+        <div style="background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80') center/cover;border-radius:var(--radio);min-height:160px"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80') center/cover;border-radius:var(--radio)"></div>
+          <div style="background:url('https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=400&q=80') center/cover;border-radius:var(--radio)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section bg-gray">
+    <div class="max-w">
+      <div class="s-header"><span class="s-label">Nuestras tiendas</span><h2 class="s-title">Dónde encontrarnos</h2></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+        <div style="background:var(--blanco);border:1.5px solid var(--gris-claro);padding:24px;border-radius:var(--radio)">
+          <div style="font-size:36px;font-weight:900;color:var(--gris-claro);margin-bottom:4px">01</div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:6px">Polígono El Pino</div>
+          <div style="font-size:13px;color:var(--gris-medio);line-height:1.6">C. Pino Central, 21<br>41016 El Pino, Sevilla</div>
+          <div style="font-size:12px;color:var(--gris-medio);margin-top:10px;padding-top:10px;border-top:1px solid var(--gris-claro)">Lun–Vie: 9:30–13:30 · 16:00–20:00<br>Sáb: 9:30–13:30</div>
+        </div>
+        <div style="background:var(--blanco);border:1.5px solid var(--gris-claro);padding:24px;border-radius:var(--radio)">
+          <div style="font-size:36px;font-weight:900;color:var(--gris-claro);margin-bottom:4px">02</div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:6px">Valencina</div>
+          <div style="font-size:13px;color:var(--gris-medio);line-height:1.6">Av. Dólmenes de Valencina, 7<br>41907 Valencina de la Concepción</div>
+          <div style="font-size:12px;color:var(--gris-medio);margin-top:10px;padding-top:10px;border-top:1px solid var(--gris-claro)">Lun–Vie: 9:30–13:30 · 16:00–20:00<br>Sáb: 9:30–13:30</div>
+        </div>
+        <div style="background:var(--blanco);border:1.5px solid var(--gris-claro);padding:24px;border-radius:var(--radio)">
+          <div style="font-size:36px;font-weight:900;color:var(--gris-claro);margin-bottom:4px">03</div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:6px">Carrión de los Céspedes</div>
+          <div style="font-size:13px;color:var(--gris-medio);line-height:1.6">Pol. La Matilla s/n<br>Autopista A-49, Km 28</div>
+          <div style="font-size:12px;color:var(--gris-medio);margin-top:10px;padding-top:10px;border-top:1px solid var(--gris-claro)">Lun–Vie: 9:30–13:30 · 16:00–20:00<br>Sáb: 9:30–13:30</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-about -->
+
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <div class="about-hero-section">
+    <div class="max-w">
+      <span class="s-label">Contacto</span>
+      <h1 class="s-title" style="color:var(--blanco)">¿Hablamos?</h1>
+    </div>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <span class="s-label">Llámanos o escríbenos</span>
+      <h2 class="s-title" style="font-size:32px">Estamos aquí<br>para ayudarte</h2>
+      <div style="margin-top:24px;display:flex;flex-direction:column;gap:14px">
+        <div class="footer-contact-row"><span>📞</span><a href="tel:+34955292129" style="font-size:22px;font-weight:700;color:var(--negro);text-decoration:none">955 292 129</a></div>
+        <div class="footer-contact-row"><span>💬</span><a href="https://wa.me/34675083003" style="font-size:16px;font-weight:600;color:var(--negro);text-decoration:none">WhatsApp: 675 083 003</a></div>
+        <div class="footer-contact-row"><span>📍</span><span>C. Pino Central, 21 · El Pino, Sevilla</span></div>
+        <div class="footer-contact-row"><span>🕐</span><span>Lun–Vie: 9:30–13:30 · 16:00–20:00 | Sáb: 9:30–13:30</span></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:18px;font-weight:800;margin-bottom:16px">Envíanos un mensaje</div>
+      <div class="f-row"><div class="f-group"><label class="f-label">Nombre</label><input class="f-input" id="ct-name" placeholder="Tu nombre"></div><div class="f-group"><label class="f-label">Email</label><input class="f-input" id="ct-email" placeholder="email@ejemplo.com"></div></div>
+      <div class="f-group"><label class="f-label">Teléfono</label><input class="f-input" id="ct-tel" placeholder="6XX XXX XXX"></div>
+      <div class="f-group"><label class="f-label">Asunto</label>
+        <select class="f-select"><option>Consulta de producto</option><option>Presupuesto obra</option><option>Servicio montaje</option><option>Otro</option></select>
+      </div>
+      <div class="f-group"><label class="f-label">Mensaje</label><textarea class="f-textarea" rows="4" placeholder="Escribe tu mensaje..."></textarea></div>
+      <button class="btn-primary" style="width:100%;padding:14px" onclick="showToast('✓ Mensaje enviado. Te contactamos pronto.')">Enviar mensaje →</button>
+    </div>
+  </div>
+</div><!-- /page-contact -->
+
+
+<!-- ╔══════════════════════════════════════════╗
+     ║           ADMIN PANEL                   ║
+     ╚══════════════════════════════════════════╝ -->
+<div class="page" id="page-admin">
+  <div class="admin-layout">
+    <div class="admin-sidebar">
+      <div class="admin-logo-area">
+        <div class="admin-logo-name">Panel de Almacén</div>
+        <div class="admin-logo-sub">Azulejos La Estrella</div>
+      </div>
+      <div class="admin-nav-section">Principal</div>
+      <div class="admin-nav-item active" onclick="showAdmin('dashboard',this)"><span class="ico">📊</span>Dashboard</div>
+      <div class="admin-nav-item" onclick="showAdmin('orders',this)"><span class="ico">📦</span>Pedidos</div>
+      <div class="admin-nav-item" onclick="showAdmin('prods',this)"><span class="ico">🗂️</span>Productos</div>
+      <div class="admin-nav-section">Sistema</div>
+      <div class="admin-nav-item" onclick="goTo('home')"><span class="ico">🌐</span>Ver web</div>
+    </div>
+    <div class="admin-main">
+      <div id="admin-dashboard">
+        <div class="admin-topbar"><div class="admin-title">Dashboard</div><button class="btn-primary" style="font-size:12px" onclick="showAdmin('orders',null)">Ver pedidos →</button></div>
+        <div class="stats-row">
+          <div class="stat-card highlight"><div class="stat-label">Pedidos hoy</div><div class="stat-val" id="s-today">0</div></div>
+          <div class="stat-card"><div class="stat-label">Pendientes</div><div class="stat-val" id="s-pend" style="color:var(--rojo)">0</div></div>
+          <div class="stat-card"><div class="stat-label">Listos</div><div class="stat-val" id="s-ready" style="color:#27ae60">0</div></div>
+          <div class="stat-card"><div class="stat-label">Facturado</div><div class="stat-val" id="s-rev">0€</div></div>
+        </div>
+        <div class="orders-tbl">
+          <div class="orders-tbl-top"><div class="orders-tbl-title">Últimos pedidos</div></div>
+          <table><thead><tr><th>Nº</th><th>Cliente</th><th>Tienda</th><th>Total</th><th>Pago</th><th>Estado</th><th>Cambiar</th></tr></thead><tbody id="admin-tbody"></tbody></table>
+        </div>
+      </div>
+      <div id="admin-orders" style="display:none">
+        <div class="admin-topbar"><div class="admin-title">Todos los pedidos</div><select class="catalog-sort" onchange="filterOrdersAdmin(this.value)"><option value="all">Todos</option><option value="new">Nuevos</option><option value="prep">Preparando</option><option value="ready">Listos</option><option value="done">Entregados</option></select></div>
+        <div class="orders-tbl"><table><thead><tr><th>Nº</th><th>Cliente</th><th>Tel.</th><th>Tienda</th><th>Total</th><th>Pago</th><th>Estado</th><th>Cambiar</th></tr></thead><tbody id="all-orders-body"></tbody></table></div>
+      </div>
+      <div id="admin-prods" style="display:none">
+        <div class="admin-topbar"><div class="admin-title">Catálogo de productos</div></div>
+        <div class="orders-tbl"><table><thead><tr><th>Img</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Marca</th></tr></thead><tbody id="admin-prods-body"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-admin -->
+
+
+<!-- FOOTER -->
+<footer id="main-footer">
+  <div class="max-w">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo"><span class="ico">★</span>Azulejos La Estrella</div>
+        <p class="footer-desc">Especialistas en productos de baño desde 1973. Tres tiendas en la provincia de Sevilla. Amplio catálogo de sanitarios, mamparas, griferías, muebles y azulejos.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Catálogo</div>
+        <div class="footer-links">
+          <a href="#" onclick="goTo('catalog','Sanitarios')">Sanitarios</a>
+          <a href="#" onclick="goTo('catalog','Mamparas')">Mamparas</a>
+          <a href="#" onclick="goTo('catalog','Grifería')">Grifería</a>
+          <a href="#" onclick="goTo('catalog','Muebles de baño')">Muebles de baño</a>
+          <a href="#" onclick="goTo('catalog','Accesorios de baño')">Accesorios</a>
+          <a href="#" onclick="goTo('catalog','Azulejos Interior')">Azulejos</a>
+          <a href="#" onclick="goTo('catalog','Outlet')">Outlet</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Empresa</div>
+        <div class="footer-links">
+          <a href="#" onclick="goTo('about')">Quiénes somos</a>
+          <a href="#" onclick="goTo('montaje')">Servicio de montaje</a>
+          <a href="#" onclick="goTo('contact')">Contacto</a>
+          <a href="#">Aviso legal</a>
+          <a href="#">Política de cookies</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contacto</div>
+        <div class="footer-contact-row"><span>📞</span><a href="tel:+34955292129">955 292 129</a></div>
+        <div class="footer-contact-row"><span>💬</span><a href="https://wa.me/34675083003">WhatsApp</a></div>
+        <div class="footer-contact-row"><span>📍</span><span>Pol. El Pino · Valencina · Carrión</span></div>
+        <div class="footer-contact-row"><span>🕐</span><span>Lun–Sáb: 9:30–20:00</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Azulejos La Estrella · Todos los derechos reservados</span>
+      <div style="display:flex;gap:14px"><a href="#">Aviso Legal</a><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ══════════════════════════════════════════════════════
+// PRODUCTOS — 25 por categoría (8 categorías = 200 refs)
+// ══════════════════════════════════════════════════════
+const CATS = {
+  'Sanitarios': { icon:'🚽', desc:'Inodoros, bidés, cisternas y más de las mejores marcas' },
+  'Mamparas': { icon:'🚿', desc:'Mamparas de ducha frontales, angulares, semicirculares y a medida' },
+  'Grifería': { icon:'🔧', desc:'Griferías de lavabo, ducha, bañera y cocina de marcas líderes' },
+  'Muebles de baño': { icon:'🪞', desc:'Muebles suspendidos, a suelo, lavabos sobre encimera y espejos' },
+  'Accesorios de baño': { icon:'🪥', desc:'Toalleros, jaboneras, portapapeles, espejos y más' },
+  'Azulejos Interior': { icon:'⬛', desc:'Azulejos y pavimentos de interior · Precio por m²', m2: true },
+  'Pavimentos Exterior': { icon:'🌿', desc:'Pavimentos exteriores antideslizantes · Precio por m²', m2: true },
+  'Outlet': { icon:'🏷️', desc:'Productos con descuento de hasta el 40%' }
+};
+
+const BRANDS = ['Roca','Grohe','Hansgrohe','Duravit','Villeroy & Boch','Porcelanosa','Roca','Jacob Delafon','Geberit','Kaldewei','Reznor','Simón','Tres Grifería','Clever'];
+const COLORS = [
+  {name:'Blanco', hex:'#FFFFFF', border:'#ccc'},
+  {name:'Negro', hex:'#1A1A1A'},
+  {name:'Gris', hex:'#A0A0A0'},
+  {name:'Cromo', hex:'linear-gradient(135deg,#c0c0c0,#e8e8e8)'},
+  {name:'Beige', hex:'#E8D8B0'},
+  {name:'Antracita', hex:'#3A3A3A'},
+  {name:'Oro', hex:'#B8922A'},
+  {name:'Marrón', hex:'#7B4F2E'},
+];
+
+// Generador de productos reales para cada categoría
+function genProducts() {
+  const allP = [];
+  let id = 1;
+
+  // ── SANITARIOS (25) ──
+  const sanData = [
+    {name:'Inodoro Suspendido Gap Compact',brand:'Roca',price:289,ref:'SAR-GAP-SUS',badge:'Más vendido',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Descarga:'3/6L',Material:'Vitreous China',Garantía:'5 años',Color:'Blanco',Salida:'Dual'}},
+    {name:'Inodoro a Suelo Meridian',brand:'Roca',price:189,ref:'SAR-MER-SUE',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'A suelo',Descarga:'6L',Color:'Blanco',Garantía:'3 años'}},
+    {name:'Inodoro Inteligente Cleanet Riva',brand:'Duravit',price:1890,ref:'DUR-RIV-INT',badge:'Premium',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Inteligente',Bidet:'Integrado',Secado:'Aire caliente',Garantía:'5 años',Color:'Blanco'}},
+    {name:'Inodoro Suspendido Starck 3',brand:'Duravit',price:420,ref:'DUR-ST3-SUS',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Descarga:'4.5/6L',Color:'Blanco',Garantía:'5 años'}},
+    {name:'Cisterna Empotrada Sigma',brand:'Geberit',price:185,ref:'GEB-SIG-EMP',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Empotrada',Descarga:'Dual',Garantía:'5 años'}},
+    {name:'Bidé Suspendido A-Vero',brand:'Jacob Delafon',price:245,ref:'JAC-AVE-BID',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Color:'Blanco',Garantía:'5 años'}},
+    {name:'Inodoro Sentido Square Rimless',brand:'Villeroy & Boch',price:390,ref:'VIL-SQR-RIM',badge:'Novedad',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Sistema:'Rimless',Garantía:'5 años',Color:'Blanco'}},
+    {name:'Taza Inodoro Meridian N',brand:'Roca',price:165,ref:'ROC-MER-TAZ',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'A suelo',Color:'Blanco',Garantía:'3 años'}},
+    {name:'Inodoro Suspendido Subway 2.0',brand:'Villeroy & Boch',price:445,ref:'VIL-SUB-SUS',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',DirectFlush:'Sí',Garantía:'5 años'}},
+    {name:'Bidé A Suelo Victoria',brand:'Roca',price:120,ref:'ROC-VIC-BID',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'A suelo',Color:'Blanco',Garantía:'3 años'}},
+    {name:'Inodoro Compact Dama Senso',brand:'Roca',price:210,ref:'ROC-DAM-COM',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'A suelo',Fondo:'48cm',Color:'Blanco',Garantía:'3 años'}},
+    {name:'Inodoro Suspendido D-Neo',brand:'Duravit',price:380,ref:'DUR-NEO-SUS',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Sistema:'Rimless',Garantía:'5 años',Color:'Blanco'}},
+    {name:'Tapa WC Termoplástico Soft Close',brand:'Roca',price:45,ref:'ROC-TAP-SOF',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Cierre:'Suave',Material:'Termoplástico',Garantía:'2 años',Color:'Blanco'}},
+    {name:'Inodoro Suspendido Ulysse',brand:'Jacob Delafon',price:520,ref:'JAC-ULY-SUS',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Color:'Blanco',Garantía:'5 años'}},
+    {name:'Inodoro Debba A suelo',brand:'Roca',price:155,ref:'ROC-DEB-SUE',outlet:true,priceOld:210,badge:'Outlet',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'A suelo',Color:'Blanco',Garantía:'3 años'}},
+    {name:'Cisterna Empotrada Duplo',brand:'Roca',price:145,ref:'ROC-DUP-CIS',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Empotrada',Descarga:'Dual 3/6L',Garantía:'3 años'}},
+    {name:'Inodoro Eco Compact',brand:'Geberit',price:340,ref:'GEB-ECO-COM',badge:'Eco',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'A suelo',Descarga:'4/6L',Color:'Blanco',Garantía:'5 años'}},
+    {name:'Inodoro Suspendido Bela',brand:'Porcelanosa',price:460,ref:'POR-BEL-SUS',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Color:'Blanco',Garantía:'5 años'}},
+    {name:'Bidé Suspendido Dama Senso',brand:'Roca',price:180,ref:'ROC-DAM-BID',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Color:'Blanco',Garantía:'3 años'}},
+    {name:'Inodoro Smart Clean Aquablade',brand:'Ideal Standard',price:510,ref:'IDS-AQU-SCL',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Sistema:'AquaBlade',Garantía:'5 años',Color:'Blanco'}},
+    {name:'Placa Pulsadora Sigma 01',brand:'Geberit',price:68,ref:'GEB-S01-PLA',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Material:'Cromo mate',Descarga:'Dual',Garantía:'5 años'}},
+    {name:'Inodoro Suspendido Connect E',brand:'Ideal Standard',price:310,ref:'IDS-COE-SUS',outlet:true,priceOld:395,badge:'Outlet',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Color:'Blanco',Garantía:'3 años'}},
+    {name:'Bidé Victoria',brand:'Roca',price:98,ref:'ROC-VIC-SU2',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'A suelo',Color:'Blanco',Garantía:'3 años'}},
+    {name:'Inodoro Suspendido Noken',brand:'Porcelanosa',price:395,ref:'POR-NOK-SUS',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'Suspendido',Sistema:'Rimless',Color:'Blanco',Garantía:'5 años'}},
+    {name:'Inodoro A Suelo Deba',brand:'Roca',price:139,ref:'ROC-DEB-AGB',outlet:true,priceOld:175,badge:'Outlet',img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',specs:{Tipo:'A suelo',Color:'Blanco',Garantía:'3 años'}},
+  ];
+
+  // ── MAMPARAS (25) ──
+  const mamData = [
+    {name:'Mampara Frontal 80cm Open 2P',brand:'Roca',price:345,ref:'MAM-ROC-FRO80',badge:'Más vendido',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Frontal',Anchura:'80cm',Vidrio:'6mm templado',Perfil:'Cromo',Apertura:'Plegable',Altura:'195cm'}},
+    {name:'Mampara Angular 80×80 Optima',brand:'Roca',price:520,ref:'MAM-ROC-ANG80',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Angular',Medidas:'80×80cm',Vidrio:'6mm',Perfil:'Cromo',Apertura:'Corredera'}},
+    {name:'Mampara Walk-In Panel 90cm',brand:'Hansgrohe',price:680,ref:'HAN-WLK-90',badge:'Premium',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Walk-in',Anchura:'90cm',Vidrio:'8mm templado',Perfil:'Negro mate',Altura:'200cm'}},
+    {name:'Mampara Semicircular 90×90',brand:'Roca',price:490,ref:'ROC-SEM-90',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Semicircular',Medidas:'90×90cm',Vidrio:'5mm',Perfil:'Cromo',Apertura:'Corredera'}},
+    {name:'Mampara Frontal 70cm Easy Plus',brand:'Roca',price:295,ref:'ROC-EZP-70',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Frontal',Anchura:'70cm',Vidrio:'5mm',Perfil:'Cromo',Apertura:'Plegable'}},
+    {name:'Panel Fijo Walk-In 100cm Negro',brand:'Simón',price:590,ref:'SIM-WLK-BLK',badge:'Novedad',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Walk-in',Anchura:'100cm',Vidrio:'8mm',Perfil:'Negro mate',Altura:'200cm'}},
+    {name:'Mampara Bañera 2 Hojas',brand:'Roca',price:380,ref:'ROC-BAN-2H',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Para bañera',Hojas:'2',Vidrio:'5mm',Perfil:'Cromo',Apertura:'Corredera'}},
+    {name:'Mampara Frontal 90cm Pivot',brand:'Hansgrohe',price:510,ref:'HAN-PIV-90',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Frontal pivotante',Anchura:'90cm',Vidrio:'8mm',Perfil:'Cromo',Altura:'200cm'}},
+    {name:'Mampara Angular 90×90 Select',brand:'Duravit',price:720,ref:'DUR-ANG-90',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Angular',Medidas:'90×90cm',Vidrio:'6mm',Perfil:'Cromo brillante',Apertura:'Batiente'}},
+    {name:'Mampara Frontal 80cm Antical',brand:'Roca',price:325,outlet:true,priceOld:420,badge:'Outlet',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',ref:'ROC-ANT-FRO',specs:{Tipo:'Frontal',Anchura:'80cm',Vidrio:'5mm antical',Perfil:'Cromo',Apertura:'Plegable'}},
+    {name:'Mampara Bañera Lateral 70cm',brand:'Roca',price:290,ref:'ROC-LAT-BAN',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Para bañera lateral',Anchura:'70cm',Vidrio:'5mm',Perfil:'Cromo'}},
+    {name:'Panel Walk-In 120cm Doble',brand:'Hansgrohe',price:920,ref:'HAN-WLK-120',badge:'Premium',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Walk-in doble',Medidas:'120+40cm',Vidrio:'10mm',Perfil:'Cromo',Altura:'200cm'}},
+    {name:'Mampara Frontal 100cm Pivot',brand:'Simón',price:420,ref:'SIM-PIV-100',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Frontal',Anchura:'100cm',Vidrio:'6mm',Perfil:'Cromo',Apertura:'Pivotante'}},
+    {name:'Mampara Angular 80×90',brand:'Roca',price:540,ref:'ROC-ANG-8090',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Angular',Medidas:'80×90cm',Vidrio:'6mm',Perfil:'Cromo',Apertura:'Corredera'}},
+    {name:'Mampara Walk-In 80cm Negra',brand:'Villeroy & Boch',price:650,outlet:true,priceOld:820,badge:'Outlet',ref:'VIL-WLK-80B',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Walk-in',Anchura:'80cm',Vidrio:'8mm',Perfil:'Negro mate',Altura:'200cm'}},
+    {name:'Mampara Frontal 75cm Compact',brand:'Roca',price:278,ref:'ROC-COM-75',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Frontal',Anchura:'75cm',Vidrio:'4mm',Perfil:'Cromo',Apertura:'Plegable'}},
+    {name:'Mampara Bañera 3 Hojas Cromo',brand:'Simón',price:440,ref:'SIM-BAN-3H',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Para bañera',Hojas:'3',Vidrio:'5mm',Perfil:'Cromo',Apertura:'Corredera'}},
+    {name:'Panel Fijo 90cm Cromo Sin Perfil',brand:'Hansgrohe',price:780,ref:'HAN-SPF-90',badge:'Novedad',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Panel sin perfil',Anchura:'90cm',Vidrio:'10mm',Perfiles:'Mínimos',Altura:'200cm'}},
+    {name:'Mampara Semicircular 80×80',brand:'Roca',price:410,ref:'ROC-SEM-80',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Semicircular',Medidas:'80×80cm',Vidrio:'5mm',Perfil:'Cromo',Apertura:'Corredera'}},
+    {name:'Mampara Frontal 120cm Smart',brand:'Duravit',price:680,ref:'DUR-SMT-120',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Frontal dos hojas',Anchura:'120cm',Vidrio:'8mm',Perfil:'Cromo',Apertura:'Corredera'}},
+    {name:'Mampara Angular 75×75',brand:'Roca',price:390,outlet:true,priceOld:490,badge:'Outlet',ref:'ROC-ANG-75',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Angular',Medidas:'75×75cm',Vidrio:'5mm',Perfil:'Cromo',Apertura:'Corredera'}},
+    {name:'Panel Walk-In 140cm Cromo',brand:'Hansgrohe',price:1050,ref:'HAN-WLK-140',badge:'Premium',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Walk-in',Anchura:'140cm',Vidrio:'10mm',Perfil:'Cromo pulido',Altura:'200cm'}},
+    {name:'Mampara Bañera Abatible',brand:'Simón',price:320,ref:'SIM-ABA-BAN',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Para bañera abatible',Anchura:'80cm',Vidrio:'5mm',Perfil:'Cromo',Apertura:'Abatible'}},
+    {name:'Mampara Frontal 85cm Open',brand:'Roca',price:310,ref:'ROC-OPN-85',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Frontal',Anchura:'85cm',Vidrio:'5mm',Perfil:'Cromo',Apertura:'Plegable'}},
+    {name:'Panel Walk-In 90cm Antracita',brand:'Villeroy & Boch',price:710,ref:'VIL-ANT-WLK',img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=500&q=80',specs:{Tipo:'Walk-in',Anchura:'90cm',Vidrio:'8mm',Perfil:'Antracita',Altura:'200cm'}},
+  ];
+
+  // ── GRIFERÍA (25) ──
+  const grData = [
+    {name:'Grifo Monomando Lavabo Grohtherm',brand:'Grohe',price:128,ref:'GRO-GTH-LAV',badge:'Más vendido',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Monomando lavabo',Caudal:'12L/min',Acabado:'Cromo',Clase:'A',Garantía:'5 años'}},
+    {name:'Grifería Termostática Ducha Ecostat',brand:'Hansgrohe',price:310,ref:'HAN-ECO-TER',badge:'Premium',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Termostática',Uso:'Ducha',Acabado:'Cromo',Garantía:'5 años'}},
+    {name:'Grifo Monomando Bañera Eurostyle',brand:'Grohe',price:175,ref:'GRO-EUR-BAN',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Monomando bañera',Acabado:'Cromo',Garantía:'5 años',Caño:'Fijo'}},
+    {name:'Grifo Empotrado Ducha Tres',brand:'Tres Grifería',price:95,ref:'TRE-EMP-DUC',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Empotrado',Uso:'Ducha',Acabado:'Cromo',Garantía:'3 años'}},
+    {name:'Columna de Ducha Rainshower',brand:'Grohe',price:445,ref:'GRO-RAI-COL',badge:'Novedad',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Columna ducha',Cabezal:'310mm',Acabado:'Cromo',Garantía:'5 años'}},
+    {name:'Grifo Monomando Lavabo Axor',brand:'Hansgrohe',price:285,ref:'HAN-AXR-LAV',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Monomando',Caño:'Alto',Acabado:'Cromo',Garantía:'5 años'}},
+    {name:'Grifería Termostática Bañera',brand:'Grohe',price:520,ref:'GRO-TER-BAN',badge:'Premium',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Termostática',Uso:'Bañera',Acabado:'Cromo',Garantía:'5 años'}},
+    {name:'Grifo Lavabo Negro Mate Logis',brand:'Hansgrohe',price:195,ref:'HAN-LOG-BLK',badge:'Novedad',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Monomando',Acabado:'Negro mate',Garantía:'5 años'}},
+    {name:'Conjunto Ducha con Barra Unica',brand:'Grohe',price:165,ref:'GRO-UNI-BAR',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Conjunto ducha',Barra:'90cm',Acabado:'Cromo',Garantía:'3 años'}},
+    {name:'Grifo Monomando Lavabo Start',brand:'Grohe',price:72,outlet:true,priceOld:98,badge:'Outlet',ref:'GRO-STA-LAV',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Monomando',Acabado:'Cromo',Garantía:'3 años',Clase:'A'}},
+    {name:'Ducha Lluvia Techo 300mm',brand:'Hansgrohe',price:390,ref:'HAN-300-TEC',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Ducha techo',Diámetro:'300mm',Acabado:'Cromo',Garantía:'3 años'}},
+    {name:'Grifo Lavabo Caño Alto Tres',brand:'Tres Grifería',price:88,ref:'TRE-ALT-LAV',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Monomando caño alto',Acabado:'Cromo',Garantía:'3 años'}},
+    {name:'Grifería Bidé Grohe Start',brand:'Grohe',price:58,ref:'GRO-BID-STA',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Bidet',Acabado:'Cromo',Garantía:'3 años'}},
+    {name:'Grifo Empotrado Bañera Termostático',brand:'Hansgrohe',price:680,ref:'HAN-EMP-TER',badge:'Premium',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Termostático empotrado',Uso:'Bañera',Acabado:'Cromo',Garantía:'5 años'}},
+    {name:'Conjunto Ducha Croma Select',brand:'Hansgrohe',price:145,ref:'HAN-CRO-DUC',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Conjunto ducha',Modos:'3',Acabado:'Cromo',Garantía:'3 años'}},
+    {name:'Grifo Lavabo Oro Mate',brand:'Hansgrohe',price:340,ref:'HAN-GLD-LAV',outlet:true,priceOld:460,badge:'Outlet',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Monomando',Acabado:'Oro mate',Garantía:'5 años'}},
+    {name:'Grifo Empotrado Termostático Tres',brand:'Tres Grifería',price:185,ref:'TRE-EMP-TER',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Termostático empotrado',Uso:'Ducha',Acabado:'Cromo',Garantía:'3 años'}},
+    {name:'Alcachofa Ducha Select+ 120',brand:'Grohe',price:65,ref:'GRO-SEL-120',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Alcachofa',Modos:'3',Diámetro:'120mm',Acabado:'Cromo'}},
+    {name:'Grifo Monomando Lavabo Antracita',brand:'Tres Grifería',price:98,ref:'TRE-ANT-LAV',badge:'Novedad',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Monomando',Acabado:'Antracita',Garantía:'3 años'}},
+    {name:'Columna Ducha Termostática Pharo',brand:'Hansgrohe',price:890,ref:'HAN-PHA-COL',badge:'Premium',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Columna termostática',Funciones:'4',Acabado:'Cromo',Garantía:'5 años'}},
+    {name:'Grifo Caño Giratorio Cocina',brand:'Grohe',price:155,ref:'GRO-GIR-COC',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Cocina giratorio',Caño:'360°',Acabado:'Cromo',Garantía:'5 años'}},
+    {name:'Grifo Empotrado Ducha Tres 1 vía',brand:'Tres Grifería',price:78,ref:'TRE-1VI-DUC',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Empotrado',Vías:'1',Acabado:'Cromo',Garantía:'3 años'}},
+    {name:'Set Ducha Rainshower Eco Grohe',brand:'Grohe',price:220,ref:'GRO-ECO-SET',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Set ducha',Alcachofa:'190mm',Acabado:'Cromo',Garantía:'5 años'}},
+    {name:'Grifo Lavabo Caño Alto Negro',brand:'Tres Grifería',price:112,outlet:true,priceOld:145,badge:'Outlet',ref:'TRE-BLK-ALT',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Monomando caño alto',Acabado:'Negro mate',Garantía:'3 años'}},
+    {name:'Mezclador Bañera Exento Tres',brand:'Tres Grifería',price:240,ref:'TRE-EXE-BAN',img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=500&q=80',specs:{Tipo:'Exento bañera',Acabado:'Cromo',Garantía:'3 años',Caño:'Giratorio'}},
+  ];
+
+  // ── MUEBLES DE BAÑO (25) ──
+  const muData = [
+    {name:'Mueble Suspendido 60cm Blanco Mate',brand:'Roca',price:420,ref:'MUE-ROC-60BL',badge:'Más vendido',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'60cm',Acabado:'Blanco mate',Cajones:'2',Material:'MDF',Lavabo:'Incluido'}},
+    {name:'Mueble Suspendido 80cm Nogal',brand:'Duravit',price:780,ref:'DUR-NOG-80',badge:'Premium',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'80cm',Acabado:'Nogal',Cajones:'2',Material:'MDF lacado',Lavabo:'Incluido'}},
+    {name:'Mueble Roble 60cm con Espejo',brand:'Porcelanosa',price:540,ref:'POR-ROB-60',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'60cm',Acabado:'Roble natural',Cajones:'1',Espejo:'Incluido',Lavabo:'Incluido'}},
+    {name:'Conjunto Mueble 120cm Antracita',brand:'Duravit',price:1180,ref:'DUR-ANT-120',badge:'Premium',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido doble seno',Anchura:'120cm',Acabado:'Antracita',Cajones:'4',Material:'MDF',Lavabo:'Incluido'}},
+    {name:'Mueble Suspendido 45cm Compact',brand:'Roca',price:285,ref:'ROC-COM-45',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'45cm',Acabado:'Blanco brillo',Puertas:'1',Material:'MDF',Lavabo:'Incluido'}},
+    {name:'Espejo LED 60×80cm Táctil',brand:'Duravit',price:320,ref:'DUR-LED-6080',badge:'Novedad',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Espejo LED',Medidas:'60×80cm',Táctil:'Sí',Antivaho:'Sí',Temperatura:'Ajustable'}},
+    {name:'Mueble Suspendido 70cm Cemento',brand:'Porcelanosa',price:620,ref:'POR-CEM-70',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'70cm',Acabado:'Gris cemento',Cajones:'2',Material:'MDF',Lavabo:'Incluido'}},
+    {name:'Lavabo Sobre Encimera Ovalin',brand:'Roca',price:145,ref:'ROC-OVA-ENC',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Sobre encimera',Forma:'Oval',Material:'Vitreous China',Color:'Blanco',Medidas:'50×40cm'}},
+    {name:'Mueble Columna Baño 40cm',brand:'Roca',price:210,ref:'ROC-COL-40',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Columna',Anchura:'40cm',Acabado:'Blanco',Puertas:'2',Balda:'1',Material:'MDF'}},
+    {name:'Conjunto 80cm Negro Mate con LED',brand:'Villeroy & Boch',price:940,ref:'VIL-BLK-80L',outlet:true,priceOld:1180,badge:'Outlet',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido con LED',Anchura:'80cm',Acabado:'Negro mate',Cajones:'2',Espejo:'LED incluido',Lavabo:'Incluido'}},
+    {name:'Lavabo Empotrado Rectangular',brand:'Duravit',price:180,ref:'DUR-EMP-REC',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Empotrado',Forma:'Rectangular',Material:'Cerámico',Color:'Blanco',Medidas:'55×38cm'}},
+    {name:'Mueble Suspendido 60cm Roble Oscuro',brand:'Roca',price:480,ref:'ROC-ROBJ-60',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'60cm',Acabado:'Roble oscuro',Cajones:'2',Material:'MDF chapado',Lavabo:'Incluido'}},
+    {name:'Espejo Retroiluminado 80×60',brand:'Porcelanosa',price:280,ref:'POR-RET-8060',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Espejo LED',Medidas:'80×60cm',Antivaho:'Sí',Táctil:'No',Temperatura:'Fría'}},
+    {name:'Mueble Fondo Reducido 50cm',brand:'Roca',price:360,ref:'ROC-FRD-50',badge:'Novedad',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido fondo reducido',Anchura:'50cm',Fondo:'35cm',Acabado:'Blanco mate',Cajones:'2',Lavabo:'Incluido'}},
+    {name:'Conjunto Mueble 80cm Roble',brand:'Duravit',price:820,ref:'DUR-ROB-80',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'80cm',Acabado:'Roble gris',Cajones:'2',Espejo:'Incluido',Lavabo:'Incluido'}},
+    {name:'Lavabo Pedestal Victoria',brand:'Roca',price:165,outlet:true,priceOld:220,badge:'Outlet',ref:'ROC-PED-VIC',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Con pedestal',Material:'Vitreous China',Color:'Blanco',Medidas:'56×44cm',Pedestal:'Incluido'}},
+    {name:'Mueble Suspendido 100cm Gris',brand:'Porcelanosa',price:720,ref:'POR-GRI-100',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'100cm',Acabado:'Gris',Cajones:'3',Material:'MDF',Lavabo:'Incluido'}},
+    {name:'Botiquín con Espejo 60cm',brand:'Roca',price:195,ref:'ROC-BOT-60',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Botiquín',Anchura:'60cm',Acabado:'Blanco',Baldas:'3',Espejo:'Frontal'}},
+    {name:'Lavabo Mineral Cast Irregular',brand:'Villeroy & Boch',price:490,ref:'VIL-MIN-IRR',badge:'Premium',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Sobre encimera',Material:'Mineral Cast',Color:'Blanco',Forma:'Irregular',Medidas:'60×36cm'}},
+    {name:'Mueble 60cm Blanco Brillo',brand:'Roca',price:350,ref:'ROC-BRI-60',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'60cm',Acabado:'Blanco brillo',Cajones:'2',Material:'MDF lacado',Lavabo:'Incluido'}},
+    {name:'Espejo Táctil Ovalado 80cm',brand:'Duravit',price:380,ref:'DUR-OVA-ESP',badge:'Novedad',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Espejo LED ovalado',Diámetro:'80cm',Antivaho:'Sí',Táctil:'Sí',Temperatura:'Ajustable'}},
+    {name:'Mueble A Suelo 80cm Blanco',brand:'Roca',price:320,outlet:true,priceOld:410,badge:'Outlet',ref:'ROC-ASU-80',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'A suelo',Anchura:'80cm',Acabado:'Blanco',Puertas:'2',Cajones:'1',Material:'MDF'}},
+    {name:'Conjunto 60cm Nogal con LED',brand:'Duravit',price:690,ref:'DUR-NOL-60',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'60cm',Acabado:'Nogal mate',Cajones:'2',Espejo:'LED incluido',Lavabo:'Incluido'}},
+    {name:'Lavabo Integrado en Encimera',brand:'Porcelanosa',price:310,ref:'POR-INT-ENC',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Integrado',Material:'Solid Surface',Color:'Blanco mate',Medidas:'60×45cm',Fondo:'Unificado'}},
+    {name:'Mueble Suspendido 90cm Marengo',brand:'Roca',price:560,ref:'ROC-MAR-90',img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=500&q=80',specs:{Tipo:'Suspendido',Anchura:'90cm',Acabado:'Gris marengo',Cajones:'3',Material:'MDF lacado',Lavabo:'Incluido'}},
+  ];
+
+  // ── ACCESORIOS (25) ──
+  const acData = [
+    {name:'Toallero Calefactor Eléctrico 45W',brand:'Reznor',price:185,ref:'REZ-TOA-45W',badge:'Top ventas',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Toallero eléctrico',Potencia:'45W',Acabado:'Cromo',Medidas:'60×40cm',Garantía:'3 años'}},
+    {name:'Set Accesorios 5 Piezas Cromo',brand:'Grohe',price:145,ref:'GRO-SET-5PC',badge:'Más vendido',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Piezas:'5',Incluye:'Portarrollos, toallero, jabonera, portacepillos, gancho',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Jabonera Pared Acero Inox',brand:'Grohe',price:38,ref:'GRO-JAB-ACE',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Jabonera de pared',Material:'Acero inox',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Portarollos con Tapa Negro Mate',brand:'Hansgrohe',price:45,ref:'HAN-PRT-BLK',badge:'Novedad',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Portarollos con tapa',Acabado:'Negro mate',Garantía:'2 años'}},
+    {name:'Toallero de Aro 50cm Cromo',brand:'Grohe',price:62,ref:'GRO-ARO-50',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Toallero aro',Longitud:'50cm',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Escobillero Inox de Suelo',brand:'Grohe',price:55,ref:'GRO-ESC-SUE',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Escobillero libre',Material:'Acero inox',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Bandeja Ducha Aluminio Antidesliz',brand:'Roca',price:85,ref:'ROC-BAN-DUC',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Bandeja ducha',Material:'Aluminio',Acabado:'Negro mate',Medidas:'90cm',Garantía:'2 años'}},
+    {name:'Portacepillos Pared 2 Posic.',brand:'Hansgrohe',price:42,ref:'HAN-PCE-PAR',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Portacepillos pared',Posiciones:'2',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Dispensador Jabón 350ml Cromo',brand:'Grohe',price:55,ref:'GRO-DIS-350',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Dispensador pared',Capacidad:'350ml',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Toallero Calefactor Hidráulico',brand:'Reznor',price:320,ref:'REZ-HID-TOA',badge:'Premium',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Calefactor hidráulico',Potencia:'900W',Acabado:'Blanco',Medidas:'120×40cm',Garantía:'5 años'}},
+    {name:'Set Accesorios 5P Negro Mate',brand:'Hansgrohe',price:195,ref:'HAN-SET-BLK',badge:'Novedad',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Piezas:'5',Acabado:'Negro mate',Garantía:'2 años'}},
+    {name:'Estante Baño Pared 40cm',brand:'Roca',price:48,ref:'ROC-EST-40',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Estante',Anchura:'40cm',Material:'Acero inox',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Hornacina Empotrada 60×30cm',brand:'Roca',price:95,ref:'ROC-HOR-6030',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Hornacina',Medidas:'60×30cm',Material:'Acero inox',Acabado:'Cromo'}},
+    {name:'Portarrollos Doble con Repuesto',brand:'Grohe',price:68,ref:'GRO-DBL-PRT',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Portarrollos doble',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Barra Abatible Ducha 85cm',brand:'Grohe',price:120,ref:'GRO-ABA-85',badge:'Accesib.',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Barra abatible',Longitud:'85cm',Material:'Acero',Acabado:'Cromo',Capacidad:'130kg',Garantía:'5 años'}},
+    {name:'Secador de Manos 1000W',brand:'Reznor',price:145,outlet:true,priceOld:185,badge:'Outlet',ref:'REZ-SEC-1KW',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Potencia:'1000W',Tiempo:'10s',Acabado:'Blanco',Garantía:'2 años'}},
+    {name:'Toallero Barra Doble 60cm',brand:'Hansgrohe',price:78,ref:'HAN-DBL-TOA',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Toallero doble',Longitud:'60cm',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Dispensador Gel Ducha Cromo',brand:'Grohe',price:65,ref:'GRO-GEL-DUC',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Dispensador encastrado',Capacidad:'500ml',Acabado:'Cromo',Garantía:'2 años'}},
+    {name:'Gancho Triple Multifunción',brand:'Hansgrohe',price:32,ref:'HAN-TRI-GAN',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Gancho triple',Acabado:'Cromo',Ganchos:'3',Garantía:'1 año'}},
+    {name:'Mampara Biombo Cortina Textil',brand:'Roca',price:55,ref:'ROC-COR-TEX',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Cortina baño',Material:'PEVA',Medidas:'180×180cm',Tratamiento:'Antifúngico'}},
+    {name:'Cesta Ducha Inox Angular',brand:'Grohe',price:48,ref:'GRO-CES-ANG',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Cesta angular',Material:'Acero inox',Acabado:'Cromo',Niveles:'2',Garantía:'2 años'}},
+    {name:'Soporte Papel Higiénico Roca',brand:'Roca',price:28,outlet:true,priceOld:38,badge:'Outlet',ref:'ROC-PEL-SOP',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Portarrollos',Acabado:'Cromo',Garantía:'1 año'}},
+    {name:'Accesorio Ducha Ayuda',brand:'Grohe',price:38,ref:'GRO-AYU-DUC',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Asidero',Material:'Aluminio',Acabado:'Cromo',Capacidad:'120kg'}},
+    {name:'Set Accesorios Dorado 5P',brand:'Hansgrohe',price:280,ref:'HAN-GLD-5PC',badge:'Premium',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Piezas:'5',Acabado:'Dorado mate',Garantía:'2 años'}},
+    {name:'Barra Ducha con Cesta',brand:'Grohe',price:90,ref:'GRO-BAR-CES',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=500&q=80',specs:{Tipo:'Barra ducha+cesta',Longitud:'70cm',Acabado:'Cromo',Garantía:'2 años'}},
+  ];
+
+  // ── AZULEJOS INTERIOR (25) ── m2:true
+  const azData = [
+    {name:'Porcelánico Mármol Calacatta 60×120',brand:'Porcelanosa',price:42.9,ref:'AZI-CAL-6012',badge:'Top ventas',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'60×120cm',Material:'Gres porcelánico',Acabado:'Pulido',Rectificado:'Sí',Uso:'Pared/Suelo',Clase:'PEI 4'},m2:true},
+    {name:'Azulejo Blanco Brillo 20×60',brand:'Porcelanosa',price:18.5,ref:'AZI-BLA-2060',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'20×60cm',Material:'Cerámica',Acabado:'Brillante',Rectificado:'No',Uso:'Pared'},m2:true},
+    {name:'Pavimento Imitación Madera 20×120',brand:'Porcelanosa',price:28.5,ref:'AZI-MAD-2012',badge:'Más vendido',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'20×120cm',Material:'Gres porcelánico',Acabado:'Mate',Uso:'Suelo',Clase:'PEI 4'},m2:true},
+    {name:'Porcelánico Cemento Gris 60×60',brand:'Porcelanosa',price:24.9,ref:'AZI-CEM-6060',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres porcelánico',Acabado:'Mate',Rectificado:'Sí',Uso:'Suelo/Pared',Clase:'PEI 5'},m2:true},
+    {name:'Revestimiento Hexagonal Mármol',brand:'Villeroy & Boch',price:55,ref:'AZI-HEX-MAR',badge:'Tendencia',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'Hexagonal 29cm',Material:'Gres',Acabado:'Mate',Rectificado:'Sí',Uso:'Pared/Suelo'},m2:true},
+    {name:'Azulejo Metro Blanco 7.5×15',brand:'Porcelanosa',price:15.9,ref:'AZI-MET-WH',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'7.5×15cm (metro)',Material:'Cerámica',Acabado:'Brillante',Uso:'Pared'},m2:true},
+    {name:'Porcelánico Gran Formato 120×260',brand:'Porcelanosa',price:68,ref:'AZI-GRF-12026',badge:'Premium',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'120×260cm',Material:'Gres porcelánico',Acabado:'Satinado',Uso:'Pared/Suelo',Espesor:'6mm'},m2:true},
+    {name:'Azulejo Piedra Caliza 45×90',brand:'Villeroy & Boch',price:36.9,ref:'AZI-PIE-4590',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'45×90cm',Material:'Gres porcelánico',Acabado:'Natural',Rectificado:'Sí',Uso:'Pared/Suelo'},m2:true},
+    {name:'Porcelánico Efecto Beton 60×60',brand:'Porcelanosa',price:26.5,ref:'AZI-BET-6060',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres',Acabado:'Mate',Rectificado:'Sí',Uso:'Suelo interior'},m2:true},
+    {name:'Azulejo Microcemento 30×60',brand:'Porcelanosa',price:32,ref:'AZI-MIC-3060',outlet:true,priceOld:42,badge:'Outlet',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'30×60cm',Material:'Gres',Acabado:'Mate',Uso:'Pared/Suelo'},m2:true},
+    {name:'Porcelánico Mármol Negro 60×120',brand:'Villeroy & Boch',price:48.5,ref:'AZI-NEG-6012',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'60×120cm',Material:'Gres porcelánico',Acabado:'Pulido',Rectificado:'Sí',Uso:'Pared/Suelo'},m2:true},
+    {name:'Azulejo Artesanal Hidráulico 20×20',brand:'Porcelanosa',price:38,ref:'AZI-HID-2020',badge:'Artesanal',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'20×20cm',Material:'Cerámica',Acabado:'Mate decorado',Uso:'Pared'},m2:true},
+    {name:'Porcelánico Antracita 60×60',brand:'Porcelanosa',price:22.9,ref:'AZI-ANT-6060',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'60×60cm',Acabado:'Mate',Material:'Gres porcelánico',Rectificado:'Sí',Uso:'Suelo/Pared'},m2:true},
+    {name:'Revestimiento Relieve 3D 30×60',brand:'Villeroy & Boch',price:44,ref:'AZI-3D-3060',badge:'Tendencia',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'30×60cm',Material:'Gres',Acabado:'Mate relieve',Uso:'Pared'},m2:true},
+    {name:'Porcelánico Roble 22×90',brand:'Porcelanosa',price:30.5,ref:'AZI-ROB-2290',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'22×90cm',Material:'Gres',Acabado:'Natural',Uso:'Suelo interior',Clase:'PEI 4'},m2:true},
+    {name:'Azulejo Blanco Mate 30×90',brand:'Porcelanosa',price:21.5,ref:'AZI-WMT-3090',outlet:true,priceOld:28,badge:'Outlet',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'30×90cm',Material:'Cerámica',Acabado:'Mate',Uso:'Pared interior'},m2:true},
+    {name:'Porcelánico Tundra 30×60',brand:'Villeroy & Boch',price:29.9,ref:'AZI-TUN-3060',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'30×60cm',Material:'Gres',Acabado:'Mate natural',Uso:'Suelo/Pared'},m2:true},
+    {name:'Revestimiento Microcemento Crema',brand:'Porcelanosa',price:34.5,ref:'AZI-CRE-MIC',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres',Acabado:'Mate',Uso:'Pared/Suelo'},m2:true},
+    {name:'Porcelánico Serpeggiante Beige',brand:'Villeroy & Boch',price:39.9,ref:'AZI-SER-BEI',badge:'Tendencia',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'60×120cm',Material:'Gres',Acabado:'Satinado',Uso:'Pared/Suelo'},m2:true},
+    {name:'Azulejo Brick Beige 6×24',brand:'Porcelanosa',price:16.9,ref:'AZI-BRK-BEI',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'6×24cm (brick)',Material:'Cerámica',Acabado:'Mate',Uso:'Pared interior'},m2:true},
+    {name:'Porcelánico Rectificado 90×90',brand:'Porcelanosa',price:38.5,ref:'AZI-REC-9090',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'90×90cm',Material:'Gres porcelánico',Acabado:'Mate',Rectificado:'Sí',Uso:'Suelo interior'},m2:true},
+    {name:'Azulejo Zellige Artesanal',brand:'Villeroy & Boch',price:52,ref:'AZI-ZEL-ART',badge:'Premium',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'10×10cm',Material:'Cerámica artesanal',Acabado:'Vidriado irregular',Uso:'Pared'},m2:true},
+    {name:'Porcelánico Pizarra Negra 30×60',brand:'Porcelanosa',price:25.9,outlet:true,priceOld:34,badge:'Outlet',ref:'AZI-PIZ-3060',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'30×60cm',Material:'Gres',Acabado:'Mate natural',Uso:'Pared/Suelo'},m2:true},
+    {name:'Revestimiento Bambú Relieve',brand:'Villeroy & Boch',price:46,ref:'AZI-BAM-REL',badge:'Tendencia',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'25×75cm',Material:'Gres',Acabado:'Relieve natural',Uso:'Pared'},m2:true},
+    {name:'Porcelánico Blanco Liso 30×60',brand:'Porcelanosa',price:14.9,ref:'AZI-WHT-3060',img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=500&q=80',specs:{Formato:'30×60cm',Material:'Gres porcelánico',Acabado:'Mate',Uso:'Pared/Suelo'},m2:true},
+  ];
+
+  // ── PAVIMENTOS EXTERIOR (25) ── m2:true
+  const extData = [
+    {name:'Porcelánico Exterior Piedra Gris 60×60',brand:'Porcelanosa',price:24.9,ref:'EXT-PIE-6060',badge:'Top ventas',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres porcelánico',Acabado:'Antideslizante R11',Resistencia:'Heladas',Uso:'Exterior',Clase:'PEI 5'},m2:true},
+    {name:'Pavimento Exterior Beige 30×30',brand:'Villeroy & Boch',price:16.9,ref:'EXT-BEI-3030',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'30×30cm',Material:'Gres',Acabado:'R11',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Porcelánico Madera Exterior 20×120',brand:'Porcelanosa',price:32.5,ref:'EXT-MAD-2012',badge:'Más vendido',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'20×120cm',Material:'Gres porcelánico',Acabado:'Antideslizante R11',Resistencia:'Heladas',Uso:'Exterior/Piscina'},m2:true},
+    {name:'Pavimento Terracota 30×30',brand:'Porcelanosa',price:19.5,ref:'EXT-TER-3030',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'30×30cm',Material:'Gres',Acabado:'Natural',Uso:'Exterior',Clase:'PEI 5'},m2:true},
+    {name:'Porcelánico Pizarra Negro 60×60',brand:'Villeroy & Boch',price:28.9,ref:'EXT-PIZ-6060',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres porcelánico',Acabado:'R11',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Pavimento Pool Antideslizante Blanco',brand:'Porcelanosa',price:21.5,ref:'EXT-POL-WH',badge:'Piscinas',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'30×30cm',Material:'Gres',Acabado:'R12 piscinas',Resistencia:'Cloro',Uso:'Piscinas/Bordes'},m2:true},
+    {name:'Porcelánico Cemento Exterior 60×60',brand:'Porcelanosa',price:26.9,ref:'EXT-CEM-6060',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres porcelánico',Acabado:'R11',Resistencia:'Heladas',Uso:'Terraza'},m2:true},
+    {name:'Pavimento Corten Oxidado 30×60',brand:'Villeroy & Boch',price:34.5,ref:'EXT-COR-3060',badge:'Tendencia',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'30×60cm',Material:'Gres',Acabado:'Natural oxidado',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Porcelánico Slate Effect 45×90',brand:'Porcelanosa',price:38.9,ref:'EXT-SLA-4590',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'45×90cm',Material:'Gres porcelánico',Acabado:'Natural',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Pavimento Granito Gris 40×40',brand:'Porcelanosa',price:22.5,outlet:true,priceOld:30,badge:'Outlet',ref:'EXT-GRA-4040',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'40×40cm',Material:'Gres',Acabado:'R11',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Porcelánico Roble Exterior 20×120',brand:'Villeroy & Boch',price:35.5,ref:'EXT-ROB-2012',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'20×120cm',Material:'Gres porcelánico',Acabado:'R11',Resistencia:'Heladas',Uso:'Exterior/Terraza'},m2:true},
+    {name:'Pavimento Jardín Beige 60×60',brand:'Porcelanosa',price:23.9,ref:'EXT-JAR-6060',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres',Acabado:'Antideslizante',Resistencia:'Heladas',Uso:'Jardín'},m2:true},
+    {name:'Gres Rústico Exterior 30×30',brand:'Porcelanosa',price:17.9,ref:'EXT-RUS-3030',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'30×30cm',Material:'Gres rústico',Acabado:'Natural',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Pavimento Pool Azul Cobalto',brand:'Villeroy & Boch',price:29.5,ref:'EXT-POL-BL',badge:'Piscinas',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'25×25cm',Material:'Gres',Acabado:'R12 piscinas',Resistencia:'Cloro UV',Uso:'Piscinas'},m2:true},
+    {name:'Porcelánico Exterior Antracita 60×60',brand:'Porcelanosa',price:27.5,ref:'EXT-ANT-6060',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres porcelánico',Acabado:'R11',Resistencia:'Heladas',Uso:'Terraza'},m2:true},
+    {name:'Gres Porcelánico In&Out 60×60',brand:'Porcelanosa',price:25.9,ref:'EXT-INN-6060',badge:'Coordinado',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres porcelánico',Acabado:'R11',Colección:'In&Out',Uso:'Interior y Exterior'},m2:true},
+    {name:'Pavimento Caliza Crema 45×45',brand:'Villeroy & Boch',price:31.5,outlet:true,priceOld:42,badge:'Outlet',ref:'EXT-CAL-4545',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'45×45cm',Material:'Gres',Acabado:'Natural',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Gres Exterior Cuarcita 30×60',brand:'Porcelanosa',price:29.9,ref:'EXT-CUA-3060',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'30×60cm',Material:'Gres',Acabado:'Natural piedra',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Pavimento Baldosa Hidráulica Ext.',brand:'Villeroy & Boch',price:42,ref:'EXT-HID-EXT',badge:'Tendencia',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'20×20cm',Material:'Gres',Acabado:'Hidráulico antideslizante',Uso:'Exterior'},m2:true},
+    {name:'Porcelánico Exterior Blanco 30×60',brand:'Porcelanosa',price:20.5,ref:'EXT-WH-3060',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'30×60cm',Material:'Gres porcelánico',Acabado:'R11',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Gres Pool Mosaico Azul',brand:'Porcelanosa',price:38.5,ref:'EXT-MOS-BL',badge:'Piscinas',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'5×5cm mosaico',Material:'Gres',Acabado:'R12',Resistencia:'Cloro',Uso:'Piscinas/Interiores'},m2:true},
+    {name:'Pavimento Exterior Grafito 40×80',brand:'Villeroy & Boch',price:32.9,ref:'EXT-GRF-4080',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'40×80cm',Material:'Gres porcelánico',Acabado:'R11',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+    {name:'Gres Exterior Teca Marrón 20×120',brand:'Porcelanosa',price:36.5,outlet:true,priceOld:48,badge:'Outlet',ref:'EXT-TEC-2012',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'20×120cm',Material:'Gres',Acabado:'Natural antidesliz.',Resistencia:'Heladas',Uso:'Terraza/Exterior'},m2:true},
+    {name:'Pavimento Drenante 40×40',brand:'Porcelanosa',price:19.9,ref:'EXT-DRE-4040',badge:'Jardín',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'40×40cm',Material:'Gres drenante',Uso:'Jardín/Exterior',Resistencia:'Heladas'},m2:true},
+    {name:'Porcelánico Exterior Óxido 60×60',brand:'Villeroy & Boch',price:26.5,ref:'EXT-OXI-6060',img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=500&q=80',specs:{Formato:'60×60cm',Material:'Gres porcelánico',Acabado:'R11 oxidado',Resistencia:'Heladas',Uso:'Exterior'},m2:true},
+  ];
+
+  // Build outlet (mix from above)
+  const outletSrc = [...sanData,...mamData,...grData,...muData,...acData,...azData,...extData].filter(p=>p.outlet);
+
+  const buildCat = (data, cat) => data.map((p,i) => ({...p, id: id++, category: cat, unit: CATS[cat]?.m2 ? 'm²' : 'ud.'}));
+
+  return [
+    ...buildCat(sanData, 'Sanitarios'),
+    ...buildCat(mamData, 'Mamparas'),
+    ...buildCat(grData, 'Grifería'),
+    ...buildCat(muData, 'Muebles de baño'),
+    ...buildCat(acData, 'Accesorios de baño'),
+    ...buildCat(azData, 'Azulejos Interior'),
+    ...buildCat(extData, 'Pavimentos Exterior'),
+    ...outletSrc.map(p => ({...p, id: id++, category: 'Outlet', unit: CATS[p.category]?.m2 ? 'm²' : 'ud.', badge:'Outlet', outlet:true})),
+  ];
+}
+
+const PRODUCTS = genProducts();
+
+// ══════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════
+let cart = [];
+let activeCat = 'Sanitarios';
+let filteredProds = [];
+let currentCat = 'Sanitarios';
+let orders = [];
+let slideIdx = 0;
+
+// ══════════════════════════════════════════════════
+// ROUTER
+// ══════════════════════════════════════════════════
+function goTo(page, param) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#mainnav button').forEach(b => b.classList.remove('active'));
+  const pg = document.getElementById('page-' + page);
+  if (pg) pg.classList.add('active');
+  const nb = document.getElementById('nav-' + page);
+  if (nb) nb.classList.add('active');
+  document.getElementById('main-footer').style.display = page === 'admin' ? 'none' : 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  closeCart();
+
+  if (page === 'home') renderHomeProds();
+  if (page === 'catalog') { activeCat = param || activeCat; renderCatalog(); }
+  if (page === 'product' && param) renderProduct(param);
+  if (page === 'checkout') renderCheckout();
+  if (page === 'admin') renderAdmin();
+}
+
+// ══════════════════════════════════════════════════
+// HERO SLIDER
+// ══════════════════════════════════════════════════
+function setSlide(i) {
+  document.querySelectorAll('.hero-bg').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.hero-dot').forEach(d=>d.classList.remove('active'));
+  const bgs = document.querySelectorAll('.hero-bg');
+  const dots = document.querySelectorAll('.hero-dot');
+  if (bgs[i]) bgs[i].classList.add('active');
+  if (dots[i]) dots[i].classList.add('active');
+  slideIdx = i;
+}
+setInterval(() => setSlide((slideIdx + 1) % 3), 5000);
+
+// ══════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════
+function prodCardHTML(p) {
+  const priceStr = p.price.toFixed(2).replace('.',',') + ' €';
+  const badgeCls = p.badge === 'Outlet' ? 'badge-outlet' : p.badge === 'Premium' ? 'badge-top' : 'badge-new';
+  return `
+    <div class="prod-card" onclick="goTo('product',${p.id})">
+      <div class="prod-img">
+        <div class="prod-img-inner" style="background-image:url('${p.img}')"></div>
+        ${p.badge ? `<div class="prod-badge ${badgeCls}">${p.badge}</div>` : ''}
+        <button class="prod-quick" onclick="event.stopPropagation();addToCart(${p.id})" title="Añadir">🛒</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">${p.category}</div>
+        <div class="prod-name">${p.name}</div>
+        <div class="prod-brand">${p.brand}</div>
+        <div class="prod-footer">
+          <div>
+            <span class="prod-price">${priceStr}</span>
+            <span class="prod-price-unit">/${p.unit}</span>
+            ${p.priceOld ? `<span class="prod-price-old">${p.priceOld.toFixed(2).replace('.',',')}€</span>` : ''}
+          </div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart(${p.id})">Añadir</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderHomeProds() {
+  const featured = PRODUCTS.filter(p => p.badge && p.category !== 'Outlet').slice(0,8);
+  document.getElementById('home-prods').innerHTML = featured.map(prodCardHTML).join('');
+}
+
+function renderCatalog() {
+  const catInfo = CATS[activeCat] || {};
+  document.getElementById('cat-page-title').textContent = activeCat;
+  document.getElementById('cat-page-sub').textContent = catInfo.desc || '';
+
+  // Build category filters
+  const catList = document.getElementById('cat-filter-list');
+  catList.innerHTML = Object.keys(CATS).map(c => `
+    <div class="filter-opt">
+      <input type="checkbox" id="cf-${c.replace(/\s/g,'')}" value="${c}" onchange="catFilterChange()" ${c===activeCat?'checked':''}>
+      <label for="cf-${c.replace(/\s/g,'')}">${c}</label>
+      <span class="cnt">(${PRODUCTS.filter(p=>p.category===c).length})</span>
+    </div>`).join('');
+
+  // Build brand filters
+  const brands = [...new Set(PRODUCTS.filter(p=>p.category===activeCat).map(p=>p.brand))];
+  document.getElementById('brand-filter-list').innerHTML = brands.map(b => `
+    <div class="filter-opt">
+      <input type="checkbox" id="bf-${b.replace(/\s/g,'')}" value="${b}" onchange="applyFilters()">
+      <label for="bf-${b.replace(/\s/g,'')}">${b}</label>
+      <span class="cnt">(${PRODUCTS.filter(p=>p.brand===b&&p.category===activeCat).length})</span>
+    </div>`).join('');
+
+  // Color filters
+  document.getElementById('color-filter-list').innerHTML = COLORS.map(c => `
+    <div class="color-dot" style="background:${c.hex};${c.border?'border-color:'+c.border:''}" title="${c.name}" onclick="this.classList.toggle('active');applyFilters()"></div>`).join('');
+
+  applyFilters();
+}
+
+function catFilterChange() {
+  const checked = [...document.querySelectorAll('#cat-filter-list input:checked')].map(i=>i.value);
+  if (checked.length) activeCat = checked[checked.length - 1];
+  renderCatalog();
+}
+
+function applyFilters() {
+  const checkedCats = [...document.querySelectorAll('#cat-filter-list input:checked')].map(i=>i.value);
+  const checkedBrands = [...document.querySelectorAll('#brand-filter-list input:checked')].map(i=>i.value);
+  const fp1 = document.getElementById('fp1')?.checked;
+  const fp2 = document.getElementById('fp2')?.checked;
+  const fp3 = document.getElementById('fp3')?.checked;
+  const fp4 = document.getElementById('fp4')?.checked;
+  const foutlet = document.getElementById('foutlet')?.checked;
+
+  filteredProds = PRODUCTS.filter(p => {
+    const cats = checkedCats.length ? checkedCats : [activeCat];
+    if (!cats.includes(p.category)) return false;
+    if (checkedBrands.length && !checkedBrands.includes(p.brand)) return false;
+    if (foutlet && !p.outlet) return false;
+    const hasPrice = fp1||fp2||fp3||fp4;
+    if (hasPrice) {
+      if (fp1 && p.price <= 100) return true;
+      if (fp2 && p.price > 100 && p.price <= 300) return true;
+      if (fp3 && p.price > 300 && p.price <= 600) return true;
+      if (fp4 && p.price > 600) return true;
+      return !hasPrice;
+    }
+    return true;
+  });
+
+  document.getElementById('prod-count').textContent = filteredProds.length;
+  document.getElementById('catalog-prods').innerHTML = filteredProds.length
+    ? filteredProds.map(prodCardHTML).join('')
+    : '<p style="color:var(--gris-medio);padding:20px 0">No hay productos con los filtros seleccionados.</p>';
+}
+
+function clearFilters() {
+  document.querySelectorAll('.filters input[type=checkbox]').forEach(i=>i.checked=false);
+  document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active'));
+  renderCatalog();
+}
+
+function sortProds(val) {
+  let sorted = [...filteredProds];
+  if (val==='price-asc') sorted.sort((a,b)=>a.price-b.price);
+  else if (val==='price-desc') sorted.sort((a,b)=>b.price-a.price);
+  else if (val==='name') sorted.sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById('catalog-prods').innerHTML = sorted.map(prodCardHTML).join('');
+}
+
+// ── PRODUCT DETAIL ──
+function renderProduct(id) {
+  const p = PRODUCTS.find(x=>x.id===id);
+  if (!p) return;
+  currentCat = p.category;
+  document.getElementById('d-cat-crumb').textContent = p.category;
+  document.getElementById('d-name').textContent = p.name;
+  document.getElementById('d-brand').textContent = p.brand;
+  document.getElementById('d-ref').textContent = 'REF: ' + p.ref;
+  document.getElementById('d-price').textContent = p.price.toFixed(2).replace('.',',') + ' €';
+  document.getElementById('d-price-note').textContent = `por ${p.unit} · IVA incluido`;
+  document.getElementById('d-main-img').style.backgroundImage = `url('${p.img}')`;
+  document.getElementById('qty-label').textContent = `Cantidad (${p.unit})`;
+  document.getElementById('d-qty').value = 1;
+
+  const specs = document.getElementById('d-specs');
+  specs.innerHTML = Object.entries(p.specs||{}).map(([k,v])=>`<div class="d-spec"><div class="d-spec-key">${k}</div><div class="d-spec-val">${v}</div></div>`).join('');
+
+  const thumbs = document.getElementById('d-thumbs');
+  thumbs.innerHTML = [p.img].map((img,i)=>`<div class="d-thumb active" style="background-image:url('${img}')"></div>`).join('');
+
+  document.getElementById('d-add-btn').onclick = () => {
+    const qty = parseInt(document.getElementById('d-qty').value)||1;
+    addToCart(p.id, qty);
+  };
+}
+
+function changeQty(d) {
+  const inp = document.getElementById('d-qty');
+  inp.value = Math.max(1, (parseInt(inp.value)||1)+d);
+}
+
+// ── SEARCH ──
+function handleSearch(q) {
+  if (!q.trim()) return;
+}
+
+// ══════════════════════════════════════════════════
+// CART
+// ══════════════════════════════════════════════════
+function addToCart(pid, qty=1) {
+  const p = PRODUCTS.find(x=>x.id===pid);
+  if (!p) return;
+  const ex = cart.find(i=>i.id===pid);
+  if (ex) ex.qty += qty;
+  else cart.push({id:pid, name:p.name, price:p.price, unit:p.unit, img:p.img, category:p.category, qty});
+  updateCartUI();
+  showToast(`✓ ${p.name} añadido al pedido`);
+}
+
+function removeFromCart(pid) {
+  cart = cart.filter(i=>i.id!==pid);
+  updateCartUI(); renderCartBody();
+}
+
+function changeCartQty(pid, d) {
+  const item = cart.find(i=>i.id===pid);
+  if (item) item.qty = Math.max(1, item.qty+d);
+  updateCartUI(); renderCartBody();
+}
+
+function cartTotal() { return cart.reduce((s,i)=>s+i.price*i.qty, 0); }
+
+function updateCartUI() {
+  const n = cart.reduce((s,i)=>s+i.qty, 0);
+  const badge = document.getElementById('cart-badge');
+  badge.textContent = n;
+  n > 0 ? badge.classList.add('show') : badge.classList.remove('show');
+  renderCartBody();
+}
+
+function renderCartBody() {
+  const body = document.getElementById('cart-body');
+  const footer = document.getElementById('cart-footer');
+  if (!cart.length) {
+    body.innerHTML = `<div class="cart-empty"><div class="cart-empty-ico">🛒</div><p>Tu carrito está vacío</p></div>`;
+    footer.style.display = 'none';
+    return;
+  }
+  body.innerHTML = cart.map(i=>`
+    <div class="cart-item-d">
+      <div class="ci-img" style="background-image:url('${i.img}')"></div>
+      <div class="ci-info">
+        <div class="ci-name">${i.name}</div>
+        <div class="ci-cat">${i.category}</div>
+        <div class="ci-controls">
+          <button class="ci-qb" onclick="changeCartQty(${i.id},-1)">−</button>
+          <span class="ci-qty">${i.qty}</span>
+          <button class="ci-qb" onclick="changeCartQty(${i.id},1)">+</button>
+          <span class="ci-unit">${i.unit}</span>
+          <button class="ci-rm" onclick="removeFromCart(${i.id})">✕</button>
+        </div>
+      </div>
+      <div class="ci-price">${(i.price*i.qty).toFixed(2).replace('.',',')}€</div>
+    </div>`).join('');
+  document.getElementById('cart-total-val').textContent = cartTotal().toFixed(2).replace('.',',') + ' €';
+  footer.style.display = 'block';
+}
+
+function openCart() { document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').classList.add('open'); }
+function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').classList.remove('open'); }
+
+// ══════════════════════════════════════════════════
+// CHECKOUT
+// ══════════════════════════════════════════════════
+function renderCheckout() {
+  const el = document.getElementById('co-items');
+  const sl = document.getElementById('os-lines');
+  const tot = document.getElementById('os-total');
+  if (!cart.length) { el.innerHTML='<p style="color:var(--gris-medio)">Tu carrito está vacío.</p>'; sl.innerHTML=''; tot.textContent='0,00 €'; return; }
+  el.innerHTML = cart.map(i=>`
+    <div class="cart-item-d" style="border-bottom:1px solid var(--gris-claro);padding:12px 0">
+      <div class="ci-img" style="background-image:url('${i.img}');width:72px;height:72px;border-radius:4px;background-size:cover;flex-shrink:0;border:1px solid var(--gris-claro)"></div>
+      <div class="ci-info"><div class="ci-name">${i.name}</div><div class="ci-cat">${i.category} · ${i.qty} ${i.unit}</div></div>
+      <div class="ci-price">${(i.price*i.qty).toFixed(2).replace('.',',')} €</div>
+    </div>`).join('');
+  sl.innerHTML = cart.map(i=>`<div class="os-line"><span>${i.name} ×${i.qty}</span><strong>${(i.price*i.qty).toFixed(2).replace('.',',')} €</strong></div>`).join('');
+  tot.textContent = cartTotal().toFixed(2).replace('.',',') + ' €';
+}
+
+function submitOrder() {
+  const name = document.getElementById('co-name').value.trim();
+  const email = document.getElementById('co-email').value.trim();
+  const phone = document.getElementById('co-phone').value.trim();
+  const store = document.getElementById('co-store').value;
+  const payment = document.querySelector('input[name=pay]:checked')?.value;
+  const notes = document.getElementById('co-notes').value;
+  if (!name||!email||!phone||!store) { showToast('Rellena todos los campos obligatorios.'); return; }
+  if (!cart.length) { showToast('Tu carrito está vacío.'); return; }
+  const oid = '#LE-' + String(Math.floor(Math.random()*9000)+1000);
+  const order = {id:oid, name, email, phone, store, payment, notes, items:[...cart], total:cartTotal(), status:'new', date:new Date().toLocaleString('es-ES')};
+  orders.push(order);
+  cart = []; updateCartUI();
+  document.getElementById('co-order-id').textContent = oid;
+  document.getElementById('co-details').innerHTML = `<b>Cliente:</b> ${name}<br><b>Email:</b> ${email}<br><b>Teléfono:</b> ${phone}<br><b>Tienda:</b> ${store}<br><b>Pago:</b> ${payment==='store'?'En tienda':'Online'}<br><b>Total:</b> ${order.total.toFixed(2).replace('.',',')} €`;
+  goTo('confirm');
+}
+
+// ══════════════════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════════════════
+function showAdmin(sec, el) {
+  ['dashboard','orders','prods'].forEach(s => { const e=document.getElementById('admin-'+s); if(e) e.style.display='none'; });
+  const t = document.getElementById('admin-'+sec);
+  if (t) t.style.display='block';
+  document.querySelectorAll('.admin-nav-item').forEach(i=>i.classList.remove('active'));
+  if (el) el.classList.add('active');
+  if (sec==='orders') renderAllOrders();
+  if (sec==='prods') renderAdminProds();
+}
+
+function renderAdmin() {
+  const pend = orders.filter(o=>o.status==='new'||o.status==='prep').length;
+  const ready = orders.filter(o=>o.status==='ready').length;
+  const rev = orders.reduce((s,o)=>s+o.total,0);
+  document.getElementById('s-today').textContent = orders.length;
+  document.getElementById('s-pend').textContent = pend;
+  document.getElementById('s-ready').textContent = ready;
+  document.getElementById('s-rev').textContent = rev.toFixed(0)+'€';
+  renderOrdersTable(document.getElementById('admin-tbody'), orders.slice(-5).reverse());
+}
+
+function renderOrdersTable(tbody, list) {
+  if (!list.length) { tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--gris-medio);padding:28px">No hay pedidos aún</td></tr>'; return; }
+  tbody.innerHTML = list.map(o=>`<tr>
+    <td><strong style="color:var(--rojo)">${o.id}</strong></td>
+    <td>${o.name}</td>
+    <td>${o.store||'–'}</td>
+    <td><strong>${o.total.toFixed(2).replace('.',',')} €</strong></td>
+    <td>${o.payment==='store'?'🏪 Tienda':'💳 Online'}</td>
+    <td><span class="status s-${o.status}">${{new:'Nuevo',prep:'Preparando',ready:'Listo',done:'Entregado'}[o.status]||o.status}</span></td>
+    <td><select class="admin-sel" onchange="updateStatus('${o.id}',this.value)"><option value="new" ${o.status==='new'?'selected':''}>Nuevo</option><option value="prep" ${o.status==='prep'?'selected':''}>Preparando</option><option value="ready" ${o.status==='ready'?'selected':''}>Listo</option><option value="done" ${o.status==='done'?'selected':''}>Entregado</option></select></td>
+  </tr>`).join('');
+}
+
+function renderAllOrders() {
+  renderOrdersTable(document.getElementById('all-orders-body'), [...orders].reverse());
+}
+
+function updateStatus(id, st) {
+  const o = orders.find(x=>x.id===id);
+  if(o) { o.status=st; showToast(`Pedido ${id} → ${st}`); renderAdmin(); }
+}
+
+function filterOrdersAdmin(val) {
+  const list = val==='all' ? orders : orders.filter(o=>o.status===val);
+  renderOrdersTable(document.getElementById('all-orders-body'), list.reverse());
+}
+
+function renderAdminProds() {
+  document.getElementById('admin-prods-body').innerHTML = PRODUCTS.slice(0,50).map(p=>`<tr>
+    <td><div style="width:44px;height:44px;background:url('${p.img}') center/cover;border-radius:3px"></div></td>
+    <td><strong>${p.name}</strong><br><span style="font-size:11px;color:var(--gris-medio)">${p.ref}</span></td>
+    <td>${p.category}</td>
+    <td><strong>${p.price.toFixed(2).replace('.',',')} €</strong>/${p.unit}</td>
+    <td>${p.brand}</td>
+  </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// CHATBOT IA
+// ══════════════════════════════════════════════════
+const FAQS = {
+  horario: 'Nuestros horarios son: Lunes a Viernes de 9:30 a 13:30 y de 16:00 a 20:00. Sábados de 9:30 a 13:30. Domingos cerrado.',
+  tiendas: 'Tenemos 3 tiendas en Sevilla: Polígono El Pino (C. Pino Central 21), Valencina de la Concepción (Av. Dólmenes 7) y Carrión de los Céspedes (Pol. La Matilla, A-49 Km28).',
+  pedido: 'Puedes hacer tu pedido directamente aquí en la web. Añade productos al carrito, elige tu tienda más cercana y confirma. Te avisaremos cuando esté listo para recoger.',
+  pago: 'Aceptamos pago en tienda (efectivo o tarjeta) al recoger, o pago online con tarjeta. Ambas opciones están disponibles al hacer tu pedido.',
+  montaje: 'Sí, ofrecemos servicio de montaje e instalación profesional en toda la provincia de Sevilla. Puedes solicitar presupuesto en la sección "Servicio Montaje".',
+  plazo: 'Una vez confirmado el pedido, normalmente lo tenemos listo en 24-48 horas. Te avisaremos por teléfono o email cuando puedas venir a recogerlo.',
+  devolucion: 'Aceptamos devoluciones en un plazo de 30 días desde la recogida, siempre que el producto esté en perfectas condiciones y sin usar.',
+  garantia: 'Todos nuestros productos tienen garantía del fabricante. La mayoría entre 2 y 5 años según marca y producto.',
+  presupuesto: 'Para presupuestos de obra o proyectos especiales puedes escribirnos por WhatsApp al 675 083 003 o llamarnos al 955 292 129. También puedes usar el formulario de contacto.',
+  envio: 'De momento solo ofrecemos recogida en tienda. No realizamos envíos a domicilio.',
+  marcas: 'Trabajamos con las mejores marcas: Roca, Grohe, Hansgrohe, Duravit, Villeroy & Boch, Porcelanosa, Geberit, Jacob Delafon, Tres Grifería y más.',
+  m2: 'Los azulejos y pavimentos se venden por metros cuadrados (m²). En el producto encontrarás el precio por m². Puedes indicar la cantidad de m² que necesitas en el selector.'
+};
+
+const QUICK_QUESTIONS = ['Horario', 'Tiendas', 'Cómo pedir', 'Montaje', 'Garantías', 'Marcas'];
+
+function initChat() {
+  const body = document.getElementById('chatbot-body');
+  body.innerHTML = '';
+  addBotMsg('¡Hola! 👋 Soy el asistente virtual de Azulejos La Estrella. ¿En qué puedo ayudarte?');
+  const quickEl = document.createElement('div');
+  quickEl.className = 'chatbot-quick';
+  quickEl.innerHTML = QUICK_QUESTIONS.map(q=>`<button class="chatbot-qbtn" onclick="sendPreset('${q}')">${q}</button>`).join('');
+  body.appendChild(quickEl);
+}
+
+function addBotMsg(text) {
+  const body = document.getElementById('chatbot-body');
+  const el = document.createElement('div');
+  el.className = 'chatbot-msg bot';
+  el.innerHTML = text;
+  body.appendChild(el);
+  body.scrollTop = body.scrollHeight;
+}
+
+function addUserMsg(text) {
+  const body = document.getElementById('chatbot-body');
+  const el = document.createElement('div');
+  el.className = 'chatbot-msg user';
+  el.textContent = text;
+  body.appendChild(el);
+  body.scrollTop = body.scrollHeight;
+}
+
+function showTyping() {
+  const body = document.getElementById('chatbot-body');
+  const el = document.createElement('div');
+  el.className = 'chatbot-msg typing';
+  el.id = 'chat-typing';
+  el.innerHTML = '<div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+  body.appendChild(el);
+  body.scrollTop = body.scrollHeight;
+}
+
+function hideTyping() { const t = document.getElementById('chat-typing'); if(t) t.remove(); }
+
+function getBotAnswer(q) {
+  const ql = q.toLowerCase();
+  if (ql.includes('horario')||ql.includes('abr')||ql.includes('cierr')) return FAQS.horario;
+  if (ql.includes('tiend')||ql.includes('dónde')||ql.includes('direcc')||ql.includes('ubic')) return FAQS.tiendas;
+  if (ql.includes('ped')||ql.includes('comprar')||ql.includes('cómo funciona')) return FAQS.pedido;
+  if (ql.includes('pago')||ql.includes('pagar')||ql.includes('tarjeta')||ql.includes('efectivo')) return FAQS.pago;
+  if (ql.includes('montaj')||ql.includes('instalac')||ql.includes('coloc')) return FAQS.montaje;
+  if (ql.includes('plazo')||ql.includes('cuándo')||ql.includes('tiempo')||ql.includes('listo')) return FAQS.plazo;
+  if (ql.includes('devolucion')||ql.includes('devolver')||ql.includes('cambio')) return FAQS.devolucion;
+  if (ql.includes('garantia')||ql.includes('garantía')) return FAQS.garantia;
+  if (ql.includes('presupuesto')||ql.includes('precio')||ql.includes('coste')) return FAQS.presupuesto;
+  if (ql.includes('envio')||ql.includes('envío')||ql.includes('domicilio')||ql.includes('reparto')) return FAQS.envio;
+  if (ql.includes('marca')||ql.includes('roca')||ql.includes('grohe')) return FAQS.marcas;
+  if (ql.includes('m2')||ql.includes('metro')||ql.includes('m²')||ql.includes('azulej')) return FAQS.m2;
+  return 'No tengo la respuesta exacta a eso 😅 Te recomiendo llamarnos al <strong>955 292 129</strong> o escribirnos por <a href="https://wa.me/34675083003" target="_blank" style="color:var(--rojo)">WhatsApp</a>. Estamos encantados de ayudarte.';
+}
+
+function sendChat() {
+  const inp = document.getElementById('chatbot-input');
+  const q = inp.value.trim();
+  if (!q) return;
+  inp.value = '';
+  addUserMsg(q);
+  showTyping();
+  setTimeout(() => { hideTyping(); addBotMsg(getBotAnswer(q)); }, 900 + Math.random()*500);
+}
+
+function sendPreset(q) {
+  addUserMsg(q);
+  showTyping();
+  const key = q.toLowerCase();
+  const map = {horario:'horario',tiendas:'tiendas','cómo pedir':'pedido',montaje:'montaje',garantías:'garantia',marcas:'marcas'};
+  setTimeout(() => { hideTyping(); addBotMsg(FAQS[map[key]] || getBotAnswer(q)); }, 700);
+}
+
+function toggleChat() {
+  const win = document.getElementById('chatbot');
+  const isOpen = win.classList.contains('open');
+  if (isOpen) { win.classList.remove('open'); }
+  else { win.classList.add('open'); if (!win.dataset.init) { win.dataset.init = '1'; initChat(); } }
+}
+
+// ══════════════════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════════════════
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// ══════════════════════════════════════════════════
+// MOBILE MENU
+// ══════════════════════════════════════════════════
+function toggleMobile() {
+  const nav = document.getElementById('mainnav');
+  if (nav.style.display==='flex') nav.style.display='';
+  else { nav.style.cssText='display:flex;flex-direction:column;position:fixed;inset:60px 0 0;background:var(--blanco);padding:20px;z-index:99;gap:4px;border-top:2px solid var(--negro)'; }
+}
+
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('out'), 1200);
+  renderHomeProds();
+  // Demo orders
+  setTimeout(()=>{
+    orders.push({id:'#LE-1001',name:'Demo Cliente',email:'demo@test.es',phone:'600111222',store:'El Pino',payment:'store',notes:'',items:[],total:289,status:'new',date:new Date().toLocaleString('es-ES')});
+    orders.push({id:'#LE-1002',name:'Ana García',email:'ana@test.es',phone:'654321098',store:'Valencina',payment:'online',notes:'',items:[],total:572.5,status:'ready',date:new Date().toLocaleString('es-ES')});
+  },500);
+});
+</script>
+</body>
+</html>
