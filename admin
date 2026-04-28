@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Estrella · Panel de Gestión</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f13;
+  --bg2: #16161d;
+  --bg3: #1e1e28;
+  --bg4: #252532;
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.10);
+  --rojo: #D0021B;
+  --rojo-glow: rgba(208,2,27,0.25);
+  --rojo-dim: rgba(208,2,27,0.12);
+  --verde: #00c896;
+  --verde-dim: rgba(0,200,150,0.12);
+  --amarillo: #f5a623;
+  --amarillo-dim: rgba(245,166,35,0.12);
+  --azul: #4a9eff;
+  --azul-dim: rgba(74,158,255,0.12);
+  --violeta: #9b59b6;
+  --violeta-dim: rgba(155,89,182,0.12);
+  --text: #e8e8f0;
+  --text2: #8888a0;
+  --text3: #555568;
+  --font: 'Poppins', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --r: 8px;
+  --r2: 12px;
+  --sidebar-w: 56px;
+  --sidebar-w-open: 240px;
+  --topbar-h: 52px;
+  --tr: all .2s cubic-bezier(.4,0,.2,1);
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ═══ SIDEBAR ═══ */
+#sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  transition: width .25s cubic-bezier(.4,0,.2,1);
+  position: relative;
+  z-index: 100;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+#sidebar.open { width: var(--sidebar-w-open); align-items: stretch; }
+
+.sidebar-logo {
+  height: var(--topbar-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+  width: 100%;
+  padding: 0 12px;
+  overflow: hidden;
+}
+.logo-mark {
+  width: 32px; height: 32px; flex-shrink: 0;
+  background: var(--rojo);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 16px; color: #fff;
+}
+.logo-text { white-space: nowrap; opacity: 0; transition: opacity .2s .05s; overflow: hidden; }
+.logo-text .ln { font-weight: 700; font-size: 13px; color: var(--text); }
+.logo-text .ls { font-size: 10px; color: var(--text3); letter-spacing: .5px; }
+#sidebar.open .logo-text { opacity: 1; }
+
+/* NAV GROUPS */
+.nav-group { width: 100%; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.nav-group:last-child { border-bottom: none; flex: 1; }
+.nav-group-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text3); padding: 8px 16px 4px;
+  white-space: nowrap; opacity: 0; transition: opacity .15s;
+  overflow: hidden; height: 0;
+}
+#sidebar.open .nav-group-label { opacity: 1; height: auto; }
+
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 12px; height: 40px;
+  cursor: pointer; border-radius: 0;
+  transition: var(--tr);
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--text2);
+  border-left: 2px solid transparent;
+  margin: 1px 0;
+}
+.nav-item:hover { background: rgba(255,255,255,.04); color: var(--text); }
+.nav-item.active { background: var(--rojo-dim); color: var(--rojo); border-left-color: var(--rojo); }
+.nav-item .ni { font-size: 18px; flex-shrink: 0; width: 32px; display: flex; align-items: center; justify-content: center; }
+.nav-item .nl { font-size: 13px; font-weight: 500; opacity: 0; transition: opacity .15s .05s; overflow: hidden; }
+#sidebar.open .nav-item .nl { opacity: 1; }
+.nav-item .nbadge {
+  margin-left: auto; background: var(--rojo); color: #fff;
+  font-size: 9px; font-weight: 700; padding: 2px 6px;
+  border-radius: 100px; opacity: 0; transition: opacity .15s;
+}
+#sidebar.open .nav-item .nbadge { opacity: 1; }
+
+.sidebar-toggle {
+  height: 44px; display: flex; align-items: center;
+  justify-content: center; cursor: pointer;
+  color: var(--text3); transition: var(--tr);
+  border-top: 1px solid var(--border);
+  flex-shrink: 0; width: 100%;
+}
+.sidebar-toggle:hover { color: var(--text); background: rgba(255,255,255,.03); }
+.sidebar-toggle svg { transition: transform .25s; }
+#sidebar.open .sidebar-toggle svg { transform: rotate(180deg); }
+
+/* ═══ MAIN AREA ═══ */
+#main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* TOPBAR */
+#topbar {
+  height: var(--topbar-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+.tb-breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px;
+}
+.tb-bc-root { color: var(--text3); }
+.tb-bc-sep { color: var(--text3); }
+.tb-bc-cur { color: var(--text); font-weight: 600; }
+.tb-search {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: var(--r); padding: 6px 12px; width: 220px;
+  transition: var(--tr);
+}
+.tb-search:focus-within { border-color: var(--rojo); width: 280px; }
+.tb-search input { border: none; background: none; font-family: var(--font); font-size: 13px; color: var(--text); outline: none; width: 100%; }
+.tb-search input::placeholder { color: var(--text3); }
+.tb-action {
+  height: 32px; padding: 0 14px; border-radius: var(--r);
+  border: none; cursor: pointer; font-family: var(--font);
+  font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px;
+  transition: var(--tr);
+}
+.tb-action-primary { background: var(--rojo); color: #fff; }
+.tb-action-primary:hover { background: #b0011a; box-shadow: 0 0 16px var(--rojo-glow); }
+.tb-action-ghost { background: var(--bg3); color: var(--text2); border: 1px solid var(--border2); }
+.tb-action-ghost:hover { color: var(--text); border-color: var(--border2); }
+.tb-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--rojo), #ff6b35);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; color: #fff; cursor: pointer;
+  flex-shrink: 0;
+}
+.tb-notif {
+  width: 32px; height: 32px; display: flex; align-items: center;
+  justify-content: center; border-radius: var(--r);
+  background: var(--bg3); border: 1px solid var(--border);
+  cursor: pointer; font-size: 16px; position: relative;
+  transition: var(--tr);
+}
+.tb-notif:hover { border-color: var(--border2); }
+.tb-notif-dot {
+  position: absolute; top: 6px; right: 6px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--rojo); border: 1.5px solid var(--bg2);
+}
+
+/* CONTENT AREA */
+#content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg4) transparent;
+}
+#content::-webkit-scrollbar { width: 6px; }
+#content::-webkit-scrollbar-track { background: transparent; }
+#content::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
+
+/* PAGES */
+.panel { display: none; animation: fadeUp .3s ease; }
+.panel.active { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ═══ COMPONENTS ═══ */
+.page-header { margin-bottom: 24px; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.page-title { font-size: 22px; font-weight: 800; color: var(--text); }
+.page-sub { font-size: 13px; color: var(--text3); margin-top: 2px; }
+.page-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* STATS GRID */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: var(--tr);
+}
+.stat-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+.stat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.stat-card.red::before { background: var(--rojo); }
+.stat-card.green::before { background: var(--verde); }
+.stat-card.yellow::before { background: var(--amarillo); }
+.stat-card.blue::before { background: var(--azul); }
+.stat-card.violet::before { background: var(--violeta); }
+.stat-icon {
+  width: 36px; height: 36px; border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; margin-bottom: 12px;
+}
+.stat-icon.red { background: var(--rojo-dim); }
+.stat-icon.green { background: var(--verde-dim); }
+.stat-icon.yellow { background: var(--amarillo-dim); }
+.stat-icon.blue { background: var(--azul-dim); }
+.stat-icon.violet { background: var(--violeta-dim); }
+.stat-val { font-size: 28px; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 4px; }
+.stat-lbl { font-size: 11px; color: var(--text3); font-weight: 500; text-transform: uppercase; letter-spacing: .5px; }
+.stat-change { margin-top: 10px; font-size: 12px; display: flex; align-items: center; gap: 4px; }
+.stat-change.up { color: var(--verde); }
+.stat-change.down { color: var(--rojo); }
+.stat-change.neutral { color: var(--text3); }
+
+/* CARDS / PANELS */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap;
+}
+.card-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.card-sub { font-size: 12px; color: var(--text3); margin-top: 1px; }
+.card-body { padding: 20px; }
+.card-body.np { padding: 0; }
+
+/* TABLES */
+.tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; min-width: 500px; }
+thead th {
+  padding: 10px 16px; text-align: left;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text3);
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+tbody td {
+  padding: 13px 16px; font-size: 13px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle; color: var(--text);
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr { transition: background .15s; }
+tbody tr:hover { background: rgba(255,255,255,.02); }
+.td-mono { font-family: var(--mono); font-size: 12px; color: var(--text2); }
+.td-bold { font-weight: 600; }
+.td-muted { color: var(--text3); font-size: 12px; }
+
+/* BADGES / STATUS */
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; border-radius: 100px;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+}
+.badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.badge-new { background: var(--azul-dim); color: var(--azul); }
+.badge-prep { background: var(--amarillo-dim); color: var(--amarillo); }
+.badge-ready { background: var(--verde-dim); color: var(--verde); }
+.badge-done { background: rgba(255,255,255,.06); color: var(--text3); }
+.badge-cancel { background: var(--rojo-dim); color: var(--rojo); }
+.badge-stock-ok { background: var(--verde-dim); color: var(--verde); }
+.badge-stock-low { background: var(--amarillo-dim); color: var(--amarillo); }
+.badge-stock-out { background: var(--rojo-dim); color: var(--rojo); }
+
+/* FORMS */
+.form-grid { display: grid; gap: 14px; }
+.form-2col { grid-template-columns: 1fr 1fr; }
+.form-3col { grid-template-columns: 1fr 1fr 1fr; }
+.f-grp { display: flex; flex-direction: column; gap: 6px; }
+.f-lbl { font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--text3); }
+.f-inp, .f-sel, .f-ta {
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: var(--r); padding: 9px 12px;
+  font-family: var(--font); font-size: 13px; color: var(--text);
+  transition: var(--tr); width: 100%;
+}
+.f-inp:focus, .f-sel:focus, .f-ta:focus {
+  outline: none; border-color: var(--rojo);
+  box-shadow: 0 0 0 3px var(--rojo-glow);
+}
+.f-inp::placeholder { color: var(--text3); }
+.f-ta { resize: vertical; min-height: 80px; }
+.f-sel option { background: var(--bg3); }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 9px 18px; border-radius: var(--r);
+  border: none; cursor: pointer; font-family: var(--font);
+  font-size: 13px; font-weight: 600; transition: var(--tr);
+  white-space: nowrap;
+}
+.btn-primary { background: var(--rojo); color: #fff; }
+.btn-primary:hover { background: #b0011a; box-shadow: 0 0 16px var(--rojo-glow); }
+.btn-secondary { background: var(--bg3); color: var(--text); border: 1px solid var(--border2); }
+.btn-secondary:hover { border-color: var(--border2); color: var(--text); background: var(--bg4); }
+.btn-success { background: var(--verde-dim); color: var(--verde); border: 1px solid rgba(0,200,150,.2); }
+.btn-success:hover { background: rgba(0,200,150,.2); }
+.btn-warning { background: var(--amarillo-dim); color: var(--amarillo); border: 1px solid rgba(245,166,35,.2); }
+.btn-danger { background: var(--rojo-dim); color: var(--rojo); border: 1px solid rgba(208,2,27,.2); }
+.btn-danger:hover { background: rgba(208,2,27,.2); }
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+.btn-icon { width: 32px; height: 32px; padding: 0; justify-content: center; font-size: 16px; }
+
+/* SELECT STATUS BTN */
+.sel-btn {
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: var(--r); padding: 5px 10px; font-family: var(--font);
+  font-size: 12px; color: var(--text); cursor: pointer; transition: var(--tr);
+}
+.sel-btn:focus { outline: none; border-color: var(--rojo); }
+
+/* TABS */
+.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.tab {
+  padding: 10px 18px; font-size: 13px; font-weight: 500;
+  color: var(--text3); cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: var(--tr);
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--rojo); border-bottom-color: var(--rojo); font-weight: 600; }
+
+/* GRID 2COL */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* MINI CHART BAR */
+.mini-bar { display: flex; align-items: flex-end; gap: 3px; height: 48px; }
+.mini-bar-col { flex: 1; border-radius: 3px 3px 0 0; background: var(--rojo-dim); transition: var(--tr); }
+.mini-bar-col:hover { background: var(--rojo); }
+.mini-bar-col.active { background: var(--rojo); }
+
+/* PROGRESS */
+.progress { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+.progress-bar { height: 100%; border-radius: 2px; transition: width .6s ease; }
+.progress-bar.red { background: var(--rojo); }
+.progress-bar.green { background: var(--verde); }
+.progress-bar.yellow { background: var(--amarillo); }
+
+/* TIMELINE */
+.timeline { display: flex; flex-direction: column; gap: 0; }
+.tl-item { display: flex; gap: 12px; padding: 10px 0; position: relative; }
+.tl-item:not(:last-child)::before {
+  content: ''; position: absolute; left: 11px; top: 28px; bottom: -8px;
+  width: 1px; background: var(--border);
+}
+.tl-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+.tl-dot.red { background: var(--rojo-dim); color: var(--rojo); border: 1px solid rgba(208,2,27,.3); }
+.tl-dot.green { background: var(--verde-dim); color: var(--verde); border: 1px solid rgba(0,200,150,.3); }
+.tl-dot.yellow { background: var(--amarillo-dim); color: var(--amarillo); border: 1px solid rgba(245,166,35,.3); }
+.tl-dot.blue { background: var(--azul-dim); color: var(--azul); border: 1px solid rgba(74,158,255,.3); }
+.tl-dot.grey { background: var(--bg3); color: var(--text3); border: 1px solid var(--border2); }
+.tl-body { flex: 1; }
+.tl-title { font-size: 13px; font-weight: 600; }
+.tl-sub { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.tl-time { font-size: 11px; color: var(--text3); white-space: nowrap; }
+
+/* SEARCH FILTER BAR */
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+.filter-inp { flex: 1; min-width: 200px; }
+.filter-sel { min-width: 140px; }
+
+/* MODAL */
+.modal-ov {
+  position: fixed; inset: 0; background: rgba(0,0,0,.7);
+  z-index: 500; display: none; align-items: center; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-ov.open { display: flex; animation: fadeIn .2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--r2); width: min(600px, calc(100vw - 32px));
+  max-height: calc(100vh - 80px); overflow-y: auto;
+  box-shadow: 0 24px 80px rgba(0,0,0,.5);
+  animation: modalUp .25s cubic-bezier(.4,0,.2,1);
+}
+@keyframes modalUp { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.modal-hdr { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.modal-ttl { font-size: 16px; font-weight: 700; }
+.modal-body { padding: 24px; }
+.modal-ftr { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; }
+.modal-close { background: none; border: none; font-size: 20px; color: var(--text3); cursor: pointer; padding: 4px; border-radius: var(--r); transition: var(--tr); }
+.modal-close:hover { background: var(--bg3); color: var(--text); }
+
+/* TOAST */
+#toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 600; display: flex; flex-direction: column; gap: 8px; }
+.toast-item {
+  background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: var(--r); padding: 12px 16px; min-width: 260px;
+  display: flex; align-items: flex-start; gap: 10px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  animation: toastIn .3s cubic-bezier(.4,0,.2,1);
+}
+@keyframes toastIn { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+.toast-icon { font-size: 18px; flex-shrink: 0; }
+.toast-title { font-size: 13px; font-weight: 600; }
+.toast-msg { font-size: 12px; color: var(--text3); margin-top: 1px; }
+.toast-item.success { border-left: 3px solid var(--verde); }
+.toast-item.error { border-left: 3px solid var(--rojo); }
+.toast-item.info { border-left: 3px solid var(--azul); }
+.toast-item.warning { border-left: 3px solid var(--amarillo); }
+
+/* EMPTY STATE */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text3); }
+.empty-icon { font-size: 48px; opacity: .3; margin-bottom: 12px; }
+.empty-title { font-size: 16px; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
+
+/* PRODUCT IMG THUMB */
+.prod-thumb { width: 40px; height: 40px; border-radius: var(--r); background-size: cover; background-position: center; border: 1px solid var(--border); flex-shrink: 0; }
+
+/* PICKING STATUS STEPS */
+.pick-steps { display: flex; gap: 0; align-items: center; margin-bottom: 24px; }
+.pick-step {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  position: relative;
+}
+.pick-step:not(:last-child)::after {
+  content: ''; position: absolute; top: 15px; left: calc(50% + 20px);
+  right: calc(-50% + 20px); height: 1px; background: var(--border2);
+}
+.pick-step.done:not(:last-child)::after { background: var(--verde); }
+.pick-step-dot {
+  width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--border2);
+  display: flex; align-items: center; justify-content: center; font-size: 14px;
+  background: var(--bg3); color: var(--text3); position: relative; z-index: 1;
+}
+.pick-step.done .pick-step-dot { background: var(--verde-dim); border-color: var(--verde); color: var(--verde); }
+.pick-step.current .pick-step-dot { background: var(--rojo-dim); border-color: var(--rojo); color: var(--rojo); }
+.pick-step-lbl { font-size: 11px; color: var(--text3); text-align: center; line-height: 1.3; }
+.pick-step.done .pick-step-lbl, .pick-step.current .pick-step-lbl { color: var(--text2); }
+
+/* ALERTS */
+.alert { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; border-radius: var(--r); margin-bottom: 16px; }
+.alert-icon { font-size: 18px; flex-shrink: 0; }
+.alert-body .alert-title { font-size: 13px; font-weight: 600; }
+.alert-body .alert-desc { font-size: 12px; margin-top: 2px; opacity: .75; }
+.alert-warning { background: var(--amarillo-dim); border: 1px solid rgba(245,166,35,.2); color: var(--amarillo); }
+.alert-danger { background: var(--rojo-dim); border: 1px solid rgba(208,2,27,.2); color: var(--rojo); }
+.alert-success { background: var(--verde-dim); border: 1px solid rgba(0,200,150,.2); color: var(--verde); }
+.alert-info { background: var(--azul-dim); border: 1px solid rgba(74,158,255,.2); color: var(--azul); }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .grid-2,.grid-3,.form-2col,.form-3col{grid-template-columns:1fr}
+  #content{padding:16px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .stats-grid{grid-template-columns:1fr}
+  .page-header{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+<nav id="sidebar" class="open">
+  <div class="sidebar-logo">
+    <div class="logo-mark">★</div>
+    <div class="logo-text">
+      <div class="ln">La Estrella</div>
+      <div class="ls">Panel de Gestión</div>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Principal</div>
+    <div class="nav-item active" onclick="navTo('dashboard',this)">
+      <div class="ni">📊</div><div class="nl">Dashboard</div>
+    </div>
+    <div class="nav-item" onclick="navTo('pedidos',this)">
+      <div class="ni">📦</div><div class="nl">Pedidos</div>
+      <div class="nbadge" id="nb-pedidos">5</div>
+    </div>
+    <div class="nav-item" onclick="navTo('picking',this)">
+      <div class="ni">🔍</div><div class="nl">Picking</div>
+      <div class="nbadge" id="nb-picking">3</div>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Almacén</div>
+    <div class="nav-item" onclick="navTo('stock',this)">
+      <div class="ni">🏗️</div><div class="nl">Stock</div>
+    </div>
+    <div class="nav-item" onclick="navTo('entradas',this)">
+      <div class="ni">📥</div><div class="nl">Entradas / Salidas</div>
+    </div>
+    <div class="nav-item" onclick="navTo('recuento',this)">
+      <div class="ni">🔢</div><div class="nl">Recuento de Stock</div>
+    </div>
+    <div class="nav-item" onclick="navTo('encargos',this)">
+      <div class="ni">🛎️</div><div class="nl">Encargos de Stock</div>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Ventas</div>
+    <div class="nav-item" onclick="navTo('clientes',this)">
+      <div class="ni">👥</div><div class="nl">Clientes</div>
+    </div>
+    <div class="nav-item" onclick="navTo('presupuestos',this)">
+      <div class="ni">📋</div><div class="nl">Presupuestos</div>
+    </div>
+    <div class="nav-item" onclick="navTo('analitycs',this)">
+      <div class="ni">📈</div><div class="nl">Analíticas</div>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Sistema</div>
+    <div class="nav-item" onclick="navTo('productos',this)">
+      <div class="ni">🗂️</div><div class="nl">Productos</div>
+    </div>
+    <div class="nav-item" onclick="navTo('usuarios',this)">
+      <div class="ni">🔐</div><div class="nl">Usuarios</div>
+    </div>
+    <div class="nav-item" onclick="navTo('tiendas',this)">
+      <div class="ni">🏪</div><div class="nl">Tiendas</div>
+    </div>
+    <div class="nav-item" onclick="window.open('azulejos-la-estrella-v2.html','_blank')">
+      <div class="ni">🌐</div><div class="nl">Ver Tienda Online</div>
+    </div>
+  </div>
+
+  <div style="flex:1"></div>
+  <div class="sidebar-toggle" onclick="toggleSidebar()">
+    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ MAIN ═══════════════════════ -->
+<div id="main">
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="tb-breadcrumb">
+      <span class="tb-bc-root">La Estrella</span>
+      <span class="tb-bc-sep">›</span>
+      <span class="tb-bc-cur" id="tb-cur">Dashboard</span>
+    </div>
+    <div class="tb-search">
+      <span style="color:var(--text3);font-size:14px">🔍</span>
+      <input type="text" placeholder="Buscar pedido, cliente, producto...">
+    </div>
+    <button class="tb-action tb-action-ghost" onclick="openModal('modal-encargo')">+ Nuevo encargo</button>
+    <button class="tb-action tb-action-primary" onclick="openModal('modal-pedido')">+ Nuevo pedido</button>
+    <div class="tb-notif" title="Notificaciones">
+      🔔<div class="tb-notif-dot"></div>
+    </div>
+    <div class="tb-avatar" title="Admin">A</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
+    <!-- ════════════════ DASHBOARD ════════════════ -->
+    <div class="panel active" id="panel-dashboard">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Dashboard</div>
+          <div class="page-sub">Visión general del negocio · Hoy <span id="today-date"></span></div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary btn-sm" onclick="showToast('success','Informe exportado','Se ha generado el PDF correctamente')">📄 Exportar informe</button>
+        </div>
+      </div>
+
+      <!-- ALERTS -->
+      <div class="alert alert-warning">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-body">
+          <div class="alert-title">3 productos con stock bajo</div>
+          <div class="alert-desc">Mampara Frontal 80cm, Porcelánico Calacatta 60×120 y Grifo Grohe Start tienen menos de 5 unidades en almacén.</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;flex-shrink:0" onclick="navTo('stock',null)">Ver stock</button>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-grid">
+        <div class="stat-card red">
+          <div class="stat-icon red">📦</div>
+          <div class="stat-val">47</div>
+          <div class="stat-lbl">Pedidos totales</div>
+          <div class="stat-change up">↑ +12% vs semana pasada</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon green">✅</div>
+          <div class="stat-val">31</div>
+          <div class="stat-lbl">Entregados</div>
+          <div class="stat-change up">↑ +8% vs semana pasada</div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-icon yellow">⏳</div>
+          <div class="stat-val">11</div>
+          <div class="stat-lbl">En preparación</div>
+          <div class="stat-change neutral">→ igual que ayer</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-icon blue">💶</div>
+          <div class="stat-val">14.820€</div>
+          <div class="stat-lbl">Facturado este mes</div>
+          <div class="stat-change up">↑ +23% vs mes anterior</div>
+        </div>
+        <div class="stat-card violet">
+          <div class="stat-icon violet">👥</div>
+          <div class="stat-val">128</div>
+          <div class="stat-lbl">Clientes activos</div>
+          <div class="stat-change up">↑ +5 nuevos esta semana</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- ÚLTIMOS PEDIDOS -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Pedidos recientes</div>
+              <div class="card-sub">Últimas 24h</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="navTo('pedidos',null)">Ver todos →</button>
+          </div>
+          <div class="card-body np">
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Nº</th><th>Cliente</th><th>Total</th><th>Estado</th></tr></thead>
+                <tbody id="dash-pedidos-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACTIVIDAD -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Actividad reciente</div>
+          </div>
+          <div class="card-body">
+            <div class="timeline" id="dash-timeline"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRÁFICO VENTAS + STOCK -->
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Ventas por día (últimos 7 días)</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="mini-bar" id="chart-ventas" style="height:80px;gap:6px"></div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:var(--text3)" id="chart-labels"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Stock crítico</div>
+            <div class="card-sub">Productos con menos de 10 uds.</div>
+          </div>
+          <div class="card-body">
+            <div id="stock-critico-list"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ PEDIDOS ════════════════ -->
+    <div class="panel" id="panel-pedidos">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Pedidos</div>
+          <div class="page-sub">Gestión de todos los pedidos de la tienda online</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary btn-sm" onclick="exportarPedidos()">📄 Exportar</button>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-pedido')">+ Nuevo pedido</button>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="filtrarPedidos('todos',this)">Todos <span style="color:var(--text3);font-size:11px" id="cnt-todos"></span></div>
+        <div class="tab" onclick="filtrarPedidos('new',this)">Nuevos <span style="color:var(--azul);font-size:11px" id="cnt-new"></span></div>
+        <div class="tab" onclick="filtrarPedidos('prep',this)">Preparando <span style="color:var(--amarillo);font-size:11px" id="cnt-prep"></span></div>
+        <div class="tab" onclick="filtrarPedidos('ready',this)">Listos <span style="color:var(--verde);font-size:11px" id="cnt-ready"></span></div>
+        <div class="tab" onclick="filtrarPedidos('done',this)">Entregados <span style="color:var(--text3);font-size:11px" id="cnt-done"></span></div>
+      </div>
+
+      <div class="filter-bar">
+        <input class="f-inp filter-inp" type="text" placeholder="Buscar por nº pedido, cliente, teléfono..." oninput="filtrarPedidosBusqueda(this.value)">
+        <select class="f-sel filter-sel" onchange="filtrarPedidosTienda(this.value)">
+          <option value="">Todas las tiendas</option>
+          <option>El Pino</option>
+          <option>Valencina</option>
+          <option>Carrión</option>
+        </select>
+        <select class="f-sel filter-sel" onchange="filtrarPedidosPago(this.value)">
+          <option value="">Todos los pagos</option>
+          <option value="store">En tienda</option>
+          <option value="online">Online</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nº Pedido</th>
+                  <th>Cliente</th>
+                  <th>Teléfono</th>
+                  <th>Tienda recogida</th>
+                  <th>Productos</th>
+                  <th>Total</th>
+                  <th>Pago</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="pedidos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ PICKING ════════════════ -->
+    <div class="panel" id="panel-picking">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Picking</div>
+          <div class="page-sub">Preparación de pedidos para recogida en tienda</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-success btn-sm" onclick="showToast('success','Picking completado','3 pedidos marcados como listos')">✅ Marcar selección lista</button>
+        </div>
+      </div>
+
+      <!-- PASOS -->
+      <div class="pick-steps">
+        <div class="pick-step done"><div class="pick-step-dot">✓</div><div class="pick-step-lbl">Pedido recibido</div></div>
+        <div class="pick-step done"><div class="pick-step-dot">✓</div><div class="pick-step-lbl">Verificado en sistema</div></div>
+        <div class="pick-step current"><div class="pick-step-dot">→</div><div class="pick-step-lbl">En preparación</div></div>
+        <div class="pick-step"><div class="pick-step-dot">4</div><div class="pick-step-lbl">Control calidad</div></div>
+        <div class="pick-step"><div class="pick-step-dot">5</div><div class="pick-step-lbl">Listo para recoger</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Pedidos en preparación</div>
+          <div style="display:flex;gap:8px">
+            <select class="f-sel" style="min-width:140px">
+              <option>Todas las tiendas</option>
+              <option>El Pino</option>
+              <option>Valencina</option>
+              <option>Carrión</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr>
+                <th><input type="checkbox" style="accent-color:var(--rojo)"></th>
+                <th>Nº Pedido</th>
+                <th>Cliente</th>
+                <th>Productos</th>
+                <th>Tienda</th>
+                <th>Prioridad</th>
+                <th>Asignado a</th>
+                <th>Acciones</th>
+              </tr></thead>
+              <tbody id="picking-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ STOCK ════════════════ -->
+    <div class="panel" id="panel-stock">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Stock</div>
+          <div class="page-sub">Inventario completo de productos</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary btn-sm" onclick="showToast('info','Exportando...','Generando Excel de inventario')">📊 Exportar Excel</button>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-stock-edit')">+ Ajustar stock</button>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <input class="f-inp filter-inp" type="text" placeholder="Buscar producto, referencia, marca..." oninput="filtrarStock(this.value)">
+        <select class="f-sel filter-sel" onchange="filtrarStockCat(this.value)">
+          <option value="">Todas las categorías</option>
+          <option>Sanitarios</option>
+          <option>Mamparas</option>
+          <option>Grifería</option>
+          <option>Muebles de baño</option>
+          <option>Accesorios de baño</option>
+          <option>Azulejos Interior</option>
+          <option>Pavimentos Exterior</option>
+        </select>
+        <select class="f-sel filter-sel">
+          <option value="">Todos los estados</option>
+          <option value="ok">En stock</option>
+          <option value="low">Stock bajo</option>
+          <option value="out">Sin stock</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr>
+                <th>Img</th>
+                <th>Referencia</th>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Marca</th>
+                <th>Precio</th>
+                <th>Stock Actual</th>
+                <th>Mínimo</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr></thead>
+              <tbody id="stock-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ ENTRADAS/SALIDAS ════════════════ -->
+    <div class="panel" id="panel-entradas">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Entradas y Salidas de Stock</div>
+          <div class="page-sub">Registro de todos los movimientos de almacén</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-success btn-sm" onclick="openModal('modal-entrada')">📥 Nueva entrada</button>
+          <button class="btn btn-danger btn-sm" onclick="openModal('modal-salida')">📤 Nueva salida</button>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="stat-card green" style="margin-bottom:0">
+          <div class="stat-icon green">📥</div>
+          <div class="stat-val">+342 uds</div>
+          <div class="stat-lbl">Entradas este mes</div>
+          <div class="stat-change up">↑ 12 movimientos</div>
+        </div>
+        <div class="stat-card red" style="margin-bottom:0">
+          <div class="stat-icon red">📤</div>
+          <div class="stat-val">−187 uds</div>
+          <div class="stat-lbl">Salidas este mes</div>
+          <div class="stat-change neutral">→ 8 movimientos</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">Historial de movimientos</div></div>
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Fecha</th><th>Tipo</th><th>Producto</th><th>Cantidad</th><th>Stock anterior</th><th>Stock nuevo</th><th>Motivo</th><th>Usuario</th></tr></thead>
+              <tbody id="movimientos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ RECUENTO ════════════════ -->
+    <div class="panel" id="panel-recuento">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Recuento de Stock</div>
+          <div class="page-sub">Inventario físico y ajustes de stock</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary btn-sm" onclick="showToast('success','Recuento iniciado','Puedes comenzar a introducir los recuentos físicos')">▶ Iniciar recuento</button>
+        </div>
+      </div>
+      <div class="alert alert-info">
+        <div class="alert-icon">ℹ️</div>
+        <div class="alert-body">
+          <div class="alert-title">Último recuento: hace 32 días</div>
+          <div class="alert-desc">Se recomienda realizar un recuento completo cada mes para garantizar la exactitud del inventario.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Hoja de recuento</div></div>
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Ref.</th><th>Producto</th><th>Stock sistema</th><th>Recuento físico</th><th>Diferencia</th><th>Observaciones</th></tr></thead>
+              <tbody id="recuento-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ ENCARGOS ════════════════ -->
+    <div class="panel" id="panel-encargos">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Encargos de Stock</div>
+          <div class="page-sub">Pedidos a proveedores y reposición de almacén</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-encargo')">+ Nuevo encargo</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Encargos activos</div></div>
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Nº</th><th>Proveedor</th><th>Productos</th><th>Cantidad</th><th>Fecha pedido</th><th>ETA</th><th>Estado</th><th>Acciones</th></tr></thead>
+              <tbody id="encargos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ CLIENTES ════════════════ -->
+    <div class="panel" id="panel-clientes">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Clientes</div>
+          <div class="page-sub">Base de datos de clientes</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary btn-sm" onclick="showToast('info','Exportando...','Exportando lista de clientes')">📄 Exportar</button>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-cliente')">+ Nuevo cliente</button>
+        </div>
+      </div>
+      <div class="filter-bar">
+        <input class="f-inp filter-inp" type="text" placeholder="Buscar cliente, email, teléfono...">
+      </div>
+      <div class="card">
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Cliente</th><th>Email</th><th>Teléfono</th><th>Pedidos</th><th>Total compras</th><th>Último pedido</th><th>Acciones</th></tr></thead>
+              <tbody id="clientes-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ PRESUPUESTOS ════════════════ -->
+    <div class="panel" id="panel-presupuestos">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Presupuestos</div>
+          <div class="page-sub">Gestión de solicitudes de presupuesto</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-presupuesto')">+ Nuevo presupuesto</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Nº</th><th>Cliente</th><th>Tipo proyecto</th><th>Montaje</th><th>Importe est.</th><th>Fecha sol.</th><th>Estado</th><th>Acciones</th></tr></thead>
+              <tbody id="presupuestos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ ANALÍTICAS ════════════════ -->
+    <div class="panel" id="panel-analitycs">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Analíticas</div>
+          <div class="page-sub">Rendimiento del negocio</div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card green"><div class="stat-icon green">💶</div><div class="stat-val">14.820€</div><div class="stat-lbl">Facturado este mes</div><div class="stat-change up">↑ +23%</div></div>
+        <div class="stat-card blue"><div class="stat-icon blue">🛒</div><div class="stat-val">314€</div><div class="stat-lbl">Ticket medio</div><div class="stat-change up">↑ +8%</div></div>
+        <div class="stat-card yellow"><div class="stat-icon yellow">🔁</div><div class="stat-val">68%</div><div class="stat-lbl">Clientes recurrentes</div><div class="stat-change neutral">→ Sin cambios</div></div>
+        <div class="stat-card red"><div class="stat-icon red">📉</div><div class="stat-val">4.2%</div><div class="stat-lbl">Tasa abandono</div><div class="stat-change down">↑ +1.2%</div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Ventas por categoría</div></div>
+          <div class="card-body" id="chart-categorias"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Pedidos por tienda</div></div>
+          <div class="card-body" id="chart-tiendas"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-title">Top 10 productos más vendidos</div></div>
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Producto</th><th>Categoría</th><th>Uds. vendidas</th><th>% del total</th><th>Ingresos</th></tr></thead>
+              <tbody id="top-productos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ PRODUCTOS ════════════════ -->
+    <div class="panel" id="panel-productos">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Catálogo de Productos</div>
+          <div class="page-sub">Gestión del catálogo completo</div>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-secondary btn-sm" onclick="showToast('info','Importando...','Sube un archivo Excel para importar productos')">📥 Importar</button>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-producto')">+ Añadir producto</button>
+        </div>
+      </div>
+      <div class="filter-bar">
+        <input class="f-inp filter-inp" type="text" placeholder="Buscar por nombre, referencia, marca...">
+        <select class="f-sel filter-sel"><option>Todas las categorías</option><option>Sanitarios</option><option>Mamparas</option><option>Grifería</option><option>Muebles de baño</option></select>
+        <select class="f-sel filter-sel"><option>Todas las marcas</option><option>Roca</option><option>Grohe</option><option>Hansgrohe</option><option>Duravit</option></select>
+      </div>
+      <div class="card">
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Img</th><th>Referencia</th><th>Nombre</th><th>Categoría</th><th>Marca</th><th>Precio</th><th>Unidad</th><th>Activo</th><th>Acciones</th></tr></thead>
+              <tbody id="productos-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ USUARIOS ════════════════ -->
+    <div class="panel" id="panel-usuarios">
+      <div class="page-header">
+        <div><div class="page-title">Usuarios del Panel</div><div class="page-sub">Gestión de accesos y permisos</div></div>
+        <div class="page-actions">
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-usuario')">+ Nuevo usuario</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body np">
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Usuario</th><th>Email</th><th>Rol</th><th>Tienda</th><th>Último acceso</th><th>Estado</th><th>Acciones</th></tr></thead>
+              <tbody id="usuarios-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ TIENDAS ════════════════ -->
+    <div class="panel" id="panel-tiendas">
+      <div class="page-header">
+        <div><div class="page-title">Gestión de Tiendas</div><div class="page-sub">Información y configuración de puntos de venta</div></div>
+      </div>
+      <div class="grid-3" id="tiendas-grid"></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ════════════════ MODALS ════════════════ -->
+
+<!-- MODAL NUEVO PEDIDO -->
+<div class="modal-ov" id="modal-pedido">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-ttl">Nuevo pedido manual</div>
+      <button class="modal-close" onclick="closeModal('modal-pedido')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid form-2col">
+        <div class="f-grp"><label class="f-lbl">Nombre cliente *</label><input class="f-inp" placeholder="Nombre completo"></div>
+        <div class="f-grp"><label class="f-lbl">Teléfono *</label><input class="f-inp" type="tel" placeholder="6XX XXX XXX"></div>
+        <div class="f-grp"><label class="f-lbl">Email</label><input class="f-inp" type="email" placeholder="email@ejemplo.com"></div>
+        <div class="f-grp"><label class="f-lbl">Tienda de recogida *</label>
+          <select class="f-sel">
+            <option>C. Pino Central, 21 · El Pino</option>
+            <option>Av. Dólmenes, 7 · Valencina</option>
+            <option>Pol. La Matilla · Carrión</option>
+          </select>
+        </div>
+        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Forma de pago</label>
+          <select class="f-sel"><option>Pago en tienda</option><option>Pago online</option></select>
+        </div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:var(--bg3);border-radius:var(--r);border:1px dashed var(--border2);text-align:center;color:var(--text3);font-size:13px;cursor:pointer" onclick="showToast('info','Próximamente','Selector de productos en desarrollo')">
+        ➕ Hacer clic para añadir productos al pedido
+      </div>
+      <div class="f-grp" style="margin-top:14px"><label class="f-lbl">Notas internas</label>
+        <textarea class="f-ta" placeholder="Observaciones para el almacén..."></textarea>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-secondary" onclick="closeModal('modal-pedido')">Cancelar</button>
+      <button class="btn btn-primary" onclick="crearPedidoManual()">Crear pedido</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NUEVO ENCARGO -->
+<div class="modal-ov" id="modal-encargo">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-ttl">Nuevo encargo a proveedor</div>
+      <button class="modal-close" onclick="closeModal('modal-encargo')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid form-2col">
+        <div class="f-grp"><label class="f-lbl">Proveedor *</label>
+          <select class="f-sel"><option>Roca</option><option>Grohe</option><option>Hansgrohe</option><option>Duravit</option><option>Porcelanosa</option><option>Villeroy & Boch</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Fecha estimada entrega</label><input class="f-inp" type="date"></div>
+        <div class="f-grp"><label class="f-lbl">Producto *</label><input class="f-inp" placeholder="Ref. o nombre del producto"></div>
+        <div class="f-grp"><label class="f-lbl">Cantidad *</label><input class="f-inp" type="number" placeholder="0"></div>
+        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Notas</label>
+          <textarea class="f-ta" placeholder="Especificaciones adicionales..."></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-secondary" onclick="closeModal('modal-encargo')">Cancelar</button>
+      <button class="btn btn-primary" onclick="crearEncargo()">Crear encargo</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AJUSTAR STOCK -->
+<div class="modal-ov" id="modal-stock-edit">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-ttl">Ajustar stock manualmente</div>
+      <button class="modal-close" onclick="closeModal('modal-stock-edit')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid form-2col">
+        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Producto</label><input class="f-inp" placeholder="Buscar por referencia o nombre..."></div>
+        <div class="f-grp"><label class="f-lbl">Tipo de movimiento</label>
+          <select class="f-sel"><option>Entrada (sumar stock)</option><option>Salida (restar stock)</option><option>Ajuste (stock exacto)</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Cantidad</label><input class="f-inp" type="number" placeholder="0"></div>
+        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Motivo</label>
+          <select class="f-sel"><option>Recepción de mercancía</option><option>Venta en tienda física</option><option>Devolución de cliente</option><option>Producto dañado / baja</option><option>Corrección de inventario</option></select>
+        </div>
+        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Observaciones</label><textarea class="f-ta" placeholder="Detalle adicional..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-secondary" onclick="closeModal('modal-stock-edit')">Cancelar</button>
+      <button class="btn btn-primary" onclick="ajustarStock()">Guardar ajuste</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CLIENTE -->
+<div class="modal-ov" id="modal-cliente">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-ttl">Nuevo cliente</div><button class="modal-close" onclick="closeModal('modal-cliente')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid form-2col">
+        <div class="f-grp"><label class="f-lbl">Nombre *</label><input class="f-inp" placeholder="Nombre completo"></div>
+        <div class="f-grp"><label class="f-lbl">Teléfono *</label><input class="f-inp" type="tel" placeholder="6XX XXX XXX"></div>
+        <div class="f-grp"><label class="f-lbl">Email</label><input class="f-inp" type="email"></div>
+        <div class="f-grp"><label class="f-lbl">NIF / CIF</label><input class="f-inp" placeholder="00000000X"></div>
+        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Dirección</label><input class="f-inp" placeholder="Calle, número, ciudad..."></div>
+        <div class="f-grp"><label class="f-lbl">Tipo cliente</label>
+          <select class="f-sel"><option>Particular</option><option>Empresa</option><option>Constructor / Reformista</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Tienda habitual</label>
+          <select class="f-sel"><option>El Pino</option><option>Valencina</option><option>Carrión</option></select>
+        </div>
+        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Observaciones</label><textarea class="f-ta" rows="2" placeholder="Notas sobre este cliente..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-secondary" onclick="closeModal('modal-cliente')">Cancelar</button>
+      <button class="btn btn-primary" onclick="crearCliente()">Guardar cliente</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PRODUCTO -->
+<div class="modal-ov" id="modal-producto">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-ttl">Nuevo producto</div><button class="modal-close" onclick="closeModal('modal-producto')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid form-2col">
+        <div class="f-grp"><label class="f-lbl">Nombre *</label><input class="f-inp" placeholder="Nombre del producto"></div>
+        <div class="f-grp"><label class="f-lbl">Referencia *</label><input class="f-inp" placeholder="REF-XXX-000"></div>
+        <div class="f-grp"><label class="f-lbl">Categoría *</label>
+          <select class="f-sel"><option>Sanitarios</option><option>Mamparas</option><option>Grifería</option><option>Muebles de baño</option><option>Accesorios de baño</option><option>Azulejos Interior</option><option>Pavimentos Exterior</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Marca *</label>
+          <select class="f-sel"><option>Roca</option><option>Grohe</option><option>Hansgrohe</option><option>Duravit</option><option>Porcelanosa</option><option>Villeroy & Boch</option><option>Geberit</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Precio (€) *</label><input class="f-inp" type="number" step="0.01" placeholder="0.00"></div>
+        <div class="f-grp"><label class="f-lbl">Unidad de venta</label>
+          <select class="f-sel"><option>ud.</option><option>m²</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Stock inicial</label><input class="f-inp" type="number" placeholder="0"></div>
+        <div class="f-grp"><label class="f-lbl">Stock mínimo (alerta)</label><input class="f-inp" type="number" placeholder="5"></div>
+        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Descripción</label><textarea class="f-ta" rows="2" placeholder="Descripción breve del producto..."></textarea></div>
+        <div class="f-grp"><label class="f-lbl">Precio outlet (€)</label><input class="f-inp" type="number" step="0.01" placeholder="Dejar vacío si no es outlet"></div>
+        <div class="f-grp" style="align-items:center;flex-direction:row;gap:10px;padding-top:20px">
+          <input type="checkbox" id="chk-activo" style="accent-color:var(--rojo);width:16px;height:16px">
+          <label for="chk-activo" class="f-lbl" style="margin:0">Producto activo en tienda</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-secondary" onclick="closeModal('modal-producto')">Cancelar</button>
+      <button class="btn btn-primary" onclick="guardarProducto()">Guardar producto</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL USUARIO -->
+<div class="modal-ov" id="modal-usuario">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-ttl">Nuevo usuario</div><button class="modal-close" onclick="closeModal('modal-usuario')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid form-2col">
+        <div class="f-grp"><label class="f-lbl">Nombre completo *</label><input class="f-inp" placeholder="Nombre y apellidos"></div>
+        <div class="f-grp"><label class="f-lbl">Email *</label><input class="f-inp" type="email" placeholder="email@azulejoslaestrella.es"></div>
+        <div class="f-grp"><label class="f-lbl">Rol *</label>
+          <select class="f-sel">
+            <option>Administrador</option>
+            <option>Encargado de tienda</option>
+            <option>Operario almacén</option>
+            <option>Comercial</option>
+            <option>Solo lectura</option>
+          </select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Tienda asignada</label>
+          <select class="f-sel"><option>Todas las tiendas</option><option>El Pino</option><option>Valencina</option><option>Carrión</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Contraseña temporal *</label><input class="f-inp" type="password" placeholder="Mínimo 8 caracteres"></div>
+        <div class="f-grp"><label class="f-lbl">Confirmar contraseña *</label><input class="f-inp" type="password"></div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-secondary" onclick="closeModal('modal-usuario')">Cancelar</button>
+      <button class="btn btn-primary" onclick="crearUsuario()">Crear usuario</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PRESUPUESTO -->
+<div class="modal-ov" id="modal-presupuesto">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-ttl">Crear presupuesto</div><button class="modal-close" onclick="closeModal('modal-presupuesto')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid form-2col">
+        <div class="f-grp"><label class="f-lbl">Cliente *</label><input class="f-inp" placeholder="Nombre o buscar cliente existente"></div>
+        <div class="f-grp"><label class="f-lbl">Teléfono</label><input class="f-inp" type="tel"></div>
+        <div class="f-grp"><label class="f-lbl">Tipo de proyecto</label>
+          <select class="f-sel"><option>Reforma baño completo</option><option>Solo azulejos</option><option>Sanitarios y griferías</option><option>Mampara y accesorios</option><option>Obra nueva</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">¿Incluye montaje?</label>
+          <select class="f-sel"><option>Sí, con montaje</option><option>No, solo materiales</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Importe estimado (€)</label><input class="f-inp" type="number" step="0.01" placeholder="0.00"></div>
+        <div class="f-grp"><label class="f-lbl">Validez (días)</label><input class="f-inp" type="number" value="30"></div>
+        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Descripción del proyecto</label><textarea class="f-ta" placeholder="Detalle del proyecto, medidas, materiales solicitados..."></textarea></div>
+      </div>
+    </div>
+    <div class="modal-ftr">
+      <button class="btn btn-secondary" onclick="closeModal('modal-presupuesto')">Cancelar</button>
+      <button class="btn btn-primary" onclick="crearPresupuesto()">Crear presupuesto</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<script>
+// ══════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════
+const PEDIDOS = [
+  { id:'#LE-2401', cliente:'María García', tel:'654 321 098', tienda:'El Pino', items:3, total:468, pago:'store', fecha:'28/04/2024 09:12', status:'new', notas:'' },
+  { id:'#LE-2402', cliente:'Carlos Martínez', tel:'612 456 789', tienda:'Valencina', items:5, total:1240, pago:'online', fecha:'28/04/2024 10:35', status:'prep', notas:'Reforma urgente' },
+  { id:'#LE-2403', cliente:'Ana Rodríguez', tel:'666 111 222', tienda:'El Pino', items:2, total:320, pago:'store', fecha:'27/04/2024 16:20', status:'ready', notas:'' },
+  { id:'#LE-2404', cliente:'Pedro López', tel:'699 888 777', tienda:'Carrión', items:8, total:2180, pago:'online', fecha:'27/04/2024 11:00', status:'done', notas:'Cliente habitual' },
+  { id:'#LE-2405', cliente:'Lucía Fernández', tel:'677 543 210', tienda:'Valencina', items:1, total:189, pago:'store', fecha:'26/04/2024 15:45', status:'new', notas:'' },
+  { id:'#LE-2406', cliente:'José Moreno', tel:'655 123 456', tienda:'El Pino', items:4, total:875, pago:'online', fecha:'26/04/2024 09:30', status:'prep', notas:'Necesita 60x120' },
+  { id:'#LE-2407', cliente:'Carmen Jiménez', tel:'643 876 543', tienda:'El Pino', items:2, total:540, pago:'store', fecha:'25/04/2024 14:15', status:'ready', notas:'' },
+  { id:'#LE-2408', cliente:'Antonio Sánchez', tel:'688 234 567', tienda:'Carrión', items:6, total:1560, pago:'online', fecha:'25/04/2024 10:00', status:'done', notas:'' },
+  { id:'#LE-2409', cliente:'Isabel Torres', tel:'622 987 654', tienda:'Valencina', items:3, total:420, pago:'store', fecha:'24/04/2024 17:30', status:'new', notas:'Llamar antes' },
+  { id:'#LE-2410', cliente:'Francisco Ruiz', tel:'611 345 678', tienda:'El Pino', items:7, total:3200, pago:'online', fecha:'24/04/2024 11:45', status:'prep', notas:'Proyecto empresa' },
+];
+
+const STOCK_DATA = [
+  { ref:'SAR-GAP-SUS', name:'Inodoro Suspendido Gap Compact', cat:'Sanitarios', marca:'Roca', precio:289, stock:18, min:5, img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=80&q=60' },
+  { ref:'MAM-ROC-FRO80', name:'Mampara Frontal 80cm Open 2P', cat:'Mamparas', marca:'Roca', precio:345, stock:4, min:5, img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=80&q=60' },
+  { ref:'GRO-GTH-LAV', name:'Grifo Monomando Grohtherm', cat:'Grifería', marca:'Grohe', precio:128, stock:22, min:8, img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=80&q=60' },
+  { ref:'MUE-ROC-60BL', name:'Mueble Suspendido 60cm Blanco', cat:'Muebles de baño', marca:'Roca', precio:420, stock:7, min:3, img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=80&q=60' },
+  { ref:'AZI-CAL-6012', name:'Porcelánico Calacatta 60×120', cat:'Azulejos Interior', marca:'Porcelanosa', precio:42.9, stock:3, min:20, img:'https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=80&q=60' },
+  { ref:'DUR-ST3-SUS', name:'Inodoro Suspendido Starck 3', cat:'Sanitarios', marca:'Duravit', precio:420, stock:9, min:3, img:'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=80&q=60' },
+  { ref:'HAN-WLK-90', name:'Mampara Walk-In Panel 90cm', cat:'Mamparas', marca:'Hansgrohe', precio:680, stock:0, min:2, img:'https://images.unsplash.com/photo-1620626011761-996317702782?w=80&q=60' },
+  { ref:'GRO-RAI-COL', name:'Columna de Ducha Rainshower', cat:'Grifería', marca:'Grohe', precio:445, stock:11, min:4, img:'https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=80&q=60' },
+  { ref:'DUR-LED-6080', name:'Espejo LED 60×80cm Táctil', cat:'Muebles de baño', marca:'Duravit', precio:320, stock:6, min:3, img:'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=80&q=60' },
+  { ref:'EXT-PIE-6060', name:'Porcelánico Exterior Piedra Gris', cat:'Pavimentos Exterior', marca:'Porcelanosa', precio:24.9, stock:85, min:30, img:'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=80&q=60' },
+];
+
+const CLIENTES_DATA = [
+  { nombre:'María García', email:'maria.garcia@email.com', tel:'654 321 098', pedidos:3, total:1240, ultimo:'28/04/2024' },
+  { nombre:'Carlos Martínez', email:'carlos.m@empresa.com', tel:'612 456 789', pedidos:8, total:5680, ultimo:'28/04/2024' },
+  { nombre:'Ana Rodríguez', email:'ana.rod@email.com', tel:'666 111 222', pedidos:2, total:760, ultimo:'27/04/2024' },
+  { nombre:'Pedro López', email:'pedro.l@reformas.es', tel:'699 888 777', pedidos:15, total:12400, ultimo:'27/04/2024' },
+  { nombre:'Lucía Fernández', email:'lucia.f@email.com', tel:'677 543 210', pedidos:1, total:189, ultimo:'26/04/2024' },
+  { nombre:'José Moreno', email:'jose.moreno@contratas.es', tel:'655 123 456', pedidos:22, total:28900, ultimo:'26/04/2024' },
+];
+
+const MOVIMIENTOS_DATA = [
+  { fecha:'28/04/2024 09:00', tipo:'entrada', prod:'Inodoro Gap Compact', cant:10, ant:8, nuevo:18, motivo:'Recepción mercancía', user:'Admin' },
+  { fecha:'27/04/2024 16:30', tipo:'salida', prod:'Mampara Frontal 80cm', cant:-2, ant:6, nuevo:4, motivo:'Pedido #LE-2403', user:'Admin' },
+  { fecha:'27/04/2024 11:00', tipo:'salida', prod:'Grifo Grohtherm', cant:-3, ant:25, nuevo:22, motivo:'Pedido #LE-2404', user:'Almacén Elvira' },
+  { fecha:'26/04/2024 14:00', tipo:'entrada', prod:'Porcelánico Calacatta', cant:50, ant:0, nuevo:50, motivo:'Recepción Porcelanosa', user:'Admin' },
+  { fecha:'26/04/2024 10:30', tipo:'baja', prod:'Walk-In Hansgrohe 90cm', cant:-2, ant:2, nuevo:0, motivo:'Producto dañado en transporte', user:'Almacén Elvira' },
+];
+
+const ENCARGOS_DATA = [
+  { num:'#ENC-0012', proveedor:'Roca', productos:'Inodoro Gap × 15, Bidé Victoria × 8', cantidad:23, fecha:'22/04/2024', eta:'05/05/2024', status:'en_camino' },
+  { num:'#ENC-0013', proveedor:'Porcelanosa', productos:'Porcelánico Calacatta 60×120 × 100m²', cantidad:100, fecha:'24/04/2024', eta:'08/05/2024', status:'confirmado' },
+  { num:'#ENC-0014', proveedor:'Grohe', productos:'Grifo Grohtherm × 20, Columna Rainshower × 5', cantidad:25, fecha:'26/04/2024', eta:'10/05/2024', status:'pendiente' },
+  { num:'#ENC-0015', proveedor:'Hansgrohe', productos:'Walk-In 90cm × 6', cantidad:6, fecha:'27/04/2024', eta:'12/05/2024', status:'confirmado' },
+];
+
+const PRESUPUESTOS_DATA = [
+  { num:'#PRES-041', cliente:'Reformas Hnos. García', tipo:'Reforma baño completo', montaje:'Sí', importe:'4.200€', fecha:'26/04/2024', status:'pendiente' },
+  { num:'#PRES-042', cliente:'Hotel Alcázar Sevilla', tipo:'Obra nueva (12 baños)', montaje:'Sí', importe:'28.400€', fecha:'25/04/2024', status:'aceptado' },
+  { num:'#PRES-043', cliente:'Carmen Jiménez', tipo:'Solo azulejos', montaje:'No', importe:'680€', fecha:'24/04/2024', status:'enviado' },
+  { num:'#PRES-044', cliente:'Contratas Moreno SL', tipo:'Pavimentos exterior', montaje:'Sí', importe:'3.100€', fecha:'23/04/2024', status:'rechazado' },
+];
+
+const USUARIOS_DATA = [
+  { nombre:'Admin Principal', email:'admin@azulejoslaestrella.es', rol:'Administrador', tienda:'Todas', ultimo:'Hoy 09:12', activo:true },
+  { nombre:'Elvira Gómez', email:'elvira@azulejoslaestrella.es', rol:'Encargado de tienda', tienda:'El Pino', ultimo:'Hoy 08:45', activo:true },
+  { nombre:'Manuel Pérez', email:'manuel@azulejoslaestrella.es', rol:'Operario almacén', tienda:'Valencina', ultimo:'Ayer 18:00', activo:true },
+  { nombre:'Rosa Delgado', email:'rosa@azulejoslaestrella.es', rol:'Comercial', tienda:'Carrión', ultimo:'Hace 3 días', activo:false },
+];
+
+// ══════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════
+let currentPanel = 'dashboard';
+
+function navTo(panel, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const target = document.getElementById('panel-'+panel);
+  if (target) target.classList.add('active');
+  if (el) el.classList.add('active');
+  currentPanel = panel;
+  document.getElementById('tb-cur').textContent = {
+    dashboard:'Dashboard', pedidos:'Pedidos', picking:'Picking',
+    stock:'Stock', entradas:'Entradas / Salidas', recuento:'Recuento de Stock',
+    encargos:'Encargos de Stock', clientes:'Clientes', presupuestos:'Presupuestos',
+    analitycs:'Analíticas', productos:'Productos', usuarios:'Usuarios', tiendas:'Tiendas'
+  }[panel] || panel;
+  renderPanel(panel);
+}
+
+function renderPanel(panel) {
+  const renderers = {
+    dashboard: renderDashboard,
+    pedidos: renderPedidos,
+    picking: renderPicking,
+    stock: renderStock,
+    entradas: renderEntradas,
+    recuento: renderRecuento,
+    encargos: renderEncargos,
+    clientes: renderClientes,
+    presupuestos: renderPresupuestos,
+    analitycs: renderAnalytics,
+    productos: renderProductos,
+    usuarios: renderUsuarios,
+    tiendas: renderTiendas,
+  };
+  if (renderers[panel]) renderers[panel]();
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ══════════════════════════════════════════════════
+// STATUS HELPERS
+// ══════════════════════════════════════════════════
+function statusBadge(status) {
+  const map = {
+    new: '<span class="badge badge-new">Nuevo</span>',
+    prep: '<span class="badge badge-prep">Preparando</span>',
+    ready: '<span class="badge badge-ready">Listo ✓</span>',
+    done: '<span class="badge badge-done">Entregado</span>',
+    cancel: '<span class="badge badge-cancel">Cancelado</span>',
+    en_camino: '<span class="badge badge-prep">En camino</span>',
+    confirmado: '<span class="badge badge-ready">Confirmado</span>',
+    pendiente: '<span class="badge badge-new">Pendiente</span>',
+    aceptado: '<span class="badge badge-ready">Aceptado</span>',
+    enviado: '<span class="badge badge-prep">Enviado</span>',
+    rechazado: '<span class="badge badge-cancel">Rechazado</span>',
+  };
+  return map[status] || `<span class="badge">${status}</span>`;
+}
+
+function statusSelect(id, status) {
+  return `<select class="sel-btn" onchange="cambiarEstado('${id}',this.value)">
+    <option value="new" ${status==='new'?'selected':''}>Nuevo</option>
+    <option value="prep" ${status==='prep'?'selected':''}>Preparando</option>
+    <option value="ready" ${status==='ready'?'selected':''}>Listo</option>
+    <option value="done" ${status==='done'?'selected':''}>Entregado</option>
+    <option value="cancel" ${status==='cancel'?'selected':''}>Cancelar</option>
+  </select>`;
+}
+
+// ══════════════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════════════
+function renderDashboard() {
+  document.getElementById('today-date').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  // Últimos pedidos
+  const tbody = document.getElementById('dash-pedidos-tbody');
+  tbody.innerHTML = PEDIDOS.slice(0,5).map(p => `<tr>
+    <td class="td-mono">${p.id}</td>
+    <td class="td-bold">${p.cliente}</td>
+    <td><strong>${p.total.toFixed(2).replace('.',',')} €</strong></td>
+    <td>${statusBadge(p.status)}</td>
+  </tr>`).join('');
+
+  // Timeline
+  const tl = document.getElementById('dash-timeline');
+  const events = [
+    { dot:'green', ico:'✅', title:'Pedido #LE-2403 listo para recoger', sub:'Cliente avisado por SMS', time:'hace 20 min' },
+    { dot:'blue', ico:'📦', title:'Nuevo pedido #LE-2409 recibido', sub:'Isabel Torres · 420€ · Valencina', time:'hace 45 min' },
+    { dot:'yellow', ico:'⚠️', title:'Stock bajo: Mampara Frontal 80cm', sub:'Quedan 4 unidades (mínimo: 5)', time:'hace 1h' },
+    { dot:'red', ico:'📥', title:'Entrada de mercancía Roca', sub:'10 × Inodoro Gap Compact', time:'hace 2h' },
+    { dot:'grey', ico:'👤', title:'Nuevo cliente registrado', sub:'Francisco Ruiz · Proyecto empresa', time:'hace 3h' },
+  ];
+  tl.innerHTML = events.map(e => `<div class="tl-item">
+    <div class="tl-dot ${e.dot}">${e.ico}</div>
+    <div class="tl-body"><div class="tl-title">${e.title}</div><div class="tl-sub">${e.sub}</div></div>
+    <div class="tl-time">${e.time}</div>
+  </div>`).join('');
+
+  // Mini chart
+  const vals = [8,14,11,19,22,16,27];
+  const days = ['L','M','X','J','V','S','D'];
+  const max = Math.max(...vals);
+  const chart = document.getElementById('chart-ventas');
+  chart.innerHTML = vals.map((v,i) => `<div class="mini-bar-col ${i===6?'active':''}" style="height:${(v/max)*100}%;background:${i===6?'var(--rojo)':'var(--rojo-dim)'}" title="${v} pedidos" onmouseenter="this.style.background='var(--rojo)'" onmouseleave="this.style.background='${i===6?'var(--rojo)':'var(--rojo-dim)'}'"></div>`).join('');
+  document.getElementById('chart-labels').innerHTML = days.map((d,i) => `<span style="${i===6?'color:var(--rojo);font-weight:600':''}">${d}</span>`).join('');
+
+  // Stock critico
+  const criticos = STOCK_DATA.filter(s => s.stock < s.min);
+  document.getElementById('stock-critico-list').innerHTML = criticos.map(s => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div class="prod-thumb" style="background-image:url('${s.img}')"></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${s.name}</div>
+        <div style="font-size:11px;color:var(--text3)">${s.ref}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:13px;font-weight:700;color:${s.stock===0?'var(--rojo)':'var(--amarillo)'}">${s.stock} uds</div>
+        <div style="font-size:10px;color:var(--text3)">mín: ${s.min}</div>
+      </div>
+      <div style="width:60px">
+        <div class="progress"><div class="progress-bar ${s.stock===0?'red':'yellow'}" style="width:${Math.min((s.stock/s.min)*100,100)}%"></div></div>
+      </div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// PEDIDOS
+// ══════════════════════════════════════════════════
+let filtroEstado = 'todos', filtroTienda = '', filtroPago = '', filtroBusqueda = '';
+
+function renderPedidos(lista = null) {
+  const data = lista || filtrarListaPedidos();
+  const cnts = { new:0, prep:0, ready:0, done:0 };
+  PEDIDOS.forEach(p => cnts[p.status]++);
+  document.getElementById('cnt-todos').textContent = `(${PEDIDOS.length})`;
+  document.getElementById('cnt-new').textContent = `(${cnts.new})`;
+  document.getElementById('cnt-prep').textContent = `(${cnts.prep})`;
+  document.getElementById('cnt-ready').textContent = `(${cnts.ready})`;
+  document.getElementById('cnt-done').textContent = `(${cnts.done})`;
+
+  const tbody = document.getElementById('pedidos-tbody');
+  if (!data.length) { tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;padding:32px;color:var(--text3)">No hay pedidos que coincidan con los filtros</td></tr>'; return; }
+  tbody.innerHTML = data.map(p => `<tr>
+    <td class="td-mono td-bold">${p.id}</td>
+    <td><div class="td-bold">${p.cliente}</div>${p.notas?`<div class="td-muted">${p.notas}</div>`:''}</td>
+    <td class="td-muted">${p.tel}</td>
+    <td><span style="font-size:12px">🏪</span> ${p.tienda}</td>
+    <td><span style="background:var(--bg3);padding:2px 8px;border-radius:100px;font-size:11px">${p.items} producto${p.items!==1?'s':''}</span></td>
+    <td><strong>${p.total.toFixed(2).replace('.',',')} €</strong></td>
+    <td>${p.pago==='online'?'<span style="color:var(--azul);font-size:12px">💳 Online</span>':'<span style="color:var(--verde);font-size:12px">💵 Tienda</span>'}</td>
+    <td class="td-muted" style="font-size:11px">${p.fecha}</td>
+    <td>${statusBadge(p.status)}</td>
+    <td>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">
+        ${statusSelect(p.id, p.status)}
+        <button class="btn btn-secondary btn-sm btn-icon" title="Ver detalle" onclick="verPedido('${p.id}')">👁</button>
+        <button class="btn btn-success btn-sm btn-icon" title="Marcar listo" onclick="marcarListo('${p.id}')">✓</button>
+      </div>
+    </td>
+  </tr>`).join('');
+}
+
+function filtrarListaPedidos() {
+  return PEDIDOS.filter(p => {
+    if (filtroEstado !== 'todos' && p.status !== filtroEstado) return false;
+    if (filtroTienda && !p.tienda.toLowerCase().includes(filtroTienda.toLowerCase())) return false;
+    if (filtroPago && p.pago !== filtroPago) return false;
+    if (filtroBusqueda) {
+      const s = filtroBusqueda.toLowerCase();
+      if (!p.id.toLowerCase().includes(s) && !p.cliente.toLowerCase().includes(s) && !p.tel.includes(s)) return false;
+    }
+    return true;
+  });
+}
+
+function filtrarPedidos(estado, el) {
+  filtroEstado = estado;
+  document.querySelectorAll('#panel-pedidos .tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderPedidos();
+}
+function filtrarPedidosBusqueda(v) { filtroBusqueda = v; renderPedidos(); }
+function filtrarPedidosTienda(v) { filtroTienda = v; renderPedidos(); }
+function filtrarPedidosPago(v) { filtroPago = v; renderPedidos(); }
+
+function cambiarEstado(id, nuevoEstado) {
+  const p = PEDIDOS.find(x => x.id === id);
+  if (p) {
+    p.status = nuevoEstado;
+    const labels = { new:'Nuevo', prep:'Preparando', ready:'Listo para recoger', done:'Entregado', cancel:'Cancelado' };
+    showToast('success', `Pedido ${id}`, `Estado cambiado a: ${labels[nuevoEstado]}`);
+    // Update badge counts
+    const newPending = PEDIDOS.filter(x=>x.status==='new'||x.status==='prep').length;
+    document.getElementById('nb-pedidos').textContent = newPending;
+  }
+}
+
+function verPedido(id) {
+  const p = PEDIDOS.find(x => x.id === id);
+  if (!p) return;
+  showToast('info', `Pedido ${id}`, `${p.cliente} · ${p.total.toFixed(2).replace('.',',')}€ · ${p.tienda}`);
+}
+
+function marcarListo(id) {
+  const p = PEDIDOS.find(x => x.id === id);
+  if (p) { p.status = 'ready'; showToast('success', 'Pedido listo ✓', `${p.id} marcado como listo para recoger`); renderPedidos(); }
+}
+
+function exportarPedidos() {
+  showToast('info', 'Exportando pedidos', 'Descargando archivo CSV con los pedidos filtrados');
+}
+
+// ══════════════════════════════════════════════════
+// PICKING
+// ══════════════════════════════════════════════════
+function renderPicking() {
+  const enPrep = PEDIDOS.filter(p => p.status === 'prep' || p.status === 'new');
+  document.getElementById('nb-picking').textContent = enPrep.length;
+  const tbody = document.getElementById('picking-tbody');
+  tbody.innerHTML = enPrep.map((p,i) => `<tr>
+    <td><input type="checkbox" style="accent-color:var(--rojo)"></td>
+    <td class="td-mono td-bold" style="color:var(--rojo)">${p.id}</td>
+    <td><div class="td-bold">${p.cliente}</div><div class="td-muted">${p.tel}</div></td>
+    <td><span style="background:var(--bg3);padding:2px 8px;border-radius:100px;font-size:11px">${p.items} productos</span></td>
+    <td>🏪 ${p.tienda}</td>
+    <td>${i===0?'<span class="badge badge-cancel">Alta</span>':i===1?'<span class="badge badge-prep">Media</span>':'<span class="badge badge-done">Normal</span>'}</td>
+    <td><span style="font-size:12px">👤 Almacén</span></td>
+    <td>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-success btn-sm" onclick="marcarListo('${p.id}');renderPicking()">✅ Listo</button>
+        <button class="btn btn-secondary btn-sm btn-icon" onclick="showToast('info','Imprimiendo','Hoja de picking generada')">🖨</button>
+      </div>
+    </td>
+  </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// STOCK
+// ══════════════════════════════════════════════════
+function renderStock(data = STOCK_DATA) {
+  const tbody = document.getElementById('stock-tbody');
+  tbody.innerHTML = data.map(s => {
+    const pct = Math.min((s.stock/s.min)*100,200);
+    const stBadge = s.stock===0?'<span class="badge badge-stock-out">Sin stock</span>':s.stock<s.min?'<span class="badge badge-stock-low">Stock bajo</span>':'<span class="badge badge-stock-ok">OK</span>';
+    return `<tr>
+      <td><div class="prod-thumb" style="background-image:url('${s.img}')"></div></td>
+      <td class="td-mono">${s.ref}</td>
+      <td class="td-bold">${s.name}</td>
+      <td><span style="font-size:11px;background:var(--bg3);padding:2px 8px;border-radius:100px">${s.cat}</span></td>
+      <td class="td-muted">${s.marca}</td>
+      <td><strong>${s.precio.toFixed(2).replace('.',',')} €</strong></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px">
+          <strong style="color:${s.stock===0?'var(--rojo)':s.stock<s.min?'var(--amarillo)':'var(--verde)'};min-width:24px">${s.stock}</strong>
+          <div style="width:60px"><div class="progress"><div class="progress-bar ${s.stock===0?'red':s.stock<s.min?'yellow':'green'}" style="width:${Math.min(pct,100)}%"></div></div></div>
+        </div>
+      </td>
+      <td class="td-muted">${s.min}</td>
+      <td>${stBadge}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-secondary btn-sm btn-icon" onclick="openModal('modal-stock-edit')" title="Ajustar stock">✏️</button>
+          <button class="btn btn-success btn-sm btn-icon" onclick="openModal('modal-encargo')" title="Encargar">📥</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function filtrarStock(q) {
+  const lower = q.toLowerCase();
+  renderStock(STOCK_DATA.filter(s => s.name.toLowerCase().includes(lower)||s.ref.toLowerCase().includes(lower)||s.marca.toLowerCase().includes(lower)));
+}
+function filtrarStockCat(cat) {
+  renderStock(cat ? STOCK_DATA.filter(s => s.cat === cat) : STOCK_DATA);
+}
+
+// ══════════════════════════════════════════════════
+// ENTRADAS / SALIDAS
+// ══════════════════════════════════════════════════
+function renderEntradas() {
+  const tbody = document.getElementById('movimientos-tbody');
+  tbody.innerHTML = MOVIMIENTOS_DATA.map(m => `<tr>
+    <td class="td-muted" style="font-size:11px">${m.fecha}</td>
+    <td>${m.tipo==='entrada'?'<span class="badge badge-ready">📥 Entrada</span>':m.tipo==='salida'?'<span class="badge badge-new">📤 Salida</span>':'<span class="badge badge-cancel">⚠ Baja</span>'}</td>
+    <td class="td-bold">${m.prod}</td>
+    <td style="font-weight:700;color:${m.cant>0?'var(--verde)':'var(--rojo)'}">${m.cant>0?'+':''}${m.cant}</td>
+    <td class="td-muted">${m.ant}</td>
+    <td><strong>${m.nuevo}</strong></td>
+    <td class="td-muted" style="font-size:12px">${m.motivo}</td>
+    <td><span style="font-size:12px">👤 ${m.user}</span></td>
+  </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// RECUENTO
+// ══════════════════════════════════════════════════
+function renderRecuento() {
+  const tbody = document.getElementById('recuento-tbody');
+  tbody.innerHTML = STOCK_DATA.map(s => `<tr>
+    <td class="td-mono">${s.ref}</td>
+    <td class="td-bold">${s.name}</td>
+    <td><strong>${s.stock}</strong></td>
+    <td><input type="number" class="f-inp" style="width:80px;padding:5px 8px" placeholder="${s.stock}" onchange="calcDiff(this,${s.stock})"></td>
+    <td class="diff-${s.ref}" style="font-weight:700;color:var(--text3)">—</td>
+    <td><input type="text" class="f-inp" style="font-size:12px" placeholder="Observaciones..."></td>
+  </tr>`).join('');
+}
+function calcDiff(el, original) {
+  const diff = parseInt(el.value) - original;
+  const td = el.closest('tr').querySelector('td:nth-child(5)');
+  td.textContent = diff === 0 ? '0' : (diff > 0 ? '+'+diff : diff);
+  td.style.color = diff === 0 ? 'var(--verde)' : diff > 0 ? 'var(--amarillo)' : 'var(--rojo)';
+}
+
+// ══════════════════════════════════════════════════
+// ENCARGOS
+// ══════════════════════════════════════════════════
+function renderEncargos() {
+  const tbody = document.getElementById('encargos-tbody');
+  tbody.innerHTML = ENCARGOS_DATA.map(e => `<tr>
+    <td class="td-mono td-bold" style="color:var(--rojo)">${e.num}</td>
+    <td><strong>${e.proveedor}</strong></td>
+    <td style="font-size:12px;max-width:200px">${e.productos}</td>
+    <td><span style="background:var(--bg3);padding:2px 8px;border-radius:100px;font-size:11px">${e.cantidad} uds</span></td>
+    <td class="td-muted" style="font-size:11px">${e.fecha}</td>
+    <td style="font-weight:600">${e.eta}</td>
+    <td>${statusBadge(e.status)}</td>
+    <td>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-secondary btn-sm btn-icon" onclick="showToast('info','Encargo '+e.num,'Detalle del encargo')" title="Ver">👁</button>
+        <button class="btn btn-success btn-sm btn-icon" onclick="showToast('success','Recibido','Encargo marcado como recibido. Stock actualizado.')" title="Marcar recibido">✓</button>
+      </div>
+    </td>
+  </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// CLIENTES
+// ══════════════════════════════════════════════════
+function renderClientes() {
+  const tbody = document.getElementById('clientes-tbody');
+  tbody.innerHTML = CLIENTES_DATA.map(c => `<tr>
+    <td>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--rojo-dim);color:var(--rojo);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0">${c.nombre[0]}</div>
+        <div class="td-bold">${c.nombre}</div>
+      </div>
+    </td>
+    <td class="td-muted">${c.email}</td>
+    <td class="td-muted">${c.tel}</td>
+    <td><span style="background:var(--bg3);padding:2px 8px;border-radius:100px;font-size:11px">${c.pedidos} pedidos</span></td>
+    <td><strong>${c.total.toLocaleString('es-ES')} €</strong></td>
+    <td class="td-muted" style="font-size:11px">${c.ultimo}</td>
+    <td>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-secondary btn-sm btn-icon" onclick="showToast('info','Cliente','Abriendo ficha de cliente')" title="Ver ficha">👁</button>
+        <button class="btn btn-primary btn-sm btn-icon" onclick="openModal('modal-pedido')" title="Nuevo pedido">+</button>
+      </div>
+    </td>
+  </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// PRESUPUESTOS
+// ══════════════════════════════════════════════════
+function renderPresupuestos() {
+  const tbody = document.getElementById('presupuestos-tbody');
+  tbody.innerHTML = PRESUPUESTOS_DATA.map(p => `<tr>
+    <td class="td-mono td-bold" style="color:var(--rojo)">${p.num}</td>
+    <td class="td-bold">${p.cliente}</td>
+    <td style="font-size:12px">${p.tipo}</td>
+    <td>${p.montaje==='Sí'?'<span class="badge badge-ready">Sí</span>':'<span class="badge badge-done">No</span>'}</td>
+    <td><strong>${p.importe}</strong></td>
+    <td class="td-muted" style="font-size:11px">${p.fecha}</td>
+    <td>${statusBadge(p.status)}</td>
+    <td>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-secondary btn-sm btn-icon" onclick="showToast('info','Presupuesto','Descargando PDF')" title="Descargar PDF">📄</button>
+        <button class="btn btn-success btn-sm btn-icon" onclick="showToast('success','Enviado','Presupuesto enviado al cliente por email')" title="Enviar email">✉</button>
+        <button class="btn btn-secondary btn-sm btn-icon" onclick="showToast('info','Convirtiendo','Presupuesto convertido en pedido')" title="Convertir en pedido">→</button>
+      </div>
+    </td>
+  </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// ANALYTICS
+// ══════════════════════════════════════════════════
+function renderAnalytics() {
+  // Ventas por categoría
+  const cats = [
+    { name:'Azulejos Interior', val:34, color:'var(--rojo)' },
+    { name:'Sanitarios', val:24, color:'var(--azul)' },
+    { name:'Grifería', val:18, color:'var(--verde)' },
+    { name:'Mamparas', val:12, color:'var(--amarillo)' },
+    { name:'Muebles', val:8, color:'var(--violeta)' },
+    { name:'Accesorios', val:4, color:'var(--text3)' },
+  ];
+  document.getElementById('chart-categorias').innerHTML = cats.map(c => `
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px">${c.name}</span>
+        <span style="font-size:12px;font-weight:700;color:${c.color}">${c.val}%</span>
+      </div>
+      <div class="progress" style="height:6px"><div style="height:100%;border-radius:3px;background:${c.color};width:${c.val}%;transition:width .8s ease"></div></div>
+    </div>`).join('');
+
+  // Pedidos por tienda
+  const tiendas = [
+    { name:'El Pino', val:58, pedidos:27 },
+    { name:'Valencina', val:27, pedidos:13 },
+    { name:'Carrión', val:15, pedidos:7 },
+  ];
+  document.getElementById('chart-tiendas').innerHTML = tiendas.map(t => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)">
+      <div style="font-size:20px">🏪</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:600;margin-bottom:4px">${t.name}</div>
+        <div class="progress"><div class="progress-bar red" style="width:${t.val}%"></div></div>
+      </div>
+      <div style="text-align:right;min-width:60px">
+        <div style="font-size:14px;font-weight:700">${t.pedidos}</div>
+        <div style="font-size:11px;color:var(--text3)">${t.val}%</div>
+      </div>
+    </div>`).join('');
+
+  // Top productos
+  const tops = [
+    { name:'Porcelánico Mármol Calacatta 60×120', cat:'Azulejos Interior', uds:145, pct:18, ing:'6.240€' },
+    { name:'Inodoro Suspendido Gap Compact', cat:'Sanitarios', uds:38, pct:12, ing:'10.982€' },
+    { name:'Grifo Monomando Grohtherm', cat:'Grifería', uds:72, pct:9, ing:'9.216€' },
+    { name:'Mampara Frontal 80cm Open 2P', cat:'Mamparas', uds:29, pct:7, ing:'10.005€' },
+    { name:'Pavimento Exterior Piedra Gris', cat:'Pavimentos', uds:210, pct:7, ing:'5.229€' },
+    { name:'Mueble Suspendido 60cm Blanco', cat:'Muebles', uds:21, pct:5, ing:'8.820€' },
+    { name:'Columna de Ducha Rainshower', cat:'Grifería', uds:18, pct:4, ing:'8.010€' },
+    { name:'Espejo LED 60×80cm Táctil', cat:'Muebles', uds:24, pct:4, ing:'7.680€' },
+    { name:'Inodoro Suspendido Starck 3', cat:'Sanitarios', uds:16, pct:3, ing:'6.720€' },
+    { name:'Porcelánico Imit. Madera 20×120', cat:'Azulejos Interior', uds:98, pct:3, ing:'2.793€' },
+  ];
+  document.getElementById('top-productos-tbody').innerHTML = tops.map((p,i) => `<tr>
+    <td><span style="font-weight:800;font-size:14px;color:${i<3?'var(--rojo)':'var(--text3)'}">${i+1}</span></td>
+    <td class="td-bold">${p.name}</td>
+    <td><span style="font-size:11px;background:var(--bg3);padding:2px 8px;border-radius:100px">${p.cat}</span></td>
+    <td><strong>${p.uds}</strong></td>
+    <td>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:60px"><div class="progress"><div class="progress-bar red" style="width:${p.pct*5}%"></div></div></div>
+        <span style="font-size:11px;color:var(--text3)">${p.pct}%</span>
+      </div>
+    </td>
+    <td><strong style="color:var(--verde)">${p.ing}</strong></td>
+  </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// PRODUCTOS
+// ══════════════════════════════════════════════════
+function renderProductos() {
+  const tbody = document.getElementById('productos-tbody');
+  tbody.innerHTML = STOCK_DATA.map(s => `<tr>
+    <td><div class="prod-thumb" style="background-image:url('${s.img}')"></div></td>
+    <td class="td-mono">${s.ref}</td>
+    <td class="td-bold">${s.name}</td>
+    <td><span style="font-size:11px;background:var(--bg3);padding:2px 8px;border-radius:100px">${s.cat}</span></td>
+    <td class="td-muted">${s.marca}</td>
+    <td><strong>${s.precio.toFixed(2).replace('.',',')} €</strong></td>
+    <td class="td-muted">ud.</td>
+    <td><span style="color:var(--verde);font-size:16px">●</span></td>
+    <td>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-secondary btn-sm btn-icon" onclick="showToast('info','Editando producto','Abre el formulario de edición')" title="Editar">✏️</button>
+        <button class="btn btn-danger btn-sm btn-icon" onclick="showToast('error','Desactivado','Producto ocultado de la tienda')" title="Desactivar">⛔</button>
+      </div>
+    </td>
+  </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// USUARIOS
+// ══════════════════════════════════════════════════
+function renderUsuarios() {
+  const rols = { 'Administrador':'<span class="badge badge-cancel">Admin</span>', 'Encargado de tienda':'<span class="badge badge-prep">Encargado</span>', 'Operario almacén':'<span class="badge badge-new">Operario</span>', 'Comercial':'<span class="badge badge-ready">Comercial</span>' };
+  const tbody = document.getElementById('usuarios-tbody');
+  tbody.innerHTML = USUARIOS_DATA.map(u => `<tr>
+    <td>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:50%;background:var(--rojo);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0">${u.nombre[0]}</div>
+        <div class="td-bold">${u.nombre}</div>
+      </div>
+    </td>
+    <td class="td-muted">${u.email}</td>
+    <td>${rols[u.rol]||u.rol}</td>
+    <td>🏪 ${u.tienda}</td>
+    <td class="td-muted" style="font-size:11px">${u.ultimo}</td>
+    <td>${u.activo?'<span class="badge badge-ready">Activo</span>':'<span class="badge badge-done">Inactivo</span>'}</td>
+    <td>
+      <div style="display:flex;gap:4px">
+        <button class="btn btn-secondary btn-sm btn-icon" onclick="showToast('info','Editando usuario','Abriendo formulario de edición')" title="Editar">✏️</button>
+        <button class="btn btn-danger btn-sm btn-icon" onclick="showToast('warning','Atención','¿Seguro que quieres desactivar este usuario?')" title="${u.activo?'Desactivar':'Activar'}">${u.activo?'🔒':'🔓'}</button>
+      </div>
+    </td>
+  </tr>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// TIENDAS
+// ══════════════════════════════════════════════════
+function renderTiendas() {
+  const tiendas = [
+    { num:'01', name:'Polígono El Pino', addr:'C. Pino Central, 21 · 41016 El Pino, Sevilla', tel:'955 292 129', horario:'Lun–Vie 9:30–13:30 · 16:00–20:00 · Sáb 9:30–13:30', encargado:'Elvira Gómez', pedidos:27, stock:342, color:'var(--rojo)' },
+    { num:'02', name:'Valencina de la Concepción', addr:'Av. Dólmenes de Valencina, 7 · 41907 Valencina', tel:'955 292 130', horario:'Lun–Vie 9:30–13:30 · 16:00–20:00 · Sáb 9:30–13:30', encargado:'Manuel Pérez', pedidos:13, stock:186, color:'var(--azul)' },
+    { num:'03', name:'Carrión de los Céspedes', addr:'Pol. La Matilla s/n · Autopista A-49 Km28', tel:'955 292 131', horario:'Lun–Vie 9:30–13:30 · 16:00–20:00 · Sáb 9:30–13:30', encargado:'Rosa Delgado', pedidos:7, stock:124, color:'var(--verde)' },
+  ];
+  document.getElementById('tiendas-grid').innerHTML = tiendas.map(t => `
+    <div class="card" style="margin-bottom:0;border-top:3px solid ${t.color}">
+      <div class="card-header">
+        <div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3)">Tienda ${t.num}</div>
+          <div class="card-title" style="margin-top:2px">${t.name}</div>
+        </div>
+        <span class="badge badge-ready">Activa</span>
+      </div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13px">
+          <div style="display:flex;gap:8px;align-items:flex-start"><span style="color:var(--text3);flex-shrink:0">📍</span><span>${t.addr}</span></div>
+          <div style="display:flex;gap:8px"><span style="color:var(--text3)">📞</span><span>${t.tel}</span></div>
+          <div style="display:flex;gap:8px"><span style="color:var(--text3)">🕐</span><span style="font-size:12px;color:var(--text2)">${t.horario}</span></div>
+          <div style="display:flex;gap:8px"><span style="color:var(--text3)">👤</span><span>Encargado: <strong>${t.encargado}</strong></span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
+          <div style="background:var(--bg3);padding:12px;border-radius:var(--r);text-align:center">
+            <div style="font-size:22px;font-weight:800;color:${t.color}">${t.pedidos}</div>
+            <div style="font-size:11px;color:var(--text3)">Pedidos pendientes</div>
+          </div>
+          <div style="background:var(--bg3);padding:12px;border-radius:var(--r);text-align:center">
+            <div style="font-size:22px;font-weight:800;color:var(--text)">${t.stock}</div>
+            <div style="font-size:11px;color:var(--text3)">Uds. en stock</div>
+          </div>
+        </div>
+        <button class="btn btn-secondary" style="width:100%;margin-top:12px;font-size:12px" onclick="showToast('info','Configurando tienda','Abriendo configuración de ${t.name}')">⚙ Configurar tienda</button>
+      </div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════
+// MODALS
+// ══════════════════════════════════════════════════
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Close modal on overlay click
+document.querySelectorAll('.modal-ov').forEach(ov => {
+  ov.addEventListener('click', e => { if (e.target === ov) closeModal(ov.id); });
+});
+
+// Modal actions
+function crearPedidoManual() {
+  closeModal('modal-pedido');
+  showToast('success', 'Pedido creado', 'El pedido manual ha sido registrado en el sistema');
+}
+function crearEncargo() {
+  closeModal('modal-encargo');
+  showToast('success', 'Encargo creado', 'El encargo ha sido enviado al proveedor');
+}
+function ajustarStock() {
+  closeModal('modal-stock-edit');
+  showToast('success', 'Stock ajustado', 'El movimiento ha sido registrado en el historial');
+}
+function crearCliente() {
+  closeModal('modal-cliente');
+  showToast('success', 'Cliente creado', 'El cliente ha sido añadido a la base de datos');
+}
+function guardarProducto() {
+  closeModal('modal-producto');
+  showToast('success', 'Producto guardado', 'El producto ya está disponible en el catálogo');
+}
+function crearUsuario() {
+  closeModal('modal-usuario');
+  showToast('success', 'Usuario creado', 'Se ha enviado el email de bienvenida con las credenciales');
+}
+function crearPresupuesto() {
+  closeModal('modal-presupuesto');
+  showToast('success', 'Presupuesto creado', 'Generando PDF para enviar al cliente');
+}
+
+// ══════════════════════════════════════════════════
+// TOASTS
+// ══════════════════════════════════════════════════
+function showToast(type, title, msg) {
+  const icons = { success:'✅', error:'❌', info:'ℹ️', warning:'⚠️' };
+  const container = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = `toast-item ${type}`;
+  el.innerHTML = `<div class="toast-icon">${icons[type]||'ℹ️'}</div><div><div class="toast-title">${title}</div>${msg?`<div class="toast-msg">${msg}</div>`:''}</div>`;
+  container.appendChild(el);
+  setTimeout(() => { el.style.animation='toastOut .3s ease forwards'; setTimeout(()=>el.remove(),300); }, 4000);
+}
+
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
+// Add toastOut animation
+const style = document.createElement('style');
+style.textContent = '@keyframes toastOut{to{opacity:0;transform:translateX(100%)}}';
+document.head.appendChild(style);
+
+// Initial render
+renderDashboard();
+renderPedidos();
+
+// Date
+document.getElementById('today-date').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+// Welcome toast
+setTimeout(() => showToast('info','Panel de Gestión activo','Bienvenido/a al panel de La Estrella'), 800);
+setTimeout(() => showToast('warning','3 pedidos nuevos','Hay pedidos pendientes de procesar'), 1800);
+</script>
+</body>
+</html>
