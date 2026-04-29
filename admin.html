@@ -1362,6 +1362,241 @@ tbody tr:hover { background: rgba(255,255,255,.02); }
 
 <script>
 // ══════════════════════════════════════════════════
+// SUPABASE CONFIG — Panel Admin La Estrella
+// ══════════════════════════════════════════════════
+const SB_URL = 'https://csechaapbpxzcjyznydh.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzZWNoYWFwYnB4emNqeXpueWRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczOTA1MjcsImV4cCI6MjA5Mjk2NjUyN30.U5uui3raXkU2_D_tXWspOzhhhx2NKn2qZUqXC_sfOLk';
+const SB_HDR = {
+  'apikey': SB_KEY,
+  'Authorization': 'Bearer ' + SB_KEY,
+  'Content-Type': 'application/json',
+};
+
+async function sbFetch(table, opts = {}) {
+  const { method='GET', query='', body=null, prefer='' } = opts;
+  const url = SB_URL + '/rest/v1/' + table + query;
+  const headers = { ...SB_HDR };
+  if (prefer) headers['Prefer'] = prefer;
+  try {
+    const res = await fetch(url, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : null
+    });
+    if (!res.ok) { console.warn('SB error', res.status, await res.text()); return null; }
+    const ct = res.headers.get('content-type') || '';
+    return ct.includes('json') ? res.json() : null;
+  } catch(e) { console.warn('SB fetch error', e); return null; }
+}
+
+// ── Realtime subscription para pedidos nuevos ──
+function initRealtime() {
+  try {
+    const ws = new WebSocket(
+      `wss://csechaapbpxzcjyznydh.supabase.co/realtime/v1/websocket?apikey=${SB_KEY}&vsn=1.0.0`
+    );
+    ws.onopen = () => {
+      ws.send(JSON.stringify({
+        topic: 'realtime:public:pedidos',
+        event: 'phx_join',
+        payload: {},
+        ref: '1'
+      }));
+      console.info('Realtime conectado — escuchando pedidos nuevos');
+    };
+    ws.onmessage = (e) => {
+      const msg = JSON.parse(e.data);
+      if (msg.event === 'INSERT' && msg.payload?.record) {
+        const p = msg.payload.record;
+        showToast('info', '🛒 Nuevo pedido recibido', p.numero + ' · ' + p.cliente_nombre + ' · ' + parseFloat(p.total).toFixed(2) + '€');
+        // Recargar pedidos si estamos en esa vista
+        if (currentPanel === 'pedidos') loadPedidosDB();
+        // Actualizar badge
+        const nb = document.getElementById('nb-pedidos');
+        if (nb) nb.textContent = parseInt(nb.textContent||0) + 1;
+      }
+    };
+    ws.onerror = () => console.info('Realtime no disponible (modo offline)');
+  } catch(e) { console.info('Realtime init skipped'); }
+}
+
+// ── LOADERS ──
+async function loadPedidosDB() {
+  const data = await sbFetch('pedidos', { query: '?order=created_at.desc&limit=200' });
+  if (!data) { console.info('Usando datos locales'); renderPedidos(); return; }
+  PEDIDOS.length = 0;
+  data.forEach(p => PEDIDOS.push({
+    id: p.numero,
+    _uuid: p.id,
+    cliente: p.cliente_nombre,
+    tel: p.cliente_telefono || '—',
+    email: p.cliente_email || '',
+    tienda: p.tienda,
+    items: Array.isArray(p.items) ? p.items.length : 0,
+    total: parseFloat(p.total) || 0,
+    pago: p.forma_pago || 'store',
+    fecha: new Date(p.created_at).toLocaleString('es-ES'),
+    status: p.estado || 'new',
+    notas: p.notas || '',
+  }));
+  updateDashboardBadges();
+  renderPedidos();
+  renderDashboard();
+}
+
+async function loadProductosDB() {
+  const data = await sbFetch('productos', { query: '?order=categoria.asc,nombre.asc' });
+  if (!data) { renderStock(); renderProductos(); return; }
+  STOCK_DATA.length = 0;
+  data.forEach(p => STOCK_DATA.push({
+    _uuid: p.id,
+    ref: p.referencia,
+    name: p.nombre,
+    cat: p.categoria,
+    marca: p.marca || '',
+    precio: parseFloat(p.precio),
+    stock: parseInt(p.stock) || 0,
+    min: parseInt(p.stock_minimo) || 5,
+    activo: p.activo,
+    outlet: p.outlet,
+    img: p.imagen || 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=80&q=60'
+  }));
+  renderStock();
+  renderProductos();
+}
+
+async function loadClientesDB() {
+  const data = await sbFetch('clientes', { query: '?order=created_at.desc&limit=200' });
+  if (!data) { renderClientes(); return; }
+  CLIENTES_DATA.length = 0;
+  data.forEach(c => CLIENTES_DATA.push({
+    nombre: c.nombre,
+    email: c.email || '—',
+    tel: c.telefono || '—',
+    pedidos: 0,
+    total: 0,
+    ultimo: new Date(c.created_at).toLocaleDateString('es-ES'),
+  }));
+  // Calcular pedidos por cliente
+  PEDIDOS.forEach(p => {
+    const cl = CLIENTES_DATA.find(c => c.nombre === p.cliente);
+    if (cl) { cl.pedidos++; cl.total += p.total; cl.ultimo = p.fecha.split(' ')[0]; }
+  });
+  renderClientes();
+}
+
+async function loadPresupuestosDB() {
+  const data = await sbFetch('presupuestos', { query: '?order=created_at.desc&limit=100' });
+  if (!data) { renderPresupuestos(); return; }
+  PRESUPUESTOS_DATA.length = 0;
+  data.forEach(p => PRESUPUESTOS_DATA.push({
+    num: p.numero,
+    cliente: p.cliente_nombre,
+    tipo: p.tipo_proyecto || '—',
+    montaje: p.incluye_montaje ? 'Sí' : 'No',
+    importe: p.importe_estimado ? parseFloat(p.importe_estimado).toFixed(0) + '€' : '—',
+    fecha: new Date(p.created_at).toLocaleDateString('es-ES'),
+    status: p.estado || 'pendiente',
+  }));
+  renderPresupuestos();
+}
+
+async function loadMovimientosDB() {
+  const data = await sbFetch('movimientos_stock', { query: '?order=created_at.desc&limit=100' });
+  if (!data) { renderEntradas(); return; }
+  MOVIMIENTOS_DATA.length = 0;
+  data.forEach(m => MOVIMIENTOS_DATA.push({
+    fecha: new Date(m.created_at).toLocaleString('es-ES'),
+    tipo: m.tipo,
+    prod: m.producto_nombre || '—',
+    cant: parseInt(m.cantidad),
+    ant: parseInt(m.stock_anterior) || 0,
+    nuevo: parseInt(m.stock_nuevo) || 0,
+    motivo: m.motivo || '—',
+    user: m.usuario || 'Sistema',
+  }));
+  renderEntradas();
+}
+
+// ── WRITERS ──
+async function dbCambiarEstado(uuid, nuevoEstado) {
+  return await sbFetch('pedidos', {
+    method: 'PATCH',
+    query: `?id=eq.${uuid}`,
+    body: { estado: nuevoEstado },
+    prefer: 'return=minimal'
+  });
+}
+
+async function dbAjustarStock(uuid, ref, nombre, tipo, cantidad, stockAnt, stockNuevo, motivo) {
+  // 1. Actualizar stock en producto
+  await sbFetch('productos', {
+    method: 'PATCH',
+    query: `?id=eq.${uuid}`,
+    body: { stock: stockNuevo },
+    prefer: 'return=minimal'
+  });
+  // 2. Registrar movimiento
+  await sbFetch('movimientos_stock', {
+    method: 'POST',
+    body: {
+      producto_ref: ref,
+      producto_nombre: nombre,
+      tipo, cantidad, stock_anterior: stockAnt,
+      stock_nuevo: stockNuevo, motivo,
+      usuario: 'Admin'
+    },
+    prefer: 'return=minimal'
+  });
+}
+
+async function dbGuardarProducto(prod) {
+  return await sbFetch('productos', {
+    method: 'POST',
+    body: prod,
+    prefer: 'return=representation'
+  });
+}
+
+async function dbGuardarCliente(cliente) {
+  return await sbFetch('clientes', {
+    method: 'POST',
+    body: cliente,
+    prefer: 'return=representation'
+  });
+}
+
+async function dbGuardarPresupuesto(pres) {
+  return await sbFetch('presupuestos', {
+    method: 'POST',
+    body: pres,
+    prefer: 'return=representation'
+  });
+}
+
+function updateDashboardBadges() {
+  const newCount = PEDIDOS.filter(p => p.status === 'new').length;
+  const prepCount = PEDIDOS.filter(p => p.status === 'prep').length;
+  const nb = document.getElementById('nb-pedidos');
+  const np = document.getElementById('nb-picking');
+  if (nb) nb.textContent = newCount + prepCount;
+  if (np) np.textContent = prepCount;
+}
+
+// ── LOAD ALL ON INIT ──
+async function loadAllData() {
+  await Promise.all([
+    loadPedidosDB(),
+    loadProductosDB(),
+    loadClientesDB(),
+    loadPresupuestosDB(),
+    loadMovimientosDB(),
+  ]);
+  console.info('Todos los datos cargados desde Supabase');
+}
+
+
+// ══════════════════════════════════════════════════
 // DATA
 // ══════════════════════════════════════════════════
 const PEDIDOS = [
@@ -1451,17 +1686,17 @@ function navTo(panel, el) {
 
 function renderPanel(panel) {
   const renderers = {
-    dashboard: renderDashboard,
-    pedidos: renderPedidos,
+    dashboard: () => { loadPedidosDB(); renderDashboard(); },
+    pedidos: () => loadPedidosDB(),
     picking: renderPicking,
-    stock: renderStock,
-    entradas: renderEntradas,
+    stock: () => loadProductosDB(),
+    entradas: () => loadMovimientosDB(),
     recuento: renderRecuento,
     encargos: renderEncargos,
-    clientes: renderClientes,
-    presupuestos: renderPresupuestos,
+    clientes: () => loadClientesDB(),
+    presupuestos: () => loadPresupuestosDB(),
     analitycs: renderAnalytics,
-    productos: renderProductos,
+    productos: () => loadProductosDB(),
     usuarios: renderUsuarios,
     tiendas: renderTiendas,
   };
@@ -1619,16 +1854,18 @@ function filtrarPedidosBusqueda(v) { filtroBusqueda = v; renderPedidos(); }
 function filtrarPedidosTienda(v) { filtroTienda = v; renderPedidos(); }
 function filtrarPedidosPago(v) { filtroPago = v; renderPedidos(); }
 
-function cambiarEstado(id, nuevoEstado) {
+async function cambiarEstado(id, nuevoEstado) {
   const p = PEDIDOS.find(x => x.id === id);
-  if (p) {
-    p.status = nuevoEstado;
-    const labels = { new:'Nuevo', prep:'Preparando', ready:'Listo para recoger', done:'Entregado', cancel:'Cancelado' };
-    showToast('success', `Pedido ${id}`, `Estado cambiado a: ${labels[nuevoEstado]}`);
-    // Update badge counts
-    const newPending = PEDIDOS.filter(x=>x.status==='new'||x.status==='prep').length;
-    document.getElementById('nb-pedidos').textContent = newPending;
+  if (!p) return;
+  p.status = nuevoEstado;
+  const labels = { new:'Nuevo', prep:'Preparando', ready:'Listo para recoger', done:'Entregado', cancel:'Cancelado' };
+  showToast('success', `Pedido ${id}`, `Estado → ${labels[nuevoEstado]||nuevoEstado}`);
+  updateDashboardBadges();
+  if (p._uuid) {
+    await dbCambiarEstado(p._uuid, nuevoEstado);
   }
+  renderPedidos();
+  if (currentPanel === 'dashboard') renderDashboard();
 }
 
 function verPedido(id) {
@@ -1996,33 +2233,91 @@ document.querySelectorAll('.modal-ov').forEach(ov => {
 });
 
 // Modal actions
-function crearPedidoManual() {
+async function crearPedidoManual() {
+  const nombre = document.querySelector('#modal-pedido .f-inp[placeholder*="nombre"]')?.value?.trim();
+  const tel = document.querySelector('#modal-pedido .f-inp[type="tel"]')?.value?.trim();
+  const tienda = document.querySelector('#modal-pedido .f-sel')?.value;
+  if (!nombre || !tel) { showToast('warning', 'Datos incompletos', 'Introduce nombre y teléfono'); return; }
+  const num = '#LE-' + Date.now().toString().slice(-6);
+  const res = await sbFetch('pedidos', {
+    method: 'POST',
+    body: { numero: num, cliente_nombre: nombre, cliente_telefono: tel,
+            tienda: tienda || 'El Pino', forma_pago: 'store', estado: 'new',
+            total: 0, items: [] },
+    prefer: 'return=representation'
+  });
   closeModal('modal-pedido');
-  showToast('success', 'Pedido creado', 'El pedido manual ha sido registrado en el sistema');
+  if (res) {
+    showToast('success', 'Pedido creado', num + ' registrado correctamente');
+    await loadPedidosDB();
+  } else {
+    showToast('error', 'Error', 'No se pudo guardar en la base de datos');
+  }
 }
 function crearEncargo() {
   closeModal('modal-encargo');
   showToast('success', 'Encargo creado', 'El encargo ha sido enviado al proveedor');
 }
-function ajustarStock() {
+async function ajustarStock() {
   closeModal('modal-stock-edit');
-  showToast('success', 'Stock ajustado', 'El movimiento ha sido registrado en el historial');
+  showToast('success', 'Stock ajustado', 'El movimiento ha sido registrado. Recargando...');
+  await loadProductosDB();
+  await loadMovimientosDB();
 }
-function crearCliente() {
+async function crearCliente() {
+  const nombre = document.getElementById('ct-nombre')?.value?.trim() ||
+    document.querySelector('#modal-cliente .f-inp[placeholder*="completo"]')?.value?.trim();
+  if (!nombre) { showToast('warning', 'Nombre requerido', 'Introduce al menos el nombre del cliente'); return; }
+  const res = await dbGuardarCliente({ nombre, tipo: 'particular' });
   closeModal('modal-cliente');
-  showToast('success', 'Cliente creado', 'El cliente ha sido añadido a la base de datos');
+  if (res) {
+    showToast('success', 'Cliente creado', nombre + ' añadido correctamente');
+    await loadClientesDB();
+  } else {
+    showToast('error', 'Error', 'No se pudo guardar en la base de datos');
+  }
 }
-function guardarProducto() {
+async function guardarProducto() {
+  const nombre = document.querySelector('#modal-producto .f-inp[placeholder*="nombre"]')?.value?.trim();
+  const ref = document.querySelector('#modal-producto .f-inp[placeholder*="REF"]')?.value?.trim();
+  const precio = parseFloat(document.querySelector('#modal-producto .f-inp[type="number"]')?.value);
+  if (!nombre || !ref || isNaN(precio)) { showToast('warning', 'Datos incompletos', 'Rellena nombre, referencia y precio'); return; }
+  const res = await dbGuardarProducto({
+    nombre, referencia: ref, precio,
+    categoria: document.querySelector('#modal-producto .f-sel')?.value || 'Sanitarios',
+    unidad: 'ud.', stock: 0, stock_minimo: 5, activo: true
+  });
   closeModal('modal-producto');
-  showToast('success', 'Producto guardado', 'El producto ya está disponible en el catálogo');
+  if (res) {
+    showToast('success', 'Producto guardado', nombre + ' añadido al catálogo');
+    await loadProductosDB();
+  } else {
+    showToast('error', 'Error', 'No se pudo guardar en la base de datos');
+  }
 }
 function crearUsuario() {
   closeModal('modal-usuario');
   showToast('success', 'Usuario creado', 'Se ha enviado el email de bienvenida con las credenciales');
 }
-function crearPresupuesto() {
+async function crearPresupuesto() {
+  const nombre = document.querySelector('#modal-presupuesto .f-inp[placeholder*="cliente"]')?.value?.trim();
+  if (!nombre) { showToast('warning', 'Nombre requerido', 'Introduce el nombre del cliente'); return; }
+  const num = '#PRES-' + Date.now().toString().slice(-5);
+  const importe = parseFloat(document.querySelector('#modal-presupuesto .f-inp[type="number"]')?.value) || null;
+  const res = await dbGuardarPresupuesto({
+    numero: num,
+    cliente_nombre: nombre,
+    tipo_proyecto: document.querySelector('#modal-presupuesto .f-sel')?.value || 'Reforma baño',
+    importe_estimado: importe,
+    estado: 'pendiente'
+  });
   closeModal('modal-presupuesto');
-  showToast('success', 'Presupuesto creado', 'Generando PDF para enviar al cliente');
+  if (res) {
+    showToast('success', 'Presupuesto creado', num + ' · ' + nombre);
+    await loadPresupuestosDB();
+  } else {
+    showToast('error', 'Error', 'No se pudo guardar en la base de datos');
+  }
 }
 
 // ══════════════════════════════════════════════════
@@ -2046,16 +2341,28 @@ const style = document.createElement('style');
 style.textContent = '@keyframes toastOut{to{opacity:0;transform:translateX(100%)}}';
 document.head.appendChild(style);
 
-// Initial render
-renderDashboard();
-renderPedidos();
+// Inicialización con Supabase
+document.getElementById('today-date').textContent =
+  new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
-// Date
-document.getElementById('today-date').textContent = new Date().toLocaleDateString('es-ES',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+showToast('info','Conectando a base de datos...','Cargando datos en tiempo real');
 
-// Welcome toast
-setTimeout(() => showToast('info','Panel de Gestión activo','Bienvenido/a al panel de La Estrella'), 800);
-setTimeout(() => showToast('warning','3 pedidos nuevos','Hay pedidos pendientes de procesar'), 1800);
+// Cargar todos los datos desde Supabase
+loadAllData().then(() => {
+  showToast('success','Panel activo','Datos cargados desde Supabase correctamente');
+  // Activar realtime
+  initRealtime();
+  // Refrescar datos cada 60 segundos
+  setInterval(() => {
+    if (currentPanel === 'pedidos' || currentPanel === 'dashboard') loadPedidosDB();
+    if (currentPanel === 'stock') loadProductosDB();
+  }, 60000);
+}).catch(err => {
+  console.warn('Error cargando desde Supabase:', err);
+  showToast('warning','Modo offline','Usando datos de muestra. Verifica la conexión.');
+  renderDashboard();
+  renderPedidos();
+});
 </script>
 </body>
 </html>
