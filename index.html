@@ -4,807 +4,850 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Azulejos La Estrella — Especialistas en Baño desde 1973</title>
-<meta name="description" content="Tienda especializada en productos de baño: sanitarios, mamparas, grifería, muebles, azulejos y más. Recogida en tienda. Sevilla.">
+<meta name="description" content="Especialistas en productos de baño desde 1973. Sanitarios, mamparas, griferías, muebles, azulejos y pavimentos. Recogida en tienda en Sevilla.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-
-/* ═══════════════════════════════════════════
-   VARIABLES Y RESET
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════
+   VARIABLES
+═══════════════════════════════════════════════════ */
 :root {
-  --rojo: #D0021B;
-  --rojo-oscuro: #A50015;
-  --rojo-claro: #FF1A33;
-  --negro: #0D0D0D;
-  --carbon: #1A1A1A;
-  --gris-oscuro: #2D2D2D;
-  --gris-medio: #666666;
-  --gris-claro: #E0E0E0;
-  --gris-bg: #F7F7F7;
-  --blanco: #FFFFFF;
-  --font: 'Poppins', sans-serif;
-  --radio: 4px;
-  --sombra: 0 2px 16px rgba(0,0,0,0.10);
-  --sombra-rojo: 0 4px 20px rgba(208,2,27,0.30);
-  --trans: all 0.25s cubic-bezier(0.4,0,0.2,1);
-
-  /* SPACING SCALE - fluid */
-  --sp-xs: clamp(8px, 1vw, 12px);
-  --sp-sm: clamp(12px, 2vw, 20px);
-  --sp-md: clamp(20px, 3vw, 32px);
-  --sp-lg: clamp(32px, 5vw, 56px);
-  --sp-xl: clamp(48px, 7vw, 80px);
-
-  /* CONTAINER */
-  --container: min(1320px, 100%);
-  --container-pad: clamp(16px, 4vw, 40px);
-
-  /* HEADER HEIGHT */
-  --header-h: 68px;
+  --rojo:#D0021B; --rojo-osc:#A50015; --rojo-clr:#FF1A33;
+  --negro:#0D0D0D; --carbon:#1A1A1A; --gris-osc:#2D2D2D;
+  --gris:#666; --gris-cl:#E0E0E0; --gris-bg:#F7F7F7; --blanco:#FFF;
+  --font:'Poppins',sans-serif;
+  --r:4px;
+  --sh:0 2px 16px rgba(0,0,0,.10);
+  --sh-r:0 4px 20px rgba(208,2,27,.30);
+  --tr:all .25s cubic-bezier(.4,0,.2,1);
+  --pad:clamp(16px,4vw,40px);
+  --maxw:1320px;
+  --hh:68px; /* header height */
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--blanco);color:var(--negro);overflow-x:hidden;line-height:1.6}
+button{-webkit-tap-highlight-color:transparent;cursor:pointer}
+a{text-decoration:none}
 
-*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { font-family: var(--font); background: var(--blanco); color: var(--negro); overflow-x: hidden; line-height: 1.6; }
-img { max-width: 100%; height: auto; display: block; }
-button { -webkit-tap-highlight-color: transparent; }
-
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    LOADER
-═══════════════════════════════════════════ */
-#loader { position: fixed; inset: 0; background: var(--negro); z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; transition: opacity .5s, visibility .5s; }
-#loader.out { opacity: 0; visibility: hidden; }
-.loader-logo { color: var(--blanco); font-size: clamp(22px, 4vw, 28px); font-weight: 800; letter-spacing: -1px; }
-.loader-logo span { color: var(--rojo); }
-.loader-bar { width: min(200px, 60vw); height: 2px; background: rgba(255,255,255,.15); border-radius: 2px; overflow: hidden; }
-.loader-fill { height: 100%; background: var(--rojo); animation: fill 1.2s ease-out forwards; }
-@keyframes fill { from { width: 0; } to { width: 100%; } }
+═══════════════════════════════════════════════════ */
+#loader{position:fixed;inset:0;background:var(--negro);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity .5s,visibility .5s}
+#loader.out{opacity:0;visibility:hidden}
+.ld-logo{color:var(--blanco);font-size:clamp(20px,4vw,28px);font-weight:800}
+.ld-logo span{color:var(--rojo)}
+.ld-bar{width:min(200px,60vw);height:2px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.ld-fill{height:100%;background:var(--rojo);animation:ld 1.2s ease-out forwards}
+@keyframes ld{from{width:0}to{width:100%}}
 
-/* ═══════════════════════════════════════════
-   TOPBAR — oculto en móvil
-═══════════════════════════════════════════ */
-#topbar { background: var(--negro); padding: 8px var(--container-pad); display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,.6); flex-wrap: wrap; gap: 6px; }
-.topbar-left { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.topbar-left a, .topbar-right a { color: rgba(255,255,255,.7); text-decoration: none; transition: color .2s; display: flex; align-items: center; gap: 5px; }
-.topbar-left a:hover, .topbar-right a:hover { color: var(--rojo); }
-.topbar-right { display: flex; gap: 12px; align-items: center; }
-.topbar-badge { background: var(--rojo); color: var(--blanco); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+/* ═══════════════════════════════════════════════════
+   TOPBAR
+═══════════════════════════════════════════════════ */
+#topbar{background:var(--negro);padding:8px var(--pad);display:flex;align-items:center;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.6);flex-wrap:wrap;gap:6px}
+.tb-l{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.tb-r{display:flex;gap:12px;align-items:center}
+#topbar a{color:rgba(255,255,255,.7);transition:color .2s;display:flex;align-items:center;gap:5px}
+#topbar a:hover{color:var(--rojo)}
+.tb-badge{background:var(--rojo);color:var(--blanco);font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px}
 
-/* ═══════════════════════════════════════════
-   HEADER
-═══════════════════════════════════════════ */
-header {
-  background: var(--blanco);
-  border-bottom: 2px solid var(--negro);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 0 var(--container-pad);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: var(--header-h);
-  box-shadow: 0 2px 12px rgba(0,0,0,.08);
-  gap: 12px;
+/* ═══════════════════════════════════════════════════
+   HEADER + NAV DESKTOP
+═══════════════════════════════════════════════════ */
+header{
+  background:var(--blanco);
+  border-bottom:2.5px solid var(--negro);
+  position:sticky;top:0;z-index:200;
+  padding:0 var(--pad);
+  display:flex;align-items:center;justify-content:space-between;
+  height:var(--hh);
+  box-shadow:0 2px 12px rgba(0,0,0,.08);
+  gap:16px;
 }
-.logo { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; flex-shrink: 0; }
-.logo-icon { width: 36px; height: 36px; background: var(--rojo); display: flex; align-items: center; justify-content: center; color: var(--blanco); font-weight: 900; font-size: 18px; border-radius: var(--radio); flex-shrink: 0; }
-.logo-text .name { font-size: clamp(14px, 2vw, 18px); font-weight: 800; color: var(--negro); letter-spacing: -.5px; white-space: nowrap; }
-.logo-text .since { font-size: 10px; color: var(--gris-medio); letter-spacing: 1px; text-transform: uppercase; }
+/* LOGO */
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-ico{width:36px;height:36px;background:var(--rojo);display:flex;align-items:center;justify-content:center;color:var(--blanco);font-weight:900;font-size:18px;border-radius:var(--r);flex-shrink:0}
+.logo-name{font-size:clamp(13px,1.6vw,17px);font-weight:800;color:var(--negro);letter-spacing:-.4px;white-space:nowrap}
+.logo-sub{font-size:10px;color:var(--gris);letter-spacing:.8px;text-transform:uppercase;line-height:1}
 
-/* DESKTOP NAV */
-nav { display: flex; align-items: center; gap: 2px; flex: 1; justify-content: center; }
-nav button { background: none; border: none; cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--gris-oscuro); padding: 8px 12px; border-radius: var(--radio); transition: var(--trans); white-space: nowrap; position: relative; }
-nav button:hover, nav button.active { color: var(--rojo); background: rgba(208,2,27,.06); }
-nav button.active::after { content: ''; position: absolute; bottom: -2px; left: 12px; right: 12px; height: 2px; background: var(--rojo); border-radius: 2px; }
-
-/* MOBILE NAV DRAWER */
-#mobile-nav {
-  display: none;
-  position: fixed;
-  inset: var(--header-h) 0 0 0;
-  background: var(--blanco);
-  z-index: 99;
-  flex-direction: column;
-  padding: 16px;
-  border-top: 2px solid var(--negro);
-  overflow-y: auto;
-  animation: slideDown .25s ease;
+/* DESKTOP NAV — visible ≥1024px */
+#desk-nav{display:flex;align-items:center;gap:2px;flex:1;justify-content:center}
+#desk-nav button{
+  background:none;border:none;
+  font-family:var(--font);font-size:12.5px;font-weight:500;
+  color:var(--gris-osc);padding:8px 11px;
+  border-radius:var(--r);transition:var(--tr);
+  white-space:nowrap;position:relative;
 }
-#mobile-nav.open { display: flex; }
-@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-#mobile-nav button {
-  background: none; border: none; cursor: pointer; font-family: var(--font);
-  font-size: 17px; font-weight: 600; color: var(--negro);
-  padding: 14px 12px; text-align: left; border-radius: var(--radio);
-  transition: var(--trans); border-bottom: 1px solid var(--gris-claro);
+#desk-nav button:hover,#desk-nav button.active{color:var(--rojo);background:rgba(208,2,27,.06)}
+#desk-nav button.active::after{
+  content:'';position:absolute;bottom:-3px;left:11px;right:11px;
+  height:2.5px;background:var(--rojo);border-radius:2px;
 }
-#mobile-nav button:last-child { border-bottom: none; }
-#mobile-nav button:hover { color: var(--rojo); background: rgba(208,2,27,.04); }
-#mobile-nav .mob-cat-btn { font-size: 13px; font-weight: 500; color: var(--gris-medio); padding: 10px 12px 10px 24px; }
-
-/* MOBILE SEARCH BAR (inside nav) */
-.mob-search { display: flex; align-items: center; background: var(--gris-bg); border: 1.5px solid var(--gris-claro); border-radius: 100px; padding: 10px 16px; gap: 8px; margin-bottom: 8px; }
-.mob-search input { flex: 1; border: none; background: none; font-family: var(--font); font-size: 14px; outline: none; color: var(--negro); }
+/* CATÁLOGO dropdown trigger */
+#desk-nav .has-drop{position:relative}
+#desk-nav .has-drop .drop-arrow{font-size:9px;margin-left:3px;transition:transform .2s;display:inline-block}
+#desk-nav .has-drop:hover .drop-arrow{transform:rotate(180deg)}
+/* DROPDOWN CATALOG */
+.nav-dropdown{
+  display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--blanco);border:1.5px solid var(--gris-cl);
+  border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.14);
+  padding:8px;min-width:220px;z-index:300;
+}
+#desk-nav .has-drop:hover .nav-dropdown{display:block;animation:dropIn .18s ease}
+@keyframes dropIn{from{opacity:0;transform:translateX(-50%) translateY(-6px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.nav-dropdown a{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:var(--r);
+  font-size:13px;font-weight:500;color:var(--gris-osc);
+  transition:var(--tr);
+}
+.nav-dropdown a:hover{background:rgba(208,2,27,.06);color:var(--rojo)}
+.nav-dropdown a span{font-size:16px;width:22px;text-align:center}
+.nav-dropdown .drop-sep{height:1px;background:var(--gris-cl);margin:4px 0}
 
 /* HEADER ACTIONS */
-.header-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-.search-bar { display: flex; align-items: center; background: var(--gris-bg); border: 1px solid var(--gris-claro); border-radius: 100px; padding: 6px 14px; gap: 8px; transition: var(--trans); }
-.search-bar:focus-within { border-color: var(--rojo); background: var(--blanco); }
-.search-bar input { border: none; background: none; font-family: var(--font); font-size: 13px; width: 160px; outline: none; color: var(--negro); }
-.search-bar input::placeholder { color: var(--gris-medio); }
-.search-bar button { background: none; border: none; cursor: pointer; color: var(--gris-medio); font-size: 16px; padding: 0; line-height: 1; }
-.btn-icon { background: none; border: none; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--negro); font-size: 19px; transition: var(--trans); position: relative; }
-.btn-icon:hover { background: var(--gris-bg); color: var(--rojo); }
-.cart-badge { position: absolute; top: 2px; right: 2px; background: var(--rojo); color: var(--blanco); font-size: 9px; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
-.cart-badge.show { display: flex; }
-.btn-call { background: var(--rojo); color: var(--blanco); border: none; cursor: pointer; font-family: var(--font); font-size: 12px; font-weight: 600; padding: 9px 16px; border-radius: 100px; transition: var(--trans); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
-.btn-call:hover { background: var(--rojo-oscuro); box-shadow: var(--sombra-rojo); }
-.mobile-btn { display: none; background: none; border: none; cursor: pointer; font-size: 24px; color: var(--negro); padding: 4px; }
+.hdr-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
 
-/* ═══════════════════════════════════════════
+/* SEARCH BAR DESKTOP */
+.search-wrap{position:relative}
+.search-bar{
+  display:flex;align-items:center;
+  background:var(--gris-bg);border:1.5px solid var(--gris-cl);
+  border-radius:100px;padding:7px 14px;gap:8px;
+  transition:var(--tr);width:200px;
+}
+.search-bar:focus-within{border-color:var(--rojo);background:var(--blanco);width:260px}
+.search-bar input{border:none;background:none;font-family:var(--font);font-size:13px;width:100%;outline:none;color:var(--negro)}
+.search-bar input::placeholder{color:var(--gris)}
+.search-bar .srch-ico{font-size:15px;color:var(--gris);flex-shrink:0}
+
+/* SEARCH DROPDOWN */
+.search-dropdown{
+  display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;
+  background:var(--blanco);border:1.5px solid var(--gris-cl);
+  border-radius:8px;box-shadow:0 8px 32px rgba(0,0,0,.14);
+  z-index:400;overflow:hidden;max-height:420px;overflow-y:auto;
+}
+.search-dropdown.open{display:block}
+.srch-section-title{
+  font-size:10px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--gris);
+  padding:10px 14px 6px;background:var(--gris-bg);
+  border-bottom:1px solid var(--gris-cl);
+}
+.srch-cat-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;cursor:pointer;transition:var(--tr);
+  border-bottom:1px solid rgba(224,224,224,.5);
+}
+.srch-cat-item:hover{background:rgba(208,2,27,.05)}
+.srch-cat-item .sci-icon{font-size:18px;width:24px;text-align:center}
+.srch-cat-item .sci-name{font-size:13px;font-weight:600;color:var(--negro)}
+.srch-cat-item .sci-count{font-size:11px;color:var(--gris);margin-left:auto}
+.srch-result-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 14px;cursor:pointer;transition:var(--tr);
+  border-bottom:1px solid rgba(224,224,224,.4);
+}
+.srch-result-item:hover{background:rgba(208,2,27,.05)}
+.srch-result-item .sri-img{
+  width:40px;height:40px;border-radius:var(--r);
+  background-size:cover;background-position:center;
+  flex-shrink:0;border:1px solid var(--gris-cl);
+}
+.srch-result-item .sri-info .sri-name{font-size:13px;font-weight:600;color:var(--negro)}
+.srch-result-item .sri-info .sri-cat{font-size:11px;color:var(--gris)}
+.srch-result-item .sri-price{font-size:13px;font-weight:700;color:var(--negro);margin-left:auto;white-space:nowrap}
+.srch-empty{padding:20px 14px;text-align:center;color:var(--gris);font-size:13px}
+.srch-footer{padding:10px 14px;background:var(--gris-bg);border-top:1px solid var(--gris-cl);text-align:center;font-size:12px;color:var(--rojo);cursor:pointer;font-weight:600}
+.srch-footer:hover{text-decoration:underline}
+
+/* CART BTN */
+.btn-ico{background:none;border:none;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--negro);font-size:19px;transition:var(--tr);position:relative}
+.btn-ico:hover{background:var(--gris-bg);color:var(--rojo)}
+.cart-badge{position:absolute;top:2px;right:2px;background:var(--rojo);color:var(--blanco);font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:none;align-items:center;justify-content:center}
+.cart-badge.show{display:flex}
+
+/* CALL BTN */
+.btn-call{background:var(--rojo);color:var(--blanco);border:none;font-family:var(--font);font-size:12px;font-weight:600;padding:9px 18px;border-radius:100px;transition:var(--tr);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.btn-call:hover{background:var(--rojo-osc);box-shadow:var(--sh-r)}
+
+/* HAMBURGER — visible <1024px */
+.mob-btn{display:none;background:none;border:none;font-size:24px;color:var(--negro);padding:4px;width:40px;height:40px;align-items:center;justify-content:center}
+
+/* ═══════════════════════════════════════════════════
+   MOBILE NAV DRAWER
+═══════════════════════════════════════════════════ */
+#mob-nav{
+  display:none;position:fixed;
+  inset:var(--hh) 0 0 0;
+  background:var(--blanco);z-index:199;
+  flex-direction:column;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  border-top:2px solid var(--negro);
+}
+#mob-nav.open{display:flex;animation:slideD .22s ease}
+@keyframes slideD{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.mob-search-wrap{padding:12px 16px;border-bottom:1px solid var(--gris-cl)}
+.mob-srch{display:flex;align-items:center;background:var(--gris-bg);border:1.5px solid var(--gris-cl);border-radius:100px;padding:10px 16px;gap:8px}
+.mob-srch input{flex:1;border:none;background:none;font-family:var(--font);font-size:14px;outline:none;color:var(--negro)}
+.mob-nav-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gris);padding:12px 16px 6px}
+.mob-nav-btn{background:none;border:none;width:100%;text-align:left;padding:13px 16px;font-family:var(--font);font-size:15px;font-weight:600;color:var(--negro);border-bottom:1px solid rgba(224,224,224,.5);transition:var(--tr);display:flex;align-items:center;gap:10px}
+.mob-nav-btn:hover{color:var(--rojo);background:rgba(208,2,27,.04)}
+.mob-nav-btn .mni{font-size:18px;width:24px;text-align:center}
+.mob-cat-btn{font-size:13px;font-weight:500;color:var(--gris-osc);padding:10px 16px 10px 50px;border-bottom:1px solid rgba(224,224,224,.3);display:flex;align-items:center;gap:8px}
+.mob-cat-btn:hover{color:var(--rojo);background:rgba(208,2,27,.03)}
+.mob-nav-footer{padding:16px;display:flex;gap:10px;margin-top:auto;border-top:1px solid var(--gris-cl)}
+.mob-nav-footer a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px;border-radius:100px;font-size:13px;font-weight:700;transition:var(--tr)}
+.mob-call{background:var(--rojo);color:var(--blanco)}
+.mob-call:hover{background:var(--rojo-osc)}
+.mob-wa{background:#25D366;color:var(--blanco)}
+.mob-wa:hover{background:#1ebd5a}
+
+/* ═══════════════════════════════════════════════════
    PAGES
-═══════════════════════════════════════════ */
-.page { display: none; animation: fadeIn .3s ease; }
-.page.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+═══════════════════════════════════════════════════ */
+.page{display:none;animation:fadeIn .3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* ═══════════════════════════════════════════
-   LAYOUT UTILITIES
-═══════════════════════════════════════════ */
-.max-w { max-width: var(--container); margin: 0 auto; padding: 0 var(--container-pad); }
-.section { padding: var(--sp-xl) var(--container-pad); }
-.section-sm { padding: var(--sp-lg) var(--container-pad); }
-.bg-gray { background: var(--gris-bg); }
-.bg-dark { background: var(--negro); }
-.text-center { text-align: center; }
-.s-label { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--rojo); display: block; margin-bottom: 8px; }
-.s-title { font-size: clamp(24px, 3.5vw, 44px); font-weight: 800; color: var(--negro); line-height: 1.1; margin-bottom: 12px; }
-.s-sub { font-size: clamp(13px, 1.5vw, 15px); color: var(--gris-medio); max-width: 520px; }
-.s-header { margin-bottom: clamp(28px, 4vw, 44px); }
-.s-header-flex { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: clamp(28px, 4vw, 44px); gap: 16px; flex-wrap: wrap; }
+/* ═══════════════════════════════════════════════════
+   LAYOUT HELPERS
+═══════════════════════════════════════════════════ */
+.mxw{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+.sec{padding:clamp(48px,7vw,80px) var(--pad)}
+.sec-sm{padding:clamp(32px,5vw,56px) var(--pad)}
+.bg-gr{background:var(--gris-bg)}
+.tc{text-align:center}
+.s-lbl{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--rojo);display:block;margin-bottom:8px}
+.s-ttl{font-size:clamp(24px,3.5vw,44px);font-weight:800;color:var(--negro);line-height:1.1;margin-bottom:12px}
+.s-sub{font-size:clamp(13px,1.5vw,15px);color:var(--gris);max-width:520px}
+.s-hdr{margin-bottom:clamp(28px,4vw,44px)}
+.s-hdr-fx{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:clamp(28px,4vw,44px);gap:16px;flex-wrap:wrap}
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    HERO
-═══════════════════════════════════════════ */
-.hero { position: relative; height: clamp(480px, 85vh, 900px); overflow: hidden; background: var(--negro); }
-.hero-slides .hero-bg { opacity: 0; position: absolute; inset: 0; background-size: cover; background-position: center; transition: opacity 1.2s; }
-.hero-slides .hero-bg.active { opacity: .45; }
-.hero-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 var(--container-pad); max-width: min(720px, 100%); }
-.hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--rojo); color: var(--blanco); font-size: clamp(10px, 1.2vw, 11px); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; margin-bottom: 16px; width: fit-content; }
-.hero h1 { font-size: clamp(32px, 6vw, 72px); font-weight: 900; color: var(--blanco); line-height: 1.05; margin-bottom: 16px; }
-.hero h1 em { color: var(--rojo); font-style: normal; }
-.hero p { font-size: clamp(14px, 1.8vw, 16px); color: rgba(255,255,255,.7); max-width: 440px; margin-bottom: clamp(24px, 3vw, 36px); font-weight: 300; line-height: 1.6; }
-.hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
-.hero-dots { position: absolute; bottom: clamp(16px, 3vw, 28px); left: var(--container-pad); z-index: 3; display: flex; gap: 6px; }
-.hero-dot { width: 28px; height: 3px; background: rgba(255,255,255,.3); cursor: pointer; border-radius: 2px; transition: var(--trans); }
-.hero-dot.active { background: var(--rojo); width: 48px; }
-.hero-badge { position: absolute; right: var(--container-pad); bottom: clamp(16px, 3vw, 40px); z-index: 3; background: var(--blanco); padding: clamp(12px, 1.5vw, 16px) clamp(14px, 2vw, 20px); border-radius: var(--radio); text-align: center; box-shadow: var(--sombra); }
-.hero-badge .num { font-size: clamp(24px, 3vw, 32px); font-weight: 800; color: var(--rojo); line-height: 1; }
-.hero-badge .lbl { font-size: 11px; color: var(--gris-medio); font-weight: 500; }
-.btn-hero-primary { background: var(--rojo); color: var(--blanco); border: none; cursor: pointer; font-family: var(--font); font-size: clamp(13px, 1.5vw, 14px); font-weight: 600; padding: clamp(11px, 1.5vw, 14px) clamp(20px, 3vw, 32px); border-radius: 100px; transition: var(--trans); }
-.btn-hero-primary:hover { background: var(--rojo-claro); box-shadow: var(--sombra-rojo); transform: translateY(-2px); }
-.btn-hero-secondary { background: rgba(255,255,255,.1); color: var(--blanco); border: 1.5px solid rgba(255,255,255,.3); cursor: pointer; font-family: var(--font); font-size: clamp(13px, 1.5vw, 14px); font-weight: 500; padding: clamp(11px, 1.5vw, 14px) clamp(20px, 3vw, 32px); border-radius: 100px; transition: var(--trans); backdrop-filter: blur(4px); }
-.btn-hero-secondary:hover { background: rgba(255,255,255,.2); }
+═══════════════════════════════════════════════════ */
+.hero{position:relative;height:clamp(480px,84vh,880px);overflow:hidden;background:var(--negro)}
+.hero-bg{opacity:0;position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 1.2s}
+.hero-bg.active{opacity:.45}
+.hero-cnt{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 var(--pad);max-width:min(720px,100%)}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--rojo);color:var(--blanco);font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:18px;width:fit-content}
+.hero h1{font-size:clamp(30px,6vw,72px);font-weight:900;color:var(--blanco);line-height:1.05;margin-bottom:16px}
+.hero h1 em{color:var(--rojo);font-style:normal}
+.hero p{font-size:clamp(14px,1.8vw,16px);color:rgba(255,255,255,.7);max-width:440px;margin-bottom:clamp(24px,3vw,36px);font-weight:300;line-height:1.65}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap}
+.hero-dots{position:absolute;bottom:clamp(16px,3vw,28px);left:var(--pad);z-index:3;display:flex;gap:6px}
+.hero-dot{width:28px;height:3px;background:rgba(255,255,255,.3);cursor:pointer;border-radius:2px;transition:var(--tr)}
+.hero-dot.active{background:var(--rojo);width:48px}
+.hero-badge{position:absolute;right:var(--pad);bottom:clamp(16px,3vw,40px);z-index:3;background:var(--blanco);padding:clamp(12px,1.5vw,16px) clamp(14px,2vw,20px);border-radius:var(--r);text-align:center;box-shadow:var(--sh)}
+.hero-badge .hb-num{font-size:clamp(24px,3vw,32px);font-weight:800;color:var(--rojo);line-height:1}
+.hero-badge .hb-lbl{font-size:11px;color:var(--gris);font-weight:500}
+.btn-hp{background:var(--rojo);color:var(--blanco);border:none;font-family:var(--font);font-size:clamp(13px,1.4vw,14px);font-weight:600;padding:clamp(11px,1.4vw,14px) clamp(20px,3vw,32px);border-radius:100px;transition:var(--tr)}
+.btn-hp:hover{background:var(--rojo-clr);box-shadow:var(--sh-r);transform:translateY(-2px)}
+.btn-hs{background:rgba(255,255,255,.1);color:var(--blanco);border:1.5px solid rgba(255,255,255,.3);font-family:var(--font);font-size:clamp(13px,1.4vw,14px);font-weight:500;padding:clamp(11px,1.4vw,14px) clamp(20px,3vw,32px);border-radius:100px;transition:var(--tr);backdrop-filter:blur(4px)}
+.btn-hs:hover{background:rgba(255,255,255,.2)}
 
-/* ═══════════════════════════════════════════
-   TRUST BAR
-═══════════════════════════════════════════ */
-.trust-bar { background: var(--negro); padding: clamp(14px, 2vw, 18px) var(--container-pad); display: flex; align-items: center; justify-content: center; gap: clamp(16px, 3vw, 40px); flex-wrap: wrap; }
-.trust-item { display: flex; align-items: center; gap: 7px; color: rgba(255,255,255,.6); font-size: clamp(11px, 1.2vw, 12px); }
-.trust-item .ico { font-size: 15px; }
-.trust-item strong { color: var(--blanco); font-weight: 600; }
+/* TRUST BAR */
+.trust-bar{background:var(--negro);padding:clamp(12px,2vw,18px) var(--pad);display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,40px);flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.6);font-size:clamp(11px,1.2vw,12px)}
+.trust-item .ti{font-size:15px}
+.trust-item strong{color:var(--blanco);font-weight:600}
 
-/* ═══════════════════════════════════════════
-   CATEGORIES GRID — Responsive fluido
-═══════════════════════════════════════════ */
-.cat-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto auto;
-  gap: clamp(10px, 1.5vw, 20px);
-}
-.cat-card { position: relative; overflow: hidden; cursor: pointer; border-radius: var(--radio); aspect-ratio: 4/5; background: var(--negro); border: 2px solid transparent; transition: var(--trans); }
-.cat-card:hover { border-color: var(--rojo); transform: translateY(-3px); box-shadow: var(--sombra-rojo); }
-.cat-card:first-child { grid-column: span 2; aspect-ratio: auto; min-height: clamp(200px, 30vw, 360px); }
-.cat-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(.55); transition: transform .5s ease; }
-.cat-card:hover .cat-bg { transform: scale(1.06); filter: brightness(.4); }
-.cat-content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(14px, 2vw, 20px); }
-.cat-icon { font-size: clamp(22px, 2.5vw, 28px); margin-bottom: 6px; }
-.cat-name { font-size: clamp(15px, 1.8vw, 20px); font-weight: 700; color: var(--blanco); line-height: 1.1; }
-.cat-count { font-size: clamp(10px, 1.2vw, 11px); color: rgba(255,255,255,.6); margin-top: 3px; }
-.cat-arrow { width: 30px; height: 30px; border: 1.5px solid rgba(255,255,255,.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--blanco); font-size: 13px; margin-top: 8px; transition: var(--trans); opacity: 0; transform: translateX(-6px); }
-.cat-card:hover .cat-arrow { opacity: 1; transform: translateX(0); background: var(--rojo); border-color: var(--rojo); }
+/* ═══════════════════════════════════════════════════
+   CATEGORIES GRID
+═══════════════════════════════════════════════════ */
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.5vw,20px)}
+.cat-card{position:relative;overflow:hidden;cursor:pointer;border-radius:var(--r);aspect-ratio:4/5;background:var(--negro);border:2px solid transparent;transition:var(--tr)}
+.cat-card:hover{border-color:var(--rojo);transform:translateY(-3px);box-shadow:var(--sh-r)}
+.cat-card:first-child{grid-column:span 2;aspect-ratio:auto;min-height:clamp(200px,28vw,340px)}
+.cat-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.55);transition:transform .5s ease}
+.cat-card:hover .cat-bg{transform:scale(1.06);filter:brightness(.4)}
+.cat-cnt{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(12px,2vw,20px)}
+.cat-ico{font-size:clamp(20px,2.5vw,28px);margin-bottom:6px}
+.cat-nm{font-size:clamp(14px,1.8vw,20px);font-weight:700;color:var(--blanco);line-height:1.1}
+.cat-ct{font-size:clamp(10px,1.1vw,11px);color:rgba(255,255,255,.6);margin-top:3px}
+.cat-arr{width:30px;height:30px;border:1.5px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--blanco);font-size:13px;margin-top:8px;transition:var(--tr);opacity:0;transform:translateX(-6px)}
+.cat-card:hover .cat-arr{opacity:1;transform:translateX(0);background:var(--rojo);border-color:var(--rojo)}
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    PRODUCT CARDS
-═══════════════════════════════════════════ */
-.prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(220px, 45%), 1fr)); gap: clamp(10px, 2vw, 20px); }
-.prod-card { background: var(--blanco); border: 1.5px solid var(--gris-claro); border-radius: var(--radio); overflow: hidden; cursor: pointer; transition: var(--trans); position: relative; }
-.prod-card:hover { border-color: var(--rojo); box-shadow: var(--sombra-rojo); transform: translateY(-2px); }
-.prod-img { width: 100%; aspect-ratio: 1; position: relative; overflow: hidden; }
-.prod-img-inner { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .4s ease; }
-.prod-card:hover .prod-img-inner { transform: scale(1.05); }
-.prod-badge { position: absolute; top: 10px; left: 10px; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; }
-.badge-new { background: var(--negro); color: var(--blanco); }
-.badge-outlet { background: var(--rojo); color: var(--blanco); }
-.badge-top { background: #FF6B00; color: var(--blanco); }
-.prod-quick { position: absolute; top: 10px; right: 10px; background: var(--blanco); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; box-shadow: var(--sombra); opacity: 0; transform: translateX(6px); transition: var(--trans); }
-.prod-card:hover .prod-quick { opacity: 1; transform: translateX(0); }
-.prod-quick:hover { background: var(--rojo); }
-.prod-info { padding: clamp(10px, 1.5vw, 14px); }
-.prod-cat { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gris-medio); font-weight: 500; }
-.prod-name { font-size: clamp(13px, 1.3vw, 14px); font-weight: 600; color: var(--negro); margin: 3px 0 4px; line-height: 1.25; }
-.prod-brand { font-size: 11px; color: var(--gris-medio); margin-bottom: 8px; }
-.prod-footer { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; }
-.prod-price { font-size: clamp(16px, 2vw, 19px); font-weight: 700; color: var(--negro); }
-.prod-price-unit { font-size: 11px; color: var(--gris-medio); }
-.prod-price-old { font-size: 12px; color: var(--gris-medio); text-decoration: line-through; margin-left: 3px; }
-.btn-add { background: var(--negro); color: var(--blanco); border: none; cursor: pointer; font-family: var(--font); font-size: 11px; font-weight: 600; padding: 7px 12px; border-radius: 100px; transition: var(--trans); white-space: nowrap; touch-action: manipulation; }
-.btn-add:hover { background: var(--rojo); }
+═══════════════════════════════════════════════════ */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(220px,46%),1fr));gap:clamp(10px,2vw,20px)}
+.prod-card{background:var(--blanco);border:1.5px solid var(--gris-cl);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:var(--tr);position:relative}
+.prod-card:hover{border-color:var(--rojo);box-shadow:var(--sh-r);transform:translateY(-2px)}
+.prod-img{width:100%;aspect-ratio:1;position:relative;overflow:hidden}
+.prod-img-in{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .4s ease}
+.prod-card:hover .prod-img-in{transform:scale(1.05)}
+.prod-bdg{position:absolute;top:10px;left:10px;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:100px}
+.bdg-new{background:var(--negro);color:var(--blanco)}
+.bdg-out{background:var(--rojo);color:var(--blanco)}
+.bdg-top{background:#FF6B00;color:var(--blanco)}
+.prod-quick{position:absolute;top:10px;right:10px;background:var(--blanco);border:none;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:var(--sh);opacity:0;transform:translateX(6px);transition:var(--tr)}
+.prod-card:hover .prod-quick{opacity:1;transform:translateX(0)}
+.prod-quick:hover{background:var(--rojo)}
+.prod-info{padding:clamp(10px,1.5vw,14px)}
+.prod-cat{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gris);font-weight:500}
+.prod-nm{font-size:clamp(12px,1.3vw,14px);font-weight:600;color:var(--negro);margin:3px 0 4px;line-height:1.25}
+.prod-brand{font-size:11px;color:var(--gris);margin-bottom:8px}
+.prod-ft{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}
+.prod-price{font-size:clamp(15px,2vw,19px);font-weight:700;color:var(--negro)}
+.prod-unit{font-size:11px;color:var(--gris)}
+.prod-old{font-size:12px;color:var(--gris);text-decoration:line-through;margin-left:3px}
+.btn-add{background:var(--negro);color:var(--blanco);border:none;font-family:var(--font);font-size:11px;font-weight:600;padding:7px 12px;border-radius:100px;transition:var(--tr);white-space:nowrap;touch-action:manipulation}
+.btn-add:hover{background:var(--rojo)}
 
-/* ═══════════════════════════════════════════
-   WHY GRID
-═══════════════════════════════════════════ */
-.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: clamp(12px, 2vw, 20px); }
-.why-card { background: var(--blanco); border: 1.5px solid var(--gris-claro); padding: clamp(20px, 3vw, 28px) clamp(16px, 2.5vw, 22px); border-radius: var(--radio); transition: var(--trans); }
-.why-card:hover { border-color: var(--rojo); box-shadow: var(--sombra-rojo); }
-.why-ico { width: 46px; height: 46px; background: var(--rojo); border-radius: var(--radio); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 14px; }
-.why-title { font-size: clamp(14px, 1.5vw, 16px); font-weight: 700; margin-bottom: 6px; }
-.why-desc { font-size: 13px; color: var(--gris-medio); line-height: 1.6; }
+/* ═══════════════════════════════════════════════════
+   WHY / PROCESS / REVIEWS / CTA
+═══════════════════════════════════════════════════ */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(12px,2vw,20px)}
+.why-card{background:var(--blanco);border:1.5px solid var(--gris-cl);padding:clamp(20px,2.5vw,28px) clamp(16px,2vw,22px);border-radius:var(--r);transition:var(--tr)}
+.why-card:hover{border-color:var(--rojo);box-shadow:var(--sh-r)}
+.why-ico{width:46px;height:46px;background:var(--rojo);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:14px}
+.why-ttl{font-size:clamp(14px,1.5vw,16px);font-weight:700;margin-bottom:6px}
+.why-desc{font-size:13px;color:var(--gris);line-height:1.6}
 
-/* ═══════════════════════════════════════════
-   PROCESS SECTION
-═══════════════════════════════════════════ */
-.process-section { background: var(--negro); padding: var(--sp-xl) var(--container-pad); color: var(--blanco); }
-.process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2.5vw, 24px); margin-top: clamp(32px, 4vw, 48px); position: relative; }
-.process-steps::before { content: ''; position: absolute; top: 20px; left: calc(12.5% + 8px); right: calc(12.5% + 8px); height: 2px; background: linear-gradient(90deg, var(--rojo), rgba(208,2,27,.2)); z-index: 0; }
-.process-step { text-align: center; position: relative; z-index: 1; }
-.step-num { width: 40px; height: 40px; border: 2px solid var(--rojo); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: var(--rojo); margin: 0 auto 14px; background: var(--negro); }
-.step-title { font-size: clamp(13px, 1.4vw, 14px); font-weight: 700; margin-bottom: 6px; color: var(--blanco); }
-.step-desc { font-size: clamp(11px, 1.2vw, 12px); color: rgba(255,255,255,.5); line-height: 1.5; }
+.proc-sec{background:var(--negro);padding:clamp(48px,7vw,80px) var(--pad)}
+.proc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2.5vw,24px);margin-top:clamp(32px,4vw,48px);position:relative}
+.proc-steps::before{content:'';position:absolute;top:20px;left:calc(12.5% + 8px);right:calc(12.5% + 8px);height:2px;background:linear-gradient(90deg,var(--rojo),rgba(208,2,27,.2));z-index:0}
+.proc-step{text-align:center;position:relative;z-index:1}
+.step-n{width:40px;height:40px;border:2px solid var(--rojo);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:var(--rojo);margin:0 auto 14px;background:var(--negro)}
+.step-ttl{font-size:clamp(13px,1.4vw,14px);font-weight:700;margin-bottom:6px;color:var(--blanco)}
+.step-desc{font-size:clamp(11px,1.2vw,12px);color:rgba(255,255,255,.5);line-height:1.5}
 
-/* ═══════════════════════════════════════════
-   REVIEWS GRID
-═══════════════════════════════════════════ */
-.reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: clamp(12px, 2vw, 20px); }
-.review-card { background: var(--blanco); border: 1.5px solid var(--gris-claro); padding: clamp(18px, 2.5vw, 24px); border-radius: var(--radio); transition: var(--trans); }
-.review-card:hover { border-color: var(--rojo); }
-.review-stars { color: var(--rojo); font-size: 13px; letter-spacing: 2px; margin-bottom: 10px; }
-.review-text { font-size: 13px; color: var(--gris-oscuro); line-height: 1.65; margin-bottom: 14px; font-style: italic; }
-.review-author { font-weight: 600; font-size: 13px; }
-.review-meta { font-size: 11px; color: var(--gris-medio); margin-top: 2px; }
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:clamp(12px,2vw,20px)}
+.rev-card{background:var(--blanco);border:1.5px solid var(--gris-cl);padding:clamp(18px,2.5vw,24px);border-radius:var(--r);transition:var(--tr)}
+.rev-card:hover{border-color:var(--rojo)}
+.rev-stars{color:var(--rojo);font-size:13px;letter-spacing:2px;margin-bottom:10px}
+.rev-txt{font-size:13px;color:var(--gris-osc);line-height:1.65;margin-bottom:14px;font-style:italic}
+.rev-aut{font-weight:600;font-size:13px}
+.rev-meta{font-size:11px;color:var(--gris);margin-top:2px}
 
-/* ═══════════════════════════════════════════
-   CTA BANNER
-═══════════════════════════════════════════ */
-.cta-banner { background: var(--rojo); padding: clamp(36px, 5vw, 56px) var(--container-pad); display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-.cta-banner h2 { font-size: clamp(20px, 3vw, 36px); font-weight: 800; color: var(--blanco); }
-.cta-banner p { font-size: clamp(13px, 1.5vw, 14px); color: rgba(255,255,255,.75); margin-top: 6px; }
-.btn-white { background: var(--blanco); color: var(--rojo); border: none; cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 700; padding: 14px clamp(20px, 3vw, 32px); border-radius: 100px; transition: var(--trans); white-space: nowrap; }
-.btn-white:hover { background: var(--negro); color: var(--blanco); }
+.cta-banner{background:var(--rojo);padding:clamp(36px,5vw,56px) var(--pad);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.cta-banner h2{font-size:clamp(20px,3vw,36px);font-weight:800;color:var(--blanco)}
+.cta-banner p{font-size:clamp(13px,1.5vw,14px);color:rgba(255,255,255,.75);margin-top:6px}
+.btn-wh{background:var(--blanco);color:var(--rojo);border:none;font-family:var(--font);font-size:13px;font-weight:700;padding:14px clamp(20px,3vw,32px);border-radius:100px;transition:var(--tr);white-space:nowrap}
+.btn-wh:hover{background:var(--negro);color:var(--blanco)}
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    CATALOG PAGE
-═══════════════════════════════════════════ */
-.catalog-hero { background: var(--negro); padding: clamp(28px, 4vw, 40px) var(--container-pad); }
-.catalog-layout { display: grid; grid-template-columns: 256px 1fr; gap: clamp(16px, 2.5vw, 28px); padding: clamp(20px, 3vw, 28px) var(--container-pad); max-width: var(--container); margin: 0 auto; }
+═══════════════════════════════════════════════════ */
+.cat-hero{background:var(--negro);padding:clamp(28px,4vw,40px) var(--pad)}
+.cat-layout{display:grid;grid-template-columns:256px 1fr;gap:clamp(16px,2.5vw,28px);padding:clamp(20px,3vw,28px) var(--pad);max-width:var(--maxw);margin:0 auto}
 
-/* FILTERS PANEL */
-.filters { background: var(--blanco); border: 1.5px solid var(--gris-claro); border-radius: var(--radio); padding: clamp(16px, 2vw, 20px); height: fit-content; position: sticky; top: calc(var(--header-h) + 16px); }
+/* FILTERS */
+.filters{background:var(--blanco);border:1.5px solid var(--gris-cl);border-radius:var(--r);padding:clamp(14px,2vw,20px);height:fit-content;position:sticky;top:calc(var(--hh) + 16px)}
+.flt-toggle{display:none;width:100%;background:var(--negro);color:var(--blanco);border:none;padding:12px 16px;font-family:var(--font);font-size:14px;font-weight:600;border-radius:var(--r);text-align:left;align-items:center;justify-content:space-between;margin-bottom:4px}
+.flt-toggle .arr{transition:transform .25s;font-style:normal}
+.flt-toggle.open .arr{transform:rotate(180deg)}
+.flt-body{}
+.flt-sec{margin-bottom:20px}
+.flt-sec:last-child{margin-bottom:0}
+.flt-ttl{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--negro);margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--gris-cl)}
+.flt-opt{display:flex;align-items:center;gap:8px;padding:5px 0;cursor:pointer}
+.flt-opt input[type=checkbox]{width:15px;height:15px;accent-color:var(--rojo);cursor:pointer;flex-shrink:0}
+.flt-opt label{font-size:13px;cursor:pointer;color:var(--gris-osc)}
+.flt-opt:hover label{color:var(--rojo)}
+.flt-cnt{margin-left:auto;font-size:11px;color:var(--gris)}
+.color-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.c-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:var(--tr)}
+.c-dot:hover,.c-dot.sel{border-color:var(--rojo);transform:scale(1.1)}
 
-/* MOBILE: filtros colapsables */
-.filters-toggle { display: none; width: 100%; background: var(--negro); color: var(--blanco); border: none; padding: 12px 16px; font-family: var(--font); font-size: 14px; font-weight: 600; cursor: pointer; border-radius: var(--radio); margin-bottom: 4px; text-align: left; justify-content: space-between; align-items: center; }
-.filters-toggle span { transition: transform .25s; }
-.filters-toggle.open span { transform: rotate(180deg); }
-.filters-body { }
+.cat-main{min-width:0}
+.cat-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.cat-count{font-size:14px;color:var(--gris)}
+.cat-count strong{color:var(--negro);font-weight:700}
+.cat-sort{background:var(--blanco);border:1.5px solid var(--gris-cl);padding:8px 12px;font-size:13px;color:var(--negro);font-family:var(--font);border-radius:var(--r);cursor:pointer}
+.cat-sort:focus{outline:none;border-color:var(--rojo)}
 
-.filter-section { margin-bottom: 22px; }
-.filter-section:last-child { margin-bottom: 0; }
-.filter-title { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--negro); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--gris-claro); }
-.filter-opt { display: flex; align-items: center; gap: 8px; padding: 5px 0; cursor: pointer; }
-.filter-opt input[type=checkbox] { width: 15px; height: 15px; accent-color: var(--rojo); cursor: pointer; flex-shrink: 0; }
-.filter-opt label { font-size: 13px; cursor: pointer; color: var(--gris-oscuro); }
-.filter-opt:hover label { color: var(--rojo); }
-.filter-opt .cnt { margin-left: auto; font-size: 11px; color: var(--gris-medio); }
-.color-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-.color-dot { width: 24px; height: 24px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: var(--trans); }
-.color-dot:hover, .color-dot.active { border-color: var(--rojo); transform: scale(1.1); }
+/* ═══════════════════════════════════════════════════
+   PRODUCT DETAIL — m2 SELECTOR
+═══════════════════════════════════════════════════ */
+.det-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,56px);padding:clamp(24px,4vw,48px) var(--pad);max-width:1200px;margin:0 auto}
+.det-gal .main-img{width:100%;aspect-ratio:1;background-size:cover;background-position:center;border-radius:var(--r);border:1.5px solid var(--gris-cl);margin-bottom:10px;overflow:hidden}
+.det-thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.d-thumb{width:clamp(54px,7vw,68px);height:clamp(54px,7vw,68px);background-size:cover;background-position:center;border-radius:var(--r);cursor:pointer;border:2px solid transparent;transition:var(--tr)}
+.d-thumb.active,.d-thumb:hover{border-color:var(--rojo)}
+.d-crumb{font-size:12px;color:var(--gris);margin-bottom:14px;display:flex;gap:5px;flex-wrap:wrap}
+.d-crumb span{cursor:pointer;transition:color .2s}
+.d-crumb span:hover{color:var(--rojo)}
+.d-nm{font-size:clamp(20px,3vw,34px);font-weight:800;line-height:1.1;margin-bottom:6px}
+.d-brand{font-size:12px;color:var(--gris);margin-bottom:10px;font-weight:500}
+.d-ref{font-size:11px;color:var(--gris);letter-spacing:1px;margin-bottom:14px;background:var(--gris-bg);display:inline-block;padding:3px 10px;border-radius:100px}
+.d-rating{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.d-price{font-size:clamp(28px,4vw,36px);font-weight:800;color:var(--negro);margin-bottom:4px}
+.d-price-note{font-size:13px;color:var(--gris);margin-bottom:18px}
+.d-sep{border:none;border-top:1.5px solid var(--gris-cl);margin:18px 0}
+.d-specs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.d-spec-key{color:var(--gris);text-transform:uppercase;letter-spacing:.5px;font-size:10px;font-weight:600}
+.d-spec-val{font-weight:600;font-size:13px;color:var(--negro);margin-top:1px}
 
-.catalog-main { min-width: 0; }
-.catalog-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
-.catalog-count { font-size: 14px; color: var(--gris-medio); }
-.catalog-count strong { color: var(--negro); font-weight: 700; }
-.catalog-sort { background: var(--blanco); border: 1.5px solid var(--gris-claro); padding: 8px 12px; font-size: 13px; color: var(--negro); font-family: var(--font); border-radius: var(--radio); cursor: pointer; }
-.catalog-sort:focus { outline: none; border-color: var(--rojo); }
+/* QUANTITY SELECTOR — unified for both m² and ud */
+.qty-wrap{margin-bottom:16px}
+.qty-label-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.qty-lbl{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gris)}
+.qty-unit-badge{
+  background:var(--negro);color:var(--blanco);
+  font-size:10px;font-weight:700;padding:3px 10px;
+  border-radius:100px;letter-spacing:.5px;text-transform:uppercase;
+}
+.qty-unit-badge.m2{background:var(--rojo)} /* red for m² */
 
-/* ═══════════════════════════════════════════
-   PRODUCT DETAIL
-═══════════════════════════════════════════ */
-.detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 56px); padding: clamp(24px, 4vw, 48px) var(--container-pad); max-width: 1200px; margin: 0 auto; }
-.detail-gallery .main-img { width: 100%; aspect-ratio: 1; background-size: cover; background-position: center; border-radius: var(--radio); border: 1.5px solid var(--gris-claro); margin-bottom: 10px; overflow: hidden; }
-.detail-thumbs { display: flex; gap: 8px; flex-wrap: wrap; }
-.d-thumb { width: clamp(56px, 8vw, 68px); height: clamp(56px, 8vw, 68px); background-size: cover; background-position: center; border-radius: var(--radio); cursor: pointer; border: 2px solid transparent; transition: var(--trans); }
-.d-thumb.active, .d-thumb:hover { border-color: var(--rojo); }
-.d-crumb { font-size: 12px; color: var(--gris-medio); margin-bottom: 14px; display: flex; gap: 5px; flex-wrap: wrap; }
-.d-crumb span { cursor: pointer; transition: color .2s; }
-.d-crumb span:hover { color: var(--rojo); }
-.d-name { font-size: clamp(20px, 3vw, 34px); font-weight: 800; line-height: 1.1; margin-bottom: 6px; }
-.d-brand { font-size: 12px; color: var(--gris-medio); margin-bottom: 10px; font-weight: 500; }
-.d-ref { font-size: 11px; color: var(--gris-medio); letter-spacing: 1px; margin-bottom: 14px; background: var(--gris-bg); display: inline-block; padding: 3px 10px; border-radius: 100px; }
-.d-rating { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
-.d-price { font-size: clamp(28px, 4vw, 36px); font-weight: 800; color: var(--negro); margin-bottom: 4px; }
-.d-price-note { font-size: 13px; color: var(--gris-medio); margin-bottom: 18px; }
-.d-sep { border: none; border-top: 1.5px solid var(--gris-claro); margin: 18px 0; }
-.d-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
-.d-spec-key { color: var(--gris-medio); text-transform: uppercase; letter-spacing: .5px; font-size: 10px; font-weight: 600; }
-.d-spec-val { font-weight: 600; font-size: 13px; color: var(--negro); margin-top: 1px; }
-.qty-wrap { margin-bottom: 16px; }
-.qty-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--gris-medio); margin-bottom: 8px; }
-.qty-box { display: inline-flex; align-items: center; border: 1.5px solid var(--gris-claro); border-radius: 100px; overflow: hidden; }
-.qty-btn { width: 40px; height: 40px; background: none; border: none; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: var(--trans); color: var(--negro); }
-.qty-btn:hover { background: var(--gris-bg); }
-.qty-inp { width: 52px; height: 40px; text-align: center; border: none; font-family: var(--font); font-size: 15px; font-weight: 600; background: none; color: var(--negro); }
-.qty-inp:focus { outline: none; }
-.d-cta { display: flex; gap: 10px; margin-bottom: 14px; }
-.btn-add-lg { flex: 1; background: var(--rojo); color: var(--blanco); border: none; cursor: pointer; font-family: var(--font); font-size: 14px; font-weight: 700; padding: 15px 20px; border-radius: 100px; transition: var(--trans); }
-.btn-add-lg:hover { background: var(--rojo-oscuro); box-shadow: var(--sombra-rojo); }
-.btn-fav { width: 48px; height: 48px; background: none; border: 1.5px solid var(--gris-claro); border-radius: 50%; cursor: pointer; font-size: 18px; transition: var(--trans); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.btn-fav:hover { border-color: var(--rojo); }
-.pickup-info { background: var(--gris-bg); border: 1.5px solid var(--gris-claro); padding: 14px 16px; border-radius: var(--radio); font-size: 13px; line-height: 1.5; display: flex; gap: 10px; align-items: flex-start; }
-.pickup-info .pi-icon { font-size: 20px; flex-shrink: 0; }
-.pickup-info strong { color: var(--rojo); }
+/* m² helper */
+.m2-helper{
+  background:rgba(208,2,27,.06);
+  border:1px solid rgba(208,2,27,.15);
+  border-radius:var(--r);
+  padding:10px 14px;margin-bottom:14px;
+  font-size:12px;color:var(--gris-osc);line-height:1.5;
+  display:none;
+}
+.m2-helper.show{display:block}
+.m2-helper strong{color:var(--rojo)}
+.m2-inputs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.m2-inp-wrap label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--gris);display:block;margin-bottom:4px}
+.m2-inp{width:100%;padding:8px 12px;border:1.5px solid var(--gris-cl);border-radius:var(--r);font-family:var(--font);font-size:14px;font-weight:600;color:var(--negro)}
+.m2-inp:focus{outline:none;border-color:var(--rojo)}
+.m2-result{font-size:13px;color:var(--gris-osc);padding-top:4px}
+.m2-result strong{color:var(--rojo);font-size:15px}
 
-/* ═══════════════════════════════════════════
+.qty-box{display:inline-flex;align-items:center;border:1.5px solid var(--gris-cl);border-radius:100px;overflow:hidden;margin-bottom:4px}
+.qty-btn{width:40px;height:40px;background:none;border:none;font-size:18px;display:flex;align-items:center;justify-content:center;transition:var(--tr);color:var(--negro)}
+.qty-btn:hover{background:var(--gris-bg)}
+.qty-inp{width:56px;height:40px;text-align:center;border:none;font-family:var(--font);font-size:15px;font-weight:600;background:none;color:var(--negro)}
+.qty-inp:focus{outline:none}
+.qty-suffix{font-size:12px;color:var(--gris);padding-right:14px;font-weight:500}
+
+.d-cta{display:flex;gap:10px;margin-bottom:14px}
+.btn-addlg{flex:1;background:var(--rojo);color:var(--blanco);border:none;font-family:var(--font);font-size:14px;font-weight:700;padding:15px 20px;border-radius:100px;transition:var(--tr)}
+.btn-addlg:hover{background:var(--rojo-osc);box-shadow:var(--sh-r)}
+.btn-fav{width:48px;height:48px;background:none;border:1.5px solid var(--gris-cl);border-radius:50%;font-size:18px;transition:var(--tr);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.btn-fav:hover{border-color:var(--rojo)}
+.pickup-info{background:var(--gris-bg);border:1.5px solid var(--gris-cl);padding:14px 16px;border-radius:var(--r);font-size:13px;line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+.pickup-info .pi{font-size:20px;flex-shrink:0}
+.pickup-info strong{color:var(--rojo)}
+
+/* ═══════════════════════════════════════════════════
    CART DRAWER
-═══════════════════════════════════════════ */
-.cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 200; opacity: 0; visibility: hidden; transition: var(--trans); }
-.cart-overlay.open { opacity: 1; visibility: visible; }
-.cart-drawer { position: fixed; right: -100%; top: 0; bottom: 0; width: min(420px, 100vw); background: var(--blanco); z-index: 201; display: flex; flex-direction: column; transition: right .4s cubic-bezier(.4,0,.2,1); box-shadow: -8px 0 40px rgba(0,0,0,.18); }
-.cart-drawer.open { right: 0; }
-.cart-dh { padding: clamp(14px, 2vw, 20px); border-bottom: 1.5px solid var(--gris-claro); display: flex; align-items: center; justify-content: space-between; }
-.cart-dh-title { font-size: 18px; font-weight: 800; }
-.cart-db { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 14px clamp(14px, 2vw, 20px); }
-.cart-df { padding: clamp(14px, 2vw, 20px); border-top: 1.5px solid var(--gris-claro); background: var(--gris-bg); }
-.cart-empty { text-align: center; padding: 56px 20px; color: var(--gris-medio); }
-.cart-empty-ico { font-size: 48px; opacity: .25; margin-bottom: 10px; }
-.cart-item-d { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gris-claro); align-items: flex-start; }
-.ci-img { width: 68px; height: 68px; background-size: cover; background-position: center; border-radius: var(--radio); flex-shrink: 0; border: 1px solid var(--gris-claro); }
-.ci-info { flex: 1; min-width: 0; }
-.ci-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ci-cat { font-size: 11px; color: var(--gris-medio); }
-.ci-controls { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-.ci-qb { background: var(--gris-bg); border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; transition: var(--trans); touch-action: manipulation; }
-.ci-qb:hover { background: var(--rojo); color: var(--blanco); }
-.ci-qty { font-size: 13px; font-weight: 600; min-width: 20px; text-align: center; }
-.ci-unit { font-size: 10px; color: var(--gris-medio); }
-.ci-rm { background: none; border: none; cursor: pointer; color: var(--gris-medio); font-size: 13px; margin-left: auto; }
-.ci-rm:hover { color: var(--rojo); }
-.ci-price { font-size: 16px; font-weight: 700; white-space: nowrap; padding-top: 2px; flex-shrink: 0; }
-.cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.cart-total-label { font-size: 14px; color: var(--gris-medio); }
-.cart-total-val { font-size: 24px; font-weight: 800; }
-.cart-pickup-note { background: rgba(208,2,27,.06); border: 1px solid rgba(208,2,27,.15); padding: 10px 12px; border-radius: var(--radio); font-size: 12px; line-height: 1.5; margin-bottom: 14px; color: var(--gris-oscuro); }
-.cart-pickup-note strong { color: var(--rojo); }
-.btn-checkout { width: 100%; background: var(--rojo); color: var(--blanco); border: none; cursor: pointer; font-family: var(--font); font-size: 14px; font-weight: 700; padding: 16px; border-radius: 100px; transition: var(--trans); touch-action: manipulation; }
-.btn-checkout:hover { background: var(--rojo-oscuro); box-shadow: var(--sombra-rojo); }
+═══════════════════════════════════════════════════ */
+.cart-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:300;opacity:0;visibility:hidden;transition:var(--tr)}
+.cart-ov.open{opacity:1;visibility:visible}
+.cart-drw{position:fixed;right:-100%;top:0;bottom:0;width:min(420px,100vw);background:var(--blanco);z-index:301;display:flex;flex-direction:column;transition:right .4s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(0,0,0,.18)}
+.cart-drw.open{right:0}
+.cart-dh{padding:clamp(14px,2vw,20px);border-bottom:1.5px solid var(--gris-cl);display:flex;align-items:center;justify-content:space-between}
+.cart-dh-ttl{font-size:18px;font-weight:800}
+.cart-db{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px clamp(14px,2vw,20px)}
+.cart-df{padding:clamp(14px,2vw,20px);border-top:1.5px solid var(--gris-cl);background:var(--gris-bg)}
+.cart-empty{text-align:center;padding:56px 20px;color:var(--gris)}
+.ce-ico{font-size:48px;opacity:.25;margin-bottom:10px}
+.ci-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--gris-cl);align-items:flex-start}
+.ci-img{width:68px;height:68px;background-size:cover;background-position:center;border-radius:var(--r);flex-shrink:0;border:1px solid var(--gris-cl)}
+.ci-info{flex:1;min-width:0}
+.ci-nm{font-size:13px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-cat{font-size:11px;color:var(--gris)}
+.ci-ctrl{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+.ci-qb{background:var(--gris-bg);border:none;width:24px;height:24px;border-radius:50%;font-size:15px;display:flex;align-items:center;justify-content:center;transition:var(--tr);touch-action:manipulation}
+.ci-qb:hover{background:var(--rojo);color:var(--blanco)}
+.ci-qty{font-size:13px;font-weight:600;min-width:20px;text-align:center}
+.ci-unit{font-size:10px;color:var(--gris)}
+.ci-rm{background:none;border:none;color:var(--gris);font-size:13px;margin-left:auto}
+.ci-rm:hover{color:var(--rojo)}
+.ci-price{font-size:16px;font-weight:700;white-space:nowrap;padding-top:2px;flex-shrink:0}
+.cart-tot-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.cart-tot-lbl{font-size:14px;color:var(--gris)}
+.cart-tot-val{font-size:24px;font-weight:800}
+.cart-note{background:rgba(208,2,27,.06);border:1px solid rgba(208,2,27,.15);padding:10px 12px;border-radius:var(--r);font-size:12px;line-height:1.5;margin-bottom:14px;color:var(--gris-osc)}
+.cart-note strong{color:var(--rojo)}
+.btn-checkout{width:100%;background:var(--rojo);color:var(--blanco);border:none;font-family:var(--font);font-size:14px;font-weight:700;padding:16px;border-radius:100px;transition:var(--tr);touch-action:manipulation}
+.btn-checkout:hover{background:var(--rojo-osc);box-shadow:var(--sh-r)}
 
-/* ═══════════════════════════════════════════
-   CHECKOUT PAGE
-═══════════════════════════════════════════ */
-.checkout-layout { display: grid; grid-template-columns: 1fr 340px; gap: clamp(20px, 3vw, 28px); padding: clamp(24px, 4vw, 40px) var(--container-pad); max-width: 1200px; margin: 0 auto; }
-.checkout-section-title { font-size: clamp(17px, 2vw, 20px); font-weight: 800; margin-bottom: 16px; }
-.checkout-items { margin-bottom: 32px; }
-.f-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.f-label { font-size: 11px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--gris-medio); }
-.f-input { padding: 12px 14px; border: 1.5px solid var(--gris-claro); border-radius: var(--radio); font-family: var(--font); font-size: 14px; color: var(--negro); transition: var(--trans); width: 100%; }
-.f-input:focus { outline: none; border-color: var(--rojo); }
-.f-select { padding: 12px 14px; border: 1.5px solid var(--gris-claro); border-radius: var(--radio); font-family: var(--font); font-size: 14px; color: var(--negro); background: var(--blanco); cursor: pointer; width: 100%; }
-.f-textarea { padding: 12px 14px; border: 1.5px solid var(--gris-claro); border-radius: var(--radio); font-family: var(--font); font-size: 14px; resize: vertical; width: 100%; }
-.f-textarea:focus { outline: none; border-color: var(--rojo); }
-.pay-opts { display: flex; flex-direction: column; gap: 8px; }
-.pay-opt { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1.5px solid var(--gris-claro); border-radius: var(--radio); cursor: pointer; transition: var(--trans); }
-.pay-opt:hover { border-color: var(--rojo); }
-.pay-opt input { accent-color: var(--rojo); cursor: pointer; flex-shrink: 0; }
-.pay-opt label { cursor: pointer; font-size: 13px; font-weight: 500; }
-.order-summary { background: var(--negro); color: var(--blanco); padding: clamp(20px, 3vw, 28px); border-radius: var(--radio); position: sticky; top: calc(var(--header-h) + 16px); height: fit-content; }
-.os-title { font-size: 18px; font-weight: 800; margin-bottom: 18px; }
-.os-line { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 10px; color: rgba(255,255,255,.6); }
-.os-line strong { color: var(--blanco); }
-.os-total { display: flex; justify-content: space-between; font-size: 22px; font-weight: 800; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.12); margin-top: 12px; color: var(--rojo); }
-.os-note { background: rgba(208,2,27,.15); border: 1px solid rgba(208,2,27,.25); padding: 12px; border-radius: var(--radio); font-size: 12px; line-height: 1.5; margin: 16px 0; color: rgba(255,255,255,.7); }
-.os-note strong { color: var(--rojo); display: block; margin-bottom: 3px; }
+/* ═══════════════════════════════════════════════════
+   CHECKOUT
+═══════════════════════════════════════════════════ */
+.co-layout{display:grid;grid-template-columns:1fr 340px;gap:clamp(20px,3vw,28px);padding:clamp(24px,4vw,40px) var(--pad);max-width:1200px;margin:0 auto}
+.co-ttl{font-size:clamp(17px,2vw,20px);font-weight:800;margin-bottom:16px}
+.co-items{margin-bottom:32px}
+.f-grp{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f-lbl{font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:var(--gris)}
+.f-inp{padding:12px 14px;border:1.5px solid var(--gris-cl);border-radius:var(--r);font-family:var(--font);font-size:14px;color:var(--negro);transition:var(--tr);width:100%}
+.f-inp:focus{outline:none;border-color:var(--rojo)}
+.f-sel{padding:12px 14px;border:1.5px solid var(--gris-cl);border-radius:var(--r);font-family:var(--font);font-size:14px;color:var(--negro);background:var(--blanco);cursor:pointer;width:100%}
+.f-ta{padding:12px 14px;border:1.5px solid var(--gris-cl);border-radius:var(--r);font-family:var(--font);font-size:14px;resize:vertical;width:100%}
+.f-ta:focus{outline:none;border-color:var(--rojo)}
+.pay-opts{display:flex;flex-direction:column;gap:8px}
+.pay-opt{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid var(--gris-cl);border-radius:var(--r);cursor:pointer;transition:var(--tr)}
+.pay-opt:hover{border-color:var(--rojo)}
+.pay-opt input{accent-color:var(--rojo);cursor:pointer;flex-shrink:0}
+.pay-opt label{cursor:pointer;font-size:13px;font-weight:500}
+.ord-sum{background:var(--negro);color:var(--blanco);padding:clamp(20px,3vw,28px);border-radius:var(--r);position:sticky;top:calc(var(--hh) + 16px);height:fit-content}
+.os-ttl{font-size:18px;font-weight:800;margin-bottom:18px}
+.os-ln{display:flex;justify-content:space-between;font-size:13px;margin-bottom:10px;color:rgba(255,255,255,.6)}
+.os-ln strong{color:var(--blanco)}
+.os-tot{display:flex;justify-content:space-between;font-size:22px;font-weight:800;padding-top:14px;border-top:1px solid rgba(255,255,255,.12);margin-top:12px;color:var(--rojo)}
+.os-note{background:rgba(208,2,27,.15);border:1px solid rgba(208,2,27,.25);padding:12px;border-radius:var(--r);font-size:12px;line-height:1.5;margin:16px 0;color:rgba(255,255,255,.7)}
+.os-note strong{color:var(--rojo);display:block;margin-bottom:3px}
+.confirm-wrap{max-width:600px;margin:clamp(40px,6vw,72px) auto;padding:0 var(--pad);text-align:center}
+.conf-ico{width:80px;height:80px;background:var(--rojo);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 28px}
+.conf-ttl{font-size:clamp(28px,4vw,36px);font-weight:800;margin-bottom:12px}
+.conf-sub{font-size:15px;color:var(--gris);line-height:1.65;margin-bottom:28px}
+.conf-box{background:var(--gris-bg);border:1.5px solid var(--gris-cl);padding:clamp(18px,3vw,24px);border-radius:var(--r);text-align:left;margin-bottom:28px}
+.conf-num{font-size:11px;color:var(--gris);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.conf-id{font-size:clamp(24px,4vw,32px);font-weight:900;color:var(--rojo)}
 
-/* CONFIRM */
-.confirm-wrap { max-width: 600px; margin: clamp(40px, 6vw, 72px) auto; padding: 0 var(--container-pad); text-align: center; }
-.confirm-ico { width: 80px; height: 80px; background: var(--rojo); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin: 0 auto 28px; }
-.confirm-title { font-size: clamp(28px, 4vw, 36px); font-weight: 800; margin-bottom: 12px; }
-.confirm-sub { font-size: 15px; color: var(--gris-medio); line-height: 1.65; margin-bottom: 28px; }
-.confirm-box { background: var(--gris-bg); border: 1.5px solid var(--gris-claro); padding: clamp(18px, 3vw, 24px); border-radius: var(--radio); text-align: left; margin-bottom: 28px; }
-.confirm-order-num { font-size: 11px; color: var(--gris-medio); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
-.confirm-order-id { font-size: clamp(24px, 4vw, 32px); font-weight: 900; color: var(--rojo); }
-
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    ADMIN
-═══════════════════════════════════════════ */
-.admin-layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - var(--header-h)); }
-.admin-sidebar { background: var(--negro); padding: 24px 0; position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); overflow-y: auto; }
-.admin-logo-area { padding: 0 20px 20px; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 12px; }
-.admin-logo-name { font-size: 15px; font-weight: 800; color: var(--blanco); }
-.admin-logo-sub { font-size: 11px; color: rgba(255,255,255,.35); }
-.admin-nav-section { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.25); padding: 12px 20px 6px; font-weight: 600; }
-.admin-nav-item { display: flex; align-items: center; gap: 10px; padding: 11px 20px; color: rgba(255,255,255,.55); cursor: pointer; font-size: 13px; transition: var(--trans); border-left: 2px solid transparent; }
-.admin-nav-item:hover { color: var(--blanco); background: rgba(255,255,255,.04); }
-.admin-nav-item.active { color: var(--blanco); border-left-color: var(--rojo); background: rgba(208,2,27,.08); }
-.admin-nav-item .ico { font-size: 16px; }
-.admin-main { background: #F4F4F4; padding: clamp(16px, 3vw, 28px); overflow-x: auto; }
-.admin-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 10px; }
-.admin-title { font-size: clamp(20px, 3vw, 26px); font-weight: 800; }
-.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: clamp(10px, 1.5vw, 16px); margin-bottom: 24px; }
-.stat-card { background: var(--blanco); border: 1.5px solid var(--gris-claro); padding: clamp(14px, 2vw, 20px); border-radius: var(--radio); }
-.stat-card.highlight { background: var(--rojo); border-color: var(--rojo); }
-.stat-card.highlight .stat-label { color: rgba(255,255,255,.6); }
-.stat-card.highlight .stat-val { color: var(--blanco); }
-.stat-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gris-medio); font-weight: 600; margin-bottom: 6px; }
-.stat-val { font-size: clamp(22px, 3vw, 30px); font-weight: 800; color: var(--negro); }
-.orders-tbl { background: var(--blanco); border: 1.5px solid var(--gris-claro); border-radius: var(--radio); overflow: auto; -webkit-overflow-scrolling: touch; }
-.orders-tbl-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1.5px solid var(--gris-claro); flex-wrap: wrap; gap: 8px; }
-.orders-tbl-title { font-size: 16px; font-weight: 700; }
-table { width: 100%; border-collapse: collapse; min-width: 500px; }
-th { text-align: left; padding: 10px 14px; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--gris-medio); background: #FAFAFA; border-bottom: 1.5px solid var(--gris-claro); font-weight: 600; white-space: nowrap; }
-td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--gris-claro); vertical-align: middle; }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: rgba(208,2,27,.02); }
-.status { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 10px; font-weight: 600; white-space: nowrap; }
-.s-new { background: rgba(52,152,219,.12); color: #3498db; }
-.s-prep { background: rgba(255,107,0,.12); color: #FF6B00; }
-.s-ready { background: rgba(39,174,96,.12); color: #27ae60; }
-.s-done { background: rgba(102,102,102,.12); color: #666; }
-.admin-sel { font-size: 12px; border: 1px solid var(--gris-claro); padding: 4px 8px; border-radius: var(--radio); font-family: var(--font); cursor: pointer; }
+═══════════════════════════════════════════════════ */
+.adm-layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - var(--hh))}
+.adm-sb{background:var(--negro);padding:24px 0;position:sticky;top:var(--hh);height:calc(100vh - var(--hh));overflow-y:auto}
+.adm-sb-logo{padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:12px}
+.adm-sb-nm{font-size:15px;font-weight:800;color:var(--blanco)}
+.adm-sb-sub{font-size:11px;color:rgba(255,255,255,.35)}
+.adm-sec-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);padding:12px 20px 6px;font-weight:600}
+.adm-item{display:flex;align-items:center;gap:10px;padding:11px 20px;color:rgba(255,255,255,.55);cursor:pointer;font-size:13px;transition:var(--tr);border-left:2px solid transparent}
+.adm-item:hover{color:var(--blanco);background:rgba(255,255,255,.04)}
+.adm-item.active{color:var(--blanco);border-left-color:var(--rojo);background:rgba(208,2,27,.08)}
+.adm-item .ico{font-size:16px}
+.adm-main{background:#F4F4F4;padding:clamp(16px,3vw,28px);overflow-x:auto}
+.adm-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+.adm-ttl{font-size:clamp(20px,3vw,26px);font-weight:800}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:clamp(10px,1.5vw,16px);margin-bottom:24px}
+.stat-card{background:var(--blanco);border:1.5px solid var(--gris-cl);padding:clamp(14px,2vw,20px);border-radius:var(--r)}
+.stat-card.hl{background:var(--rojo);border-color:var(--rojo)}
+.stat-card.hl .stat-lbl{color:rgba(255,255,255,.6)}
+.stat-card.hl .stat-v{color:var(--blanco)}
+.stat-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gris);font-weight:600;margin-bottom:6px}
+.stat-v{font-size:clamp(22px,3vw,30px);font-weight:800;color:var(--negro)}
+.ord-tbl{background:var(--blanco);border:1.5px solid var(--gris-cl);border-radius:var(--r);overflow:auto;-webkit-overflow-scrolling:touch}
+.ord-tbl-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1.5px solid var(--gris-cl);flex-wrap:wrap;gap:8px}
+.ord-tbl-ttl{font-size:16px;font-weight:700}
+table{width:100%;border-collapse:collapse;min-width:480px}
+th{text-align:left;padding:10px 14px;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gris);background:#FAFAFA;border-bottom:1.5px solid var(--gris-cl);font-weight:600;white-space:nowrap}
+td{padding:12px 14px;font-size:13px;border-bottom:1px solid var(--gris-cl);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(208,2,27,.02)}
+.st{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:600;white-space:nowrap}
+.st-new{background:rgba(52,152,219,.12);color:#3498db}
+.st-prep{background:rgba(255,107,0,.12);color:#FF6B00}
+.st-ready{background:rgba(39,174,96,.12);color:#27ae60}
+.st-done{background:rgba(102,102,102,.12);color:#666}
+.adm-sel{font-size:12px;border:1px solid var(--gris-cl);padding:4px 8px;border-radius:var(--r);font-family:var(--font);cursor:pointer}
 
-/* ═══════════════════════════════════════════
-   PAGES INTERNAS (about / contact / montaje)
-═══════════════════════════════════════════ */
-.about-hero-section { background: var(--negro); padding: clamp(40px, 6vw, 64px) var(--container-pad); }
-.montaje-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 48px); align-items: center; }
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 48px); padding: clamp(36px, 6vw, 64px) var(--container-pad); max-width: 1200px; margin: 0 auto; }
+/* ═══════════════════════════════════════════════════
+   INTERIOR PAGES (nosotros, montaje, contacto)
+═══════════════════════════════════════════════════ */
+.pg-hero{background:var(--negro);padding:clamp(40px,6vw,64px) var(--pad)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,48px);align-items:start}
+.two-col.center{align-items:center}
+.pg-sec{padding:clamp(40px,6vw,64px) var(--pad);max-width:1200px;margin:0 auto}
+.pg-sec-full{padding:clamp(40px,6vw,64px) var(--pad)}
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════════
    FOOTER
-═══════════════════════════════════════════ */
-footer { background: var(--negro); color: rgba(255,255,255,.55); padding: clamp(40px, 6vw, 56px) var(--container-pad) clamp(20px, 3vw, 28px); }
-.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: clamp(24px, 4vw, 40px); margin-bottom: clamp(32px, 4vw, 40px); }
-.footer-brand-logo { font-size: 20px; font-weight: 800; color: var(--blanco); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.footer-brand-logo .ico { background: var(--rojo); padding: 4px 8px; border-radius: var(--radio); }
-.footer-desc { font-size: 13px; line-height: 1.7; max-width: 260px; }
-.footer-col-title { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--blanco); font-weight: 600; margin-bottom: 14px; }
-.footer-links { display: flex; flex-direction: column; gap: 8px; }
-.footer-links a { color: rgba(255,255,255,.55); text-decoration: none; font-size: 13px; transition: color .2s; }
-.footer-links a:hover { color: var(--rojo); }
-.footer-contact-row { display: flex; align-items: center; gap: 8px; font-size: 13px; margin-bottom: 8px; }
-.footer-contact-row a { color: rgba(255,255,255,.55); text-decoration: none; }
-.footer-contact-row a:hover { color: var(--rojo); }
-.footer-bottom { padding-top: 20px; border-top: 1px solid rgba(255,255,255,.08); display: flex; align-items: center; justify-content: space-between; font-size: 12px; flex-wrap: wrap; gap: 10px; }
-.footer-bottom a { color: rgba(255,255,255,.35); text-decoration: none; }
-.footer-bottom a:hover { color: var(--rojo); }
+═══════════════════════════════════════════════════ */
+footer{background:var(--negro);color:rgba(255,255,255,.55);padding:clamp(40px,6vw,56px) var(--pad) clamp(20px,3vw,28px)}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:clamp(24px,4vw,40px);margin-bottom:clamp(32px,4vw,40px)}
+.ft-logo{font-size:20px;font-weight:800;color:var(--blanco);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ft-logo .fi{background:var(--rojo);padding:4px 8px;border-radius:var(--r)}
+.ft-desc{font-size:13px;line-height:1.7;max-width:260px}
+.ft-col-ttl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--blanco);font-weight:600;margin-bottom:14px}
+.ft-links{display:flex;flex-direction:column;gap:8px}
+.ft-links a{color:rgba(255,255,255,.55);font-size:13px;transition:color .2s}
+.ft-links a:hover{color:var(--rojo)}
+.ft-row{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:8px}
+.ft-row a{color:rgba(255,255,255,.55)}
+.ft-row a:hover{color:var(--rojo)}
+.ft-bot{padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;font-size:12px;flex-wrap:wrap;gap:10px}
+.ft-bot a{color:rgba(255,255,255,.35)}
+.ft-bot a:hover{color:var(--rojo)}
 
-/* ═══════════════════════════════════════════
-   FLOATING BUTTONS
-═══════════════════════════════════════════ */
-.float-wa { position: fixed; bottom: clamp(16px, 3vw, 24px); right: clamp(16px, 3vw, 24px); z-index: 150; background: #25D366; color: var(--blanco); border: none; width: 52px; height: 52px; border-radius: 50%; cursor: pointer; font-size: 26px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,.4); transition: var(--trans); touch-action: manipulation; }
-.float-wa:hover { transform: scale(1.1); }
-.float-wa-tooltip { position: absolute; right: 60px; background: var(--negro); color: var(--blanco); font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 100px; white-space: nowrap; opacity: 0; transition: var(--trans); pointer-events: none; }
-.float-wa:hover .float-wa-tooltip { opacity: 1; }
-.chatbot-toggle { position: fixed; bottom: clamp(76px, 10vw, 86px); right: clamp(16px, 3vw, 24px); z-index: 150; background: var(--rojo); color: var(--blanco); border: none; width: 52px; height: 52px; border-radius: 50%; cursor: pointer; font-size: 22px; display: flex; align-items: center; justify-content: center; box-shadow: var(--sombra-rojo); transition: var(--trans); touch-action: manipulation; }
-.chatbot-toggle:hover { transform: scale(1.1); }
+/* ═══════════════════════════════════════════════════
+   FLOATING: WhatsApp + Chatbot
+═══════════════════════════════════════════════════ */
+.float-wa{position:fixed;bottom:clamp(16px,3vw,24px);right:clamp(16px,3vw,24px);z-index:150;background:#25D366;color:var(--blanco);border:none;width:52px;height:52px;border-radius:50%;font-size:26px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:var(--tr);touch-action:manipulation}
+.float-wa:hover{transform:scale(1.1)}
+.wa-tip{position:absolute;right:60px;background:var(--negro);color:var(--blanco);font-size:12px;font-weight:500;padding:6px 12px;border-radius:100px;white-space:nowrap;opacity:0;transition:var(--tr);pointer-events:none}
+.float-wa:hover .wa-tip{opacity:1}
+.chat-btn{position:fixed;bottom:clamp(76px,10vw,86px);right:clamp(16px,3vw,24px);z-index:150;background:var(--rojo);color:var(--blanco);border:none;width:52px;height:52px;border-radius:50%;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-r);transition:var(--tr);touch-action:manipulation}
+.chat-btn:hover{transform:scale(1.1)}
+.chat-win{position:fixed;bottom:clamp(136px,18vw,150px);right:clamp(16px,3vw,24px);width:min(340px,calc(100vw - 32px));background:var(--blanco);border:1.5px solid var(--gris-cl);border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:160;display:none;flex-direction:column;overflow:hidden;max-height:min(480px,65vh)}
+.chat-win.open{display:flex}
+.chat-hdr{background:var(--rojo);padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chat-av{width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
+.chat-nm{font-size:13px;font-weight:700;color:var(--blanco)}
+.chat-st{font-size:11px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:4px}
+.chat-dot{width:7px;height:7px;border-radius:50%;background:#4ade80}
+.chat-x{background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;margin-left:auto}
+.chat-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--gris-bg)}
+.chat-msg{max-width:82%;border-radius:12px;padding:10px 14px;font-size:13px;line-height:1.5}
+.chat-msg.bot{background:var(--blanco);color:var(--negro);border:1px solid var(--gris-cl);align-self:flex-start;border-radius:12px 12px 12px 3px}
+.chat-msg.user{background:var(--rojo);color:var(--blanco);align-self:flex-end;border-radius:12px 12px 3px 12px}
+.chat-msg.typing{background:var(--blanco);border:1px solid var(--gris-cl);align-self:flex-start}
+.tdots{display:flex;gap:4px;padding:4px 0}
+.tdot{width:7px;height:7px;background:var(--gris);border-radius:50%;animation:bounce .9s infinite}
+.tdot:nth-child(2){animation-delay:.2s}
+.tdot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chat-quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chat-qbtn{background:var(--blanco);border:1.5px solid var(--rojo);color:var(--rojo);font-family:var(--font);font-size:11px;font-weight:600;padding:5px 12px;border-radius:100px;cursor:pointer;transition:var(--tr);touch-action:manipulation}
+.chat-qbtn:hover{background:var(--rojo);color:var(--blanco)}
+.chat-ftr{padding:10px 12px;border-top:1px solid var(--gris-cl);display:flex;gap:8px;align-items:center;flex-shrink:0}
+.chat-inp{flex:1;border:1.5px solid var(--gris-cl);border-radius:100px;padding:9px 14px;font-family:var(--font);font-size:14px;color:var(--negro);min-width:0}
+.chat-inp:focus{outline:none;border-color:var(--rojo)}
+.chat-send{background:var(--rojo);color:var(--blanco);border:none;width:36px;height:36px;border-radius:50%;font-size:16px;display:flex;align-items:center;justify-content:center;transition:var(--tr);flex-shrink:0}
 
-/* ═══════════════════════════════════════════
-   CHATBOT
-═══════════════════════════════════════════ */
-.chatbot-window { position: fixed; bottom: clamp(136px, 18vw, 150px); right: clamp(16px, 3vw, 24px); width: min(340px, calc(100vw - 32px)); background: var(--blanco); border: 1.5px solid var(--gris-claro); border-radius: 12px; box-shadow: 0 8px 40px rgba(0,0,0,.18); z-index: 160; display: none; flex-direction: column; overflow: hidden; max-height: min(480px, 65vh); }
-.chatbot-window.open { display: flex; }
-.chatbot-header { background: var(--rojo); padding: 14px 16px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.chatbot-avatar { width: 36px; height: 36px; background: rgba(255,255,255,.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-.chatbot-info .chatbot-name { font-size: 13px; font-weight: 700; color: var(--blanco); }
-.chatbot-info .chatbot-status { font-size: 11px; color: rgba(255,255,255,.7); display: flex; align-items: center; gap: 4px; }
-.chatbot-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; }
-.chatbot-close { background: none; border: none; cursor: pointer; color: rgba(255,255,255,.7); font-size: 18px; margin-left: auto; }
-.chatbot-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: var(--gris-bg); }
-.chatbot-msg { max-width: 82%; border-radius: 12px; padding: 10px 14px; font-size: 13px; line-height: 1.5; }
-.chatbot-msg.bot { background: var(--blanco); color: var(--negro); border: 1px solid var(--gris-claro); align-self: flex-start; border-radius: 12px 12px 12px 3px; }
-.chatbot-msg.user { background: var(--rojo); color: var(--blanco); align-self: flex-end; border-radius: 12px 12px 3px 12px; }
-.chatbot-msg.typing { background: var(--blanco); border: 1px solid var(--gris-claro); align-self: flex-start; }
-.typing-dots { display: flex; gap: 4px; padding: 4px 0; }
-.typing-dot { width: 7px; height: 7px; background: var(--gris-medio); border-radius: 50%; animation: bounce .9s infinite; }
-.typing-dot:nth-child(2) { animation-delay: .2s; }
-.typing-dot:nth-child(3) { animation-delay: .4s; }
-@keyframes bounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
-.chatbot-quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-.chatbot-qbtn { background: var(--blanco); border: 1.5px solid var(--rojo); color: var(--rojo); font-family: var(--font); font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 100px; cursor: pointer; transition: var(--trans); touch-action: manipulation; }
-.chatbot-qbtn:hover { background: var(--rojo); color: var(--blanco); }
-.chatbot-footer { padding: 10px 12px; border-top: 1px solid var(--gris-claro); display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
-.chatbot-input { flex: 1; border: 1.5px solid var(--gris-claro); border-radius: 100px; padding: 9px 14px; font-family: var(--font); font-size: 14px; color: var(--negro); min-width: 0; }
-.chatbot-input:focus { outline: none; border-color: var(--rojo); }
-.chatbot-send { background: var(--rojo); color: var(--blanco); border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: var(--trans); flex-shrink: 0; }
+/* ═══════════════════════════════════════════════════
+   UTILS
+═══════════════════════════════════════════════════ */
+.btn-prim{background:var(--rojo);color:var(--blanco);border:none;font-family:var(--font);font-size:13px;font-weight:600;padding:11px 24px;border-radius:100px;transition:var(--tr);touch-action:manipulation}
+.btn-prim:hover{background:var(--rojo-osc);box-shadow:var(--sh-r)}
+.btn-out{background:transparent;color:var(--negro);border:1.5px solid var(--negro);font-family:var(--font);font-size:13px;font-weight:600;padding:11px 24px;border-radius:100px;transition:var(--tr)}
+.btn-out:hover{border-color:var(--rojo);color:var(--rojo)}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--negro);color:var(--blanco);padding:12px clamp(16px,4vw,24px);border-radius:100px;font-size:13px;font-weight:500;box-shadow:var(--sh);transition:var(--tr);z-index:999;opacity:0;border-left:3px solid var(--rojo);white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-/* ═══════════════════════════════════════════
-   UTILS / BUTTONS
-═══════════════════════════════════════════ */
-.btn-primary { background: var(--rojo); color: var(--blanco); border: none; cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 600; padding: 11px 24px; border-radius: 100px; transition: var(--trans); touch-action: manipulation; }
-.btn-primary:hover { background: var(--rojo-oscuro); box-shadow: var(--sombra-rojo); }
-.btn-outline { background: transparent; color: var(--negro); border: 1.5px solid var(--negro); cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 600; padding: 11px 24px; border-radius: 100px; transition: var(--trans); }
-.btn-outline:hover { border-color: var(--rojo); color: var(--rojo); }
-.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--negro); color: var(--blanco); padding: 12px clamp(16px, 4vw, 24px); border-radius: 100px; font-size: 13px; font-weight: 500; box-shadow: var(--sombra); transition: var(--trans); z-index: 999; opacity: 0; border-left: 3px solid var(--rojo); white-space: nowrap; max-width: calc(100vw - 32px); text-overflow: ellipsis; overflow: hidden; }
-.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+/* ═══════════════════════════════════════════════════
+   ██ RESPONSIVE BREAKPOINTS ██
+   XL >1280 · LG 1024-1280 · MD 768-1023 · SM <768
+═══════════════════════════════════════════════════ */
 
-/* ═══════════════════════════════════════════
-   ████  BREAKPOINTS  ████
-
-   XL: > 1280px  (monitor grande)
-   LG: 1024–1280 (portátil / monitor pequeño)
-   MD: 768–1023  (tablet)
-   SM: < 768     (móvil)
-═══════════════════════════════════════════ */
-
-/* ── PORTÁTIL / MONITOR PEQUEÑO (1024–1280px) ── */
-@media (max-width: 1280px) {
-  .cat-grid { grid-template-columns: repeat(4, 1fr); }
-  .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 24px; }
-  .catalog-layout { grid-template-columns: 220px 1fr; }
+/* LG — portátil */
+@media(max-width:1280px){
+  .ft-grid{grid-template-columns:1.5fr 1fr 1fr 1fr;gap:24px}
+  .cat-layout{grid-template-columns:220px 1fr}
 }
 
-/* ── TABLET (768–1023px) ── */
-@media (max-width: 1023px) {
-  :root { --header-h: 62px; }
-
-  /* Header */
-  nav { display: none; }
-  .mobile-btn { display: flex; }
-  .search-bar { display: none; }
-  .btn-call { padding: 8px 14px; font-size: 11px; }
-
-  /* Hero */
-  .hero-badge { display: none; }
-
-  /* Categories — 2x4 en tablet */
-  .cat-grid { grid-template-columns: repeat(2, 1fr); }
-  .cat-card:first-child { grid-column: span 2; min-height: clamp(180px, 25vw, 260px); }
-
-  /* Products */
-  .prod-grid { grid-template-columns: repeat(3, 1fr); }
-
-  /* Why */
-  .why-grid { grid-template-columns: repeat(2, 1fr); }
-
-  /* Process */
-  .process-steps { grid-template-columns: repeat(2, 1fr); }
-  .process-steps::before { display: none; }
-
-  /* Catalog */
-  .catalog-layout { grid-template-columns: 1fr; }
-  .filters { position: static; }
-  .filters-toggle { display: flex; }
-  .filters-body { display: none; }
-  .filters-body.open { display: block; margin-top: 12px; }
-
-  /* Detail */
-  .detail-layout { grid-template-columns: 1fr; }
-
-  /* Checkout */
-  .checkout-layout { grid-template-columns: 1fr; }
-  .order-summary { position: static; }
-
-  /* About / Contact / Montaje */
-  .montaje-grid { grid-template-columns: 1fr; }
-  .contact-grid { grid-template-columns: 1fr; padding-top: 36px; }
-
-  /* Footer */
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
-  .footer-desc { max-width: 100%; }
-
-  /* Admin */
-  .admin-layout { grid-template-columns: 1fr; }
-  .admin-sidebar { display: none; }
-  .stats-row { grid-template-columns: repeat(2, 1fr); }
-
-  /* About page */
-  #page-about [style*="grid-template-columns:1fr 1fr"] { display: grid; grid-template-columns: 1fr !important; }
-  #page-about [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+/* MD — tablet */
+@media(max-width:1023px){
+  :root{--hh:60px}
+  #desk-nav{display:none}
+  .mob-btn{display:flex}
+  .search-bar{display:none}
+  .btn-call{display:none}
+  .hero-badge{display:none}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .cat-card:first-child{grid-column:span 2;min-height:clamp(180px,24vw,260px)}
+  .prod-grid{grid-template-columns:repeat(3,1fr)}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .proc-steps{grid-template-columns:repeat(2,1fr)}
+  .proc-steps::before{display:none}
+  .cat-layout{grid-template-columns:1fr}
+  .filters{position:static}
+  .flt-toggle{display:flex}
+  .flt-body{display:none}
+  .flt-body.open{display:block;margin-top:12px}
+  .det-layout{grid-template-columns:1fr}
+  .co-layout{grid-template-columns:1fr}
+  .ord-sum{position:static}
+  .two-col{grid-template-columns:1fr}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .adm-layout{grid-template-columns:1fr}
+  .adm-sb{display:none}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
 }
 
-/* ── MÓVIL (< 768px) ── */
-@media (max-width: 767px) {
-  :root {
-    --header-h: 58px;
-    --container-pad: 16px;
-  }
-
-  /* Topbar oculto */
-  #topbar { display: none; }
-
-  /* Header */
-  header { height: var(--header-h); }
-  .logo-text .since { display: none; }
-  .logo-text .name { font-size: 15px; }
-  .btn-call { display: none; }
-
-  /* Hero */
-  .hero { height: clamp(400px, 75vh, 560px); }
-  .hero-tag { font-size: 10px; padding: 4px 10px; margin-bottom: 12px; }
-  .hero p { display: none; } /* texto desc oculto en móvil pequeño para limpiar */
-  .hero-btns { flex-direction: column; gap: 8px; }
-  .btn-hero-primary, .btn-hero-secondary { width: 100%; max-width: 280px; text-align: center; justify-content: center; }
-
-  /* Trust bar — scroll horizontal en móvil pequeño */
-  .trust-bar { justify-content: flex-start; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 12px 16px; gap: 20px; scrollbar-width: none; }
-  .trust-bar::-webkit-scrollbar { display: none; }
-  .trust-item { flex-shrink: 0; }
-
-  /* Categories — 2 columnas en móvil */
-  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .cat-card:first-child { grid-column: span 2; min-height: 160px; aspect-ratio: auto; }
-  .cat-card { aspect-ratio: 3/4; }
-  .cat-name { font-size: 14px; }
-  .cat-icon { font-size: 20px; margin-bottom: 4px; }
-
-  /* Products — 2 columnas en móvil */
-  .prod-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .prod-info { padding: 10px; }
-  .prod-name { font-size: 12px; }
-  .prod-price { font-size: 15px; }
-  .btn-add { font-size: 10px; padding: 6px 10px; }
-
-  /* Why — 1 columna */
-  .why-grid { grid-template-columns: 1fr; gap: 10px; }
-  .why-card { padding: 18px 16px; display: flex; align-items: flex-start; gap: 14px; }
-  .why-ico { flex-shrink: 0; margin-bottom: 0; width: 40px; height: 40px; font-size: 18px; }
-
-  /* Process — 1 columna en móvil */
-  .process-steps { grid-template-columns: 1fr; gap: 16px; }
-  .process-step { display: flex; align-items: flex-start; gap: 14px; text-align: left; }
-  .step-num { margin: 0; flex-shrink: 0; width: 36px; height: 36px; font-size: 14px; }
-
-  /* Reviews — 1 columna */
-  .reviews-grid { grid-template-columns: 1fr; }
-
-  /* CTA banner */
-  .cta-banner { flex-direction: column; align-items: flex-start; text-align: left; }
-  .btn-white { width: 100%; text-align: center; }
-
-  /* Catalog */
-  .catalog-layout { padding: 12px var(--container-pad); gap: 12px; }
-  .catalog-hero { padding: 24px var(--container-pad); }
-  .filters { padding: 12px; border-radius: var(--radio); }
-  .filters-toggle { display: flex; padding: 10px 14px; }
-  .catalog-bar { flex-direction: column; align-items: flex-start; gap: 8px; }
-
-  /* Detail */
-  .detail-layout { padding: 16px var(--container-pad); gap: 20px; }
-  .d-specs { grid-template-columns: 1fr 1fr; }
-  .d-cta { flex-wrap: wrap; }
-  .btn-add-lg { min-width: 0; }
-
-  /* Checkout */
-  .checkout-layout { padding: 16px var(--container-pad); gap: 20px; }
-  .f-row { grid-template-columns: 1fr; }
-
-  /* Cart drawer full width */
-  .cart-drawer { width: 100%; }
-
-  /* Chatbot más grande en móvil */
-  .chatbot-window { width: calc(100vw - 32px); right: 16px; max-height: 60vh; }
-  .float-wa { bottom: 16px; right: 16px; }
-  .chatbot-toggle { bottom: 76px; right: 16px; }
-
-  /* Footer */
-  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-  .footer-desc { max-width: 100%; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
-
-  /* Admin */
-  .admin-main { padding: 16px; }
-  .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .stat-val { font-size: 24px; }
-
-  /* Confirm */
-  .confirm-wrap { margin-top: 40px; margin-bottom: 40px; }
-
-  /* About grid 3 cols → 1 col */
-  #page-about .about-3col { grid-template-columns: 1fr !important; }
+/* SM — móvil */
+@media(max-width:767px){
+  :root{--hh:56px;--pad:16px}
+  #topbar{display:none}
+  .logo-sub{display:none}
+  .logo-name{font-size:15px}
+  .hero{height:clamp(400px,74vh,560px)}
+  .hero-tag{font-size:10px;padding:4px 11px;margin-bottom:12px}
+  .hero p{font-size:14px;margin-bottom:20px}
+  .hero-btns{flex-direction:column;gap:8px;align-items:flex-start}
+  .btn-hp,.btn-hs{width:100%;max-width:280px;text-align:center}
+  .trust-bar{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:12px var(--pad)}
+  .trust-bar::-webkit-scrollbar{display:none}
+  .trust-item{flex-shrink:0}
+  .cat-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .cat-card:first-child{grid-column:span 2;min-height:150px}
+  .cat-card{aspect-ratio:3/4}
+  .cat-nm{font-size:14px}
+  .prod-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .prod-info{padding:10px}
+  .prod-nm{font-size:12px}
+  .prod-price{font-size:15px}
+  .btn-add{font-size:10px;padding:6px 10px}
+  .why-grid{grid-template-columns:1fr;gap:10px}
+  .why-card{display:flex;align-items:flex-start;gap:14px;padding:16px}
+  .why-ico{flex-shrink:0;margin-bottom:0;width:40px;height:40px;font-size:18px}
+  .proc-steps{grid-template-columns:1fr;gap:14px}
+  .proc-step{display:flex;align-items:flex-start;gap:14px;text-align:left}
+  .step-n{margin:0;flex-shrink:0;width:36px;height:36px;font-size:14px}
+  .rev-grid{grid-template-columns:1fr}
+  .cta-banner{flex-direction:column;align-items:flex-start}
+  .btn-wh{width:100%;text-align:center}
+  .cat-layout{padding:12px var(--pad);gap:12px}
+  .cat-hero{padding:20px var(--pad)}
+  .cat-bar{flex-direction:column;align-items:flex-start}
+  .det-layout{padding:16px var(--pad);gap:18px}
+  .d-specs{grid-template-columns:1fr 1fr}
+  .d-cta{flex-wrap:wrap}
+  .m2-inputs{grid-template-columns:1fr 1fr}
+  .co-layout{padding:16px var(--pad);gap:16px}
+  .f-row{grid-template-columns:1fr}
+  .cart-drw{width:100%}
+  .chat-win{width:calc(100vw - 32px);right:16px;max-height:58vh}
+  .float-wa{bottom:16px;right:16px}
+  .chat-btn{bottom:76px;right:16px}
+  .ft-grid{grid-template-columns:1fr;gap:28px}
+  .ft-desc{max-width:100%}
+  .ft-bot{flex-direction:column;align-items:flex-start;gap:8px}
+  .adm-main{padding:16px}
+  .stats-row{grid-template-columns:1fr 1fr;gap:10px}
+  .confirm-wrap{margin:36px auto}
+  .two-col.pg-sec{padding:28px var(--pad)}
 }
-
-/* ── MÓVIL MUY PEQUEÑO (< 360px) ── */
-@media (max-width: 359px) {
-  .prod-grid { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 28px; }
-  .cat-grid { grid-template-columns: 1fr; }
-  .cat-card:first-child { grid-column: span 1; }
+/* Muy pequeño */
+@media(max-width:359px){
+  .prod-grid{grid-template-columns:1fr}
+  .cat-grid{grid-template-columns:1fr}
+  .cat-card:first-child{grid-column:span 1}
+  .hero h1{font-size:26px}
 }
-
-/* ═══════════════════════════════════════════
-   TOUCH IMPROVEMENTS
-═══════════════════════════════════════════ */
-@media (hover: none) {
-  /* En táctil siempre mostramos el quick-add */
-  .prod-quick { opacity: 1; transform: none; }
-  .cat-arrow { opacity: 1; transform: none; }
+/* Touch: mostrar acciones sin hover */
+@media(hover:none){
+  .prod-quick{opacity:1;transform:none}
+  .cat-arr{opacity:1;transform:none}
 }
-
-/* ═══════════════════════════════════════════
-   PRINT BASIC
-═══════════════════════════════════════════ */
-@media print {
-  #topbar, header, footer, .float-wa, .chatbot-toggle, .chatbot-window, .cart-overlay, .cart-drawer { display: none !important; }
+@media print{
+  #topbar,header,footer,.float-wa,.chat-btn,.chat-win,.cart-ov,.cart-drw{display:none!important}
 }
-
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
+<!-- ── LOADER ── -->
 <div id="loader">
-  <div class="loader-logo">La <span>Estrella</span></div>
-  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="ld-logo">La <span>Estrella</span></div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
 </div>
 
-<!-- TOPBAR -->
+<!-- ── TOPBAR ── -->
 <div id="topbar">
-  <div class="topbar-left">
-    <span>📍 Tres tiendas en Sevilla — Recogida en tienda gratuita</span>
+  <div class="tb-l">
+    <span>📍 Tres tiendas en Sevilla · Recogida en tienda gratuita</span>
     <a href="tel:+34955292129">📞 955 292 129</a>
   </div>
-  <div class="topbar-right">
+  <div class="tb-r">
     <a href="https://wa.me/34675083003" target="_blank">💬 WhatsApp</a>
-    <span class="topbar-badge">OUTLET activo</span>
+    <span class="tb-badge">OUTLET activo</span>
   </div>
 </div>
 
-<!-- HEADER -->
+<!-- ── HEADER ── -->
 <header>
+  <!-- LOGO -->
   <a class="logo" onclick="goTo('home')">
-    <div class="logo-icon">★</div>
-    <div class="logo-text">
-      <div class="name">Azulejos La Estrella</div>
-      <div class="since">Baño & Pavimentos · Sevilla</div>
+    <div class="logo-ico">★</div>
+    <div>
+      <div class="logo-name">Azulejos La Estrella</div>
+      <div class="logo-sub">Baño & Pavimentos · Sevilla</div>
     </div>
   </a>
-  <nav id="mainnav" style="display:none">
+
+  <!-- DESKTOP NAV -->
+  <nav id="desk-nav">
     <button onclick="goTo('home')" id="nav-home" class="active">Inicio</button>
-    <button onclick="goTo('catalog','Sanitarios')" id="nav-catalog">Catálogo</button>
-    <button onclick="goTo('montaje')" id="nav-montaje">Servicio Montaje</button>
+
+    <!-- CATÁLOGO con dropdown -->
+    <div class="has-drop">
+      <button onclick="goTo('catalog','Sanitarios')" id="nav-catalog">
+        Catálogo <span class="drop-arrow">▾</span>
+      </button>
+      <div class="nav-dropdown">
+        <a onclick="goTo('catalog','Sanitarios')"><span>🚽</span> Sanitarios</a>
+        <a onclick="goTo('catalog','Mamparas')"><span>🚿</span> Mamparas</a>
+        <a onclick="goTo('catalog','Grifería')"><span>🔧</span> Grifería</a>
+        <a onclick="goTo('catalog','Muebles de baño')"><span>🪞</span> Muebles de baño</a>
+        <a onclick="goTo('catalog','Accesorios de baño')"><span>🪥</span> Accesorios</a>
+        <div class="drop-sep"></div>
+        <a onclick="goTo('catalog','Azulejos Interior')"><span>⬛</span> Azulejos Interior</a>
+        <a onclick="goTo('catalog','Pavimentos Exterior')"><span>🌿</span> Pavimentos Exterior</a>
+        <div class="drop-sep"></div>
+        <a onclick="goTo('catalog','Outlet')" style="color:var(--rojo);font-weight:700"><span>🏷️</span> Outlet —40%</a>
+      </div>
+    </div>
+
+    <button onclick="goTo('montaje')" id="nav-montaje">Montaje</button>
     <button onclick="goTo('about')" id="nav-about">Nosotros</button>
     <button onclick="goTo('contact')" id="nav-contact">Contacto</button>
-    <button onclick="goTo('admin')" id="nav-admin" style="color:var(--gris-medio);font-size:12px;">⚙ Admin</button>
+    <button onclick="goTo('presupuesto')" id="nav-presupuesto">Presupuesto</button>
+    <button onclick="goTo('admin')" id="nav-admin" style="font-size:12px;color:var(--gris)">⚙ Admin</button>
   </nav>
-  <div class="header-actions">
-    <div class="search-bar">
-      <button>🔍</button>
-      <input type="text" id="search-input" placeholder="Buscar productos..." oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter')goTo('search')">
+
+  <!-- HEADER ACTIONS -->
+  <div class="hdr-actions">
+    <!-- SEARCH BAR DESKTOP -->
+    <div class="search-wrap" id="search-wrap">
+      <div class="search-bar">
+        <span class="srch-ico">🔍</span>
+        <input type="text" id="srch-input" placeholder="Buscar productos..."
+          autocomplete="off"
+          oninput="handleSearch(this.value)"
+          onfocus="openSearchDrop()"
+          onkeydown="handleSearchKey(event)">
+      </div>
+      <div class="search-dropdown" id="srch-drop"></div>
     </div>
-    <button class="btn-icon" onclick="openCart()" title="Carrito">
+    <!-- CART -->
+    <button class="btn-ico" onclick="openCart()" title="Carrito">
       🛒<span class="cart-badge" id="cart-badge">0</span>
     </button>
-    <button class="btn-call" onclick="window.location='tel:+34955292129'">📞 Llamar</button>
-    <button class="mobile-btn" onclick="toggleMobile()">☰</button>
+    <!-- CALL -->
+    <button class="btn-call" onclick="window.location='tel:+34955292129'">📞 955 292 129</button>
+    <!-- HAMBURGER -->
+    <button class="mob-btn" id="mob-btn" onclick="toggleMob()" aria-label="Menú">☰</button>
   </div>
 </header>
 
-<!-- CART DRAWER -->
-<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
-<div class="cart-drawer" id="cart-drawer">
+<!-- ── MOBILE NAV ── -->
+<div id="mob-nav">
+  <div class="mob-search-wrap">
+    <div class="mob-srch">
+      <span>🔍</span>
+      <input type="text" placeholder="Buscar productos..." oninput="handleSearch(this.value)" onkeydown="if(event.key==='Enter'){closeMob();goTo('catalog','Sanitarios')}">
+    </div>
+  </div>
+  <div class="mob-nav-section">Menú principal</div>
+  <button class="mob-nav-btn" onclick="closeMob();goTo('home')"><span class="mni">🏠</span>Inicio</button>
+  <div class="mob-nav-section">Catálogo</div>
+  <button class="mob-cat-btn" onclick="closeMob();goTo('catalog','Sanitarios')"><span>🚽</span> Sanitarios</button>
+  <button class="mob-cat-btn" onclick="closeMob();goTo('catalog','Mamparas')"><span>🚿</span> Mamparas</button>
+  <button class="mob-cat-btn" onclick="closeMob();goTo('catalog','Grifería')"><span>🔧</span> Grifería</button>
+  <button class="mob-cat-btn" onclick="closeMob();goTo('catalog','Muebles de baño')"><span>🪞</span> Muebles de baño</button>
+  <button class="mob-cat-btn" onclick="closeMob();goTo('catalog','Accesorios de baño')"><span>🪥</span> Accesorios</button>
+  <button class="mob-cat-btn" onclick="closeMob();goTo('catalog','Azulejos Interior')"><span>⬛</span> Azulejos Interior</button>
+  <button class="mob-cat-btn" onclick="closeMob();goTo('catalog','Pavimentos Exterior')"><span>🌿</span> Pavimentos Exterior</button>
+  <button class="mob-cat-btn" onclick="closeMob();goTo('catalog','Outlet')" style="color:var(--rojo);font-weight:700"><span>🏷️</span> Outlet —40%</button>
+  <div class="mob-nav-section">Servicios</div>
+  <button class="mob-nav-btn" onclick="closeMob();goTo('montaje')"><span class="mni">🔧</span>Servicio Montaje</button>
+  <button class="mob-nav-btn" onclick="closeMob();goTo('presupuesto')"><span class="mni">📋</span>Solicitar Presupuesto</button>
+  <button class="mob-nav-btn" onclick="closeMob();goTo('about')"><span class="mni">🏢</span>Nosotros</button>
+  <button class="mob-nav-btn" onclick="closeMob();goTo('contact')"><span class="mni">📍</span>Contacto</button>
+  <div class="mob-nav-footer">
+    <a class="mob-call" href="tel:+34955292129">📞 Llamar</a>
+    <a class="mob-wa" href="https://wa.me/34675083003" target="_blank">💬 WhatsApp</a>
+  </div>
+</div>
+
+<!-- ── CART DRAWER ── -->
+<div class="cart-ov" id="cart-ov" onclick="closeCart()"></div>
+<div class="cart-drw" id="cart-drw">
   <div class="cart-dh">
-    <div class="cart-dh-title">Tu pedido</div>
-    <button class="btn-icon" onclick="closeCart()">✕</button>
+    <div class="cart-dh-ttl">Tu pedido</div>
+    <button class="btn-ico" onclick="closeCart()">✕</button>
   </div>
   <div class="cart-db" id="cart-body"></div>
   <div class="cart-df" id="cart-footer" style="display:none">
-    <div class="cart-total-row">
-      <span class="cart-total-label">Total</span>
-      <span class="cart-total-val" id="cart-total-val">0,00 €</span>
+    <div class="cart-tot-row">
+      <span class="cart-tot-lbl">Total</span>
+      <span class="cart-tot-val" id="cart-total-val">0,00 €</span>
     </div>
-    <div class="cart-pickup-note">
+    <div class="cart-note">
       <strong>📦 Recogida en tienda gratis</strong><br>
       Pide y recoge en cualquiera de nuestras 3 tiendas en Sevilla.
     </div>
@@ -812,52 +855,48 @@ footer { background: var(--negro); color: rgba(255,255,255,.55); padding: clamp(
   </div>
 </div>
 
-<!-- TOAST -->
+<!-- ── TOAST ── -->
 <div class="toast" id="toast"></div>
 
-<!-- FLOATING BUTTONS -->
+<!-- ── FLOATING: WA + CHATBOT ── -->
 <button class="float-wa" onclick="window.open('https://wa.me/34675083003','_blank')" title="WhatsApp">
-  <span class="float-wa-tooltip">Escríbenos por WhatsApp</span>
-  💬
+  <span class="wa-tip">Escríbenos por WhatsApp</span>💬
 </button>
-<button class="chatbot-toggle" onclick="toggleChat()" title="Asistente IA" id="chat-toggle">🤖</button>
-
-<!-- CHATBOT WINDOW -->
-<div class="chatbot-window" id="chatbot">
-  <div class="chatbot-header">
-    <div class="chatbot-avatar">🤖</div>
-    <div class="chatbot-info">
-      <div class="chatbot-name">Asistente La Estrella</div>
-      <div class="chatbot-status"><span class="chatbot-status-dot"></span> En línea</div>
+<button class="chat-btn" onclick="toggleChat()" title="Asistente IA">🤖</button>
+<div class="chat-win" id="chat-win">
+  <div class="chat-hdr">
+    <div class="chat-av">🤖</div>
+    <div>
+      <div class="chat-nm">Asistente La Estrella</div>
+      <div class="chat-st"><span class="chat-dot"></span> En línea</div>
     </div>
-    <button class="chatbot-close" onclick="toggleChat()">✕</button>
+    <button class="chat-x" onclick="toggleChat()">✕</button>
   </div>
-  <div class="chatbot-body" id="chatbot-body"></div>
-  <div class="chatbot-footer">
-    <input class="chatbot-input" id="chatbot-input" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="chatbot-send" onclick="sendChat()">➤</button>
+  <div class="chat-body" id="chat-body"></div>
+  <div class="chat-ftr">
+    <input class="chat-inp" id="chat-inp" placeholder="Escribe tu pregunta..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">➤</button>
   </div>
 </div>
 
-<!-- ╔══════════════════════════════════════════╗
-     ║            HOME PAGE                    ║
-     ╚══════════════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════════════════════════
+     HOME
+═══════════════════════════════════════════════════════ -->
 <div class="page active" id="page-home">
-
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-slides" id="hero-slides">
+    <div id="hero-slides">
       <div class="hero-bg active" style="background-image:url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1600&q=80')"></div>
       <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1584622781564-1d987f7333c1?w=1600&q=80')"></div>
       <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=1600&q=80')"></div>
     </div>
-    <div class="hero-content">
+    <div class="hero-cnt">
       <div class="hero-tag">★ Especialistas en Baño desde 1973</div>
       <h1>Todo para tu<br>baño <em>perfecto</em></h1>
-      <p>Sanitarios, griferías, mamparas, muebles, azulejos y pavimentos. Pide online y recoge en tienda en Sevilla.</p>
+      <p>Sanitarios, griferías, mamparas, muebles, azulejos y pavimentos. Pide online y recoge en tienda.</p>
       <div class="hero-btns">
-        <button class="btn-hero-primary" onclick="goTo('catalog','Sanitarios')">Ver catálogo completo</button>
-        <button class="btn-hero-secondary" onclick="goTo('montaje')">Servicio de montaje</button>
+        <button class="btn-hp" onclick="goTo('catalog','Sanitarios')">Ver catálogo completo</button>
+        <button class="btn-hs" onclick="goTo('montaje')">Servicio de montaje</button>
       </div>
     </div>
     <div class="hero-dots" id="hero-dots">
@@ -865,272 +904,587 @@ footer { background: var(--negro); color: rgba(255,255,255,.55); padding: clamp(
       <div class="hero-dot" onclick="setSlide(1)"></div>
       <div class="hero-dot" onclick="setSlide(2)"></div>
     </div>
-    <div class="hero-badge">
-      <div class="num">4.6★</div>
-      <div class="lbl">+200 reseñas</div>
-    </div>
+    <div class="hero-badge"><div class="hb-num">4.6★</div><div class="hb-lbl">+200 reseñas</div></div>
   </div>
 
-  <!-- TRUST BAR -->
+  <!-- TRUST -->
   <div class="trust-bar">
-    <div class="trust-item"><span class="ico">★</span><div><strong>+50 años</strong> de experiencia</div></div>
-    <div class="trust-item"><span class="ico">🏪</span><div><strong>3 tiendas</strong> en Sevilla</div></div>
-    <div class="trust-item"><span class="ico">📦</span><div><strong>Recogida</strong> gratuita en tienda</div></div>
-    <div class="trust-item"><span class="ico">🔧</span><div><strong>Servicio</strong> de montaje</div></div>
-    <div class="trust-item"><span class="ico">💳</span><div><strong>Pago</strong> en tienda u online</div></div>
-    <div class="trust-item"><span class="ico">🎯</span><div><strong>Asesoramiento</strong> especializado</div></div>
+    <div class="trust-item"><span class="ti">★</span><div><strong>+50 años</strong> de exp.</div></div>
+    <div class="trust-item"><span class="ti">🏪</span><div><strong>3 tiendas</strong> en Sevilla</div></div>
+    <div class="trust-item"><span class="ti">📦</span><div><strong>Recogida</strong> gratis</div></div>
+    <div class="trust-item"><span class="ti">🔧</span><div><strong>Servicio</strong> montaje</div></div>
+    <div class="trust-item"><span class="ti">💳</span><div><strong>Pago</strong> online/tienda</div></div>
+    <div class="trust-item"><span class="ti">🎯</span><div><strong>Asesoramiento</strong> gratis</div></div>
   </div>
 
   <!-- CATEGORÍAS -->
-  <div class="section max-w">
-    <div class="s-header">
-      <span class="s-label">Explora</span>
-      <h2 class="s-title">Todas las categorías</h2>
-      <p class="s-sub">Desde azulejos hasta griferías, todo lo que necesitas para tu proyecto de baño o reforma.</p>
+  <div class="sec mxw">
+    <div class="s-hdr">
+      <span class="s-lbl">Explora</span>
+      <h2 class="s-ttl">Todas las categorías</h2>
+      <p class="s-sub">Todo lo que necesitas para tu proyecto de baño o reforma en un solo lugar.</p>
     </div>
     <div class="cat-grid">
       <div class="cat-card" onclick="goTo('catalog','Sanitarios')">
         <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=900&q=80')"></div>
-        <div class="cat-content"><div class="cat-icon">🚽</div><div class="cat-name">Sanitarios</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+        <div class="cat-cnt"><div class="cat-ico">🚽</div><div class="cat-nm">Sanitarios</div><div class="cat-ct">25 productos</div><div class="cat-arr">→</div></div>
       </div>
       <div class="cat-card" onclick="goTo('catalog','Mamparas')">
         <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1620626011761-996317702782?w=700&q=80')"></div>
-        <div class="cat-content"><div class="cat-icon">🚿</div><div class="cat-name">Mamparas</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+        <div class="cat-cnt"><div class="cat-ico">🚿</div><div class="cat-nm">Mamparas</div><div class="cat-ct">25 productos</div><div class="cat-arr">→</div></div>
       </div>
       <div class="cat-card" onclick="goTo('catalog','Grifería')">
         <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=700&q=80')"></div>
-        <div class="cat-content"><div class="cat-icon">🔧</div><div class="cat-name">Grifería</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+        <div class="cat-cnt"><div class="cat-ico">🔧</div><div class="cat-nm">Grifería</div><div class="cat-ct">25 productos</div><div class="cat-arr">→</div></div>
       </div>
       <div class="cat-card" onclick="goTo('catalog','Muebles de baño')">
         <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=700&q=80')"></div>
-        <div class="cat-content"><div class="cat-icon">🪞</div><div class="cat-name">Muebles de baño</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+        <div class="cat-cnt"><div class="cat-ico">🪞</div><div class="cat-nm">Muebles de baño</div><div class="cat-ct">25 productos</div><div class="cat-arr">→</div></div>
       </div>
       <div class="cat-card" onclick="goTo('catalog','Accesorios de baño')">
         <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=700&q=80')"></div>
-        <div class="cat-content"><div class="cat-icon">🪥</div><div class="cat-name">Accesorios de baño</div><div class="cat-count">25 productos</div><div class="cat-arrow">→</div></div>
+        <div class="cat-cnt"><div class="cat-ico">🪥</div><div class="cat-nm">Accesorios de baño</div><div class="cat-ct">25 productos</div><div class="cat-arr">→</div></div>
       </div>
       <div class="cat-card" onclick="goTo('catalog','Azulejos Interior')">
         <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1615971677499-5467cbab01c0?w=700&q=80')"></div>
-        <div class="cat-content"><div class="cat-icon">⬛</div><div class="cat-name">Azulejos Interior</div><div class="cat-count">25 productos · precio/m²</div><div class="cat-arrow">→</div></div>
+        <div class="cat-cnt"><div class="cat-ico">⬛</div><div class="cat-nm">Azulejos Interior</div><div class="cat-ct">25 productos · precio/m²</div><div class="cat-arr">→</div></div>
       </div>
       <div class="cat-card" onclick="goTo('catalog','Pavimentos Exterior')">
         <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=700&q=80')"></div>
-        <div class="cat-content"><div class="cat-icon">🌿</div><div class="cat-name">Pavimentos Exterior</div><div class="cat-count">25 productos · precio/m²</div><div class="cat-arrow">→</div></div>
+        <div class="cat-cnt"><div class="cat-ico">🌿</div><div class="cat-nm">Pavimentos Exterior</div><div class="cat-ct">25 productos · precio/m²</div><div class="cat-arr">→</div></div>
       </div>
       <div class="cat-card" onclick="goTo('catalog','Outlet')">
         <div class="cat-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80')"></div>
-        <div class="cat-content"><div class="cat-icon">🏷️</div><div class="cat-name">Outlet</div><div class="cat-count">Hasta –40% descuento</div><div class="cat-arrow">→</div></div>
+        <div class="cat-cnt"><div class="cat-ico">🏷️</div><div class="cat-nm">Outlet</div><div class="cat-ct">Hasta –40% descuento</div><div class="cat-arr">→</div></div>
       </div>
     </div>
   </div>
 
   <!-- DESTACADOS -->
-  <div class="section bg-gray">
-    <div class="max-w">
-      <div class="s-header-flex">
-        <div><span class="s-label">Más vendidos</span><h2 class="s-title">Productos destacados</h2></div>
-        <button class="btn-outline" onclick="goTo('catalog','Sanitarios')">Ver todo el catálogo →</button>
+  <div class="sec bg-gr">
+    <div class="mxw">
+      <div class="s-hdr-fx">
+        <div><span class="s-lbl">Más vendidos</span><h2 class="s-ttl">Productos destacados</h2></div>
+        <button class="btn-out" onclick="goTo('catalog','Sanitarios')">Ver todo el catálogo →</button>
       </div>
       <div class="prod-grid" id="home-prods"></div>
     </div>
   </div>
 
-  <!-- PROCESS -->
-  <div class="process-section">
-    <div class="max-w">
-      <div class="text-center">
-        <span class="s-label">¿Cómo funciona?</span>
-        <h2 class="s-title" style="color:var(--blanco)">Pide online,<br>recoge en tienda</h2>
+  <!-- PROCESO -->
+  <div class="proc-sec">
+    <div class="mxw">
+      <div class="tc">
+        <span class="s-lbl">¿Cómo funciona?</span>
+        <h2 class="s-ttl" style="color:var(--blanco)">Pide online,<br>recoge en tienda</h2>
       </div>
-      <div class="process-steps">
-        <div class="process-step"><div class="step-num">1</div><div class="step-title">Elige productos</div><div class="step-desc">Navega el catálogo con filtros avanzados</div></div>
-        <div class="process-step"><div class="step-num">2</div><div class="step-title">Selecciona tienda</div><div class="step-desc">Elige cuál de nuestras 3 tiendas prefieres</div></div>
-        <div class="process-step"><div class="step-num">3</div><div class="step-title">Confirma pedido</div><div class="step-desc">Paga online o en tienda al recoger</div></div>
-        <div class="process-step"><div class="step-num">4</div><div class="step-title">Recoge y disfruta</div><div class="step-desc">Te avisamos cuando esté listo. Sin colas</div></div>
+      <div class="proc-steps">
+        <div class="proc-step"><div class="step-n">1</div><div class="step-ttl">Elige productos</div><div class="step-desc">Navega el catálogo con filtros avanzados</div></div>
+        <div class="proc-step"><div class="step-n">2</div><div class="step-ttl">Selecciona tienda</div><div class="step-desc">Elige cuál de nuestras 3 tiendas prefieres</div></div>
+        <div class="proc-step"><div class="step-n">3</div><div class="step-ttl">Confirma pedido</div><div class="step-desc">Paga online o en tienda al recoger</div></div>
+        <div class="proc-step"><div class="step-n">4</div><div class="step-ttl">Recoge y disfruta</div><div class="step-desc">Te avisamos cuando esté listo. Sin colas</div></div>
       </div>
     </div>
   </div>
 
-  <!-- WHY -->
-  <div class="section max-w">
-    <div class="s-header text-center">
-      <span class="s-label">¿Por qué elegirnos?</span>
-      <h2 class="s-title">Más de 50 años<br>siendo tu referencia</h2>
-    </div>
+  <!-- POR QUÉ -->
+  <div class="sec mxw">
+    <div class="s-hdr tc"><span class="s-lbl">¿Por qué elegirnos?</span><h2 class="s-ttl">Más de 50 años<br>siendo tu referencia</h2></div>
     <div class="why-grid">
-      <div class="why-card"><div class="why-ico">🏆</div><div class="why-title">Marcas premium</div><div class="why-desc">Roca, Grohe, Hansgrohe, Duravit, Villeroy & Boch, Porcelanosa y más.</div></div>
-      <div class="why-card"><div class="why-ico">👷</div><div class="why-title">Montaje incluido</div><div class="why-desc">Servicio de instalación profesional en toda la provincia de Sevilla.</div></div>
-      <div class="why-card"><div class="why-ico">📦</div><div class="why-title">Stock garantizado</div><div class="why-desc">Confirmamos disponibilidad antes de que vengas. Sin sorpresas.</div></div>
-      <div class="why-card"><div class="why-ico">💰</div><div class="why-title">Mejores precios</div><div class="why-desc">Precio de almacén directo. Outlet permanente con hasta 40% de descuento.</div></div>
+      <div class="why-card"><div class="why-ico">🏆</div><div class="why-ttl">Marcas premium</div><div class="why-desc">Roca, Grohe, Hansgrohe, Duravit, Villeroy & Boch, Porcelanosa y más.</div></div>
+      <div class="why-card"><div class="why-ico">👷</div><div class="why-ttl">Montaje incluido</div><div class="why-desc">Servicio de instalación profesional en toda la provincia de Sevilla.</div></div>
+      <div class="why-card"><div class="why-ico">📦</div><div class="why-ttl">Stock garantizado</div><div class="why-desc">Confirmamos disponibilidad antes de que vengas. Sin sorpresas.</div></div>
+      <div class="why-card"><div class="why-ico">💰</div><div class="why-ttl">Mejores precios</div><div class="why-desc">Precio de almacén. Outlet permanente con hasta 40% de descuento.</div></div>
     </div>
   </div>
 
   <!-- REVIEWS -->
-  <div class="section bg-gray">
-    <div class="max-w">
-      <div class="s-header"><span class="s-label">Google Reviews · 4.6★</span><h2 class="s-title">Lo que dicen<br>nuestros clientes</h2></div>
-      <div class="reviews-grid">
-        <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Excelente atención, me asesoraron perfectamente para elegir los azulejos del baño. Pedí online y en 24h estaba todo listo para recoger. Muy recomendable."</div><div class="review-author">María G.</div><div class="review-meta">Google · hace 2 semanas</div></div>
-        <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Llevamos reformando el baño completo con ellos: sanitarios, mampara, griferías y mueble. Todo de calidad y al mejor precio que encontré en Sevilla."</div><div class="review-author">Carlos M.</div><div class="review-meta">Google · hace 1 mes</div></div>
-        <div class="review-card"><div class="review-stars">★★★★☆</div><div class="review-text">"Gran variedad de azulejos y muy buen precio. El sistema de pedido online es cómodo. El servicio de montaje también es muy profesional."</div><div class="review-author">Ana R.</div><div class="review-meta">Google · hace 3 semanas</div></div>
+  <div class="sec bg-gr">
+    <div class="mxw">
+      <div class="s-hdr"><span class="s-lbl">Google Reviews · 4.6★</span><h2 class="s-ttl">Lo que dicen<br>nuestros clientes</h2></div>
+      <div class="rev-grid">
+        <div class="rev-card"><div class="rev-stars">★★★★★</div><div class="rev-txt">"Excelente atención. Me asesoraron perfectamente para elegir los azulejos del baño. Pedí online y en 24h estaba listo para recoger."</div><div class="rev-aut">María G.</div><div class="rev-meta">Google · hace 2 semanas</div></div>
+        <div class="rev-card"><div class="rev-stars">★★★★★</div><div class="rev-txt">"Reformé el baño completo con ellos: sanitarios, mampara, griferías y mueble. Todo de calidad y al mejor precio que encontré en Sevilla."</div><div class="rev-aut">Carlos M.</div><div class="rev-meta">Google · hace 1 mes</div></div>
+        <div class="rev-card"><div class="rev-stars">★★★★☆</div><div class="rev-txt">"Gran variedad y muy buen precio. El sistema de pedido online es muy cómodo. El servicio de montaje también es muy profesional."</div><div class="rev-aut">Ana R.</div><div class="rev-meta">Google · hace 3 semanas</div></div>
       </div>
     </div>
   </div>
 
-  <!-- CTA BANNER -->
+  <!-- CTA -->
   <div class="cta-banner">
     <div><h2>¿Tienes un proyecto de reforma?</h2><p>Pídenos presupuesto sin compromiso. Asesoramiento gratis para particulares y profesionales.</p></div>
-    <button class="btn-white" onclick="goTo('contact')">Solicitar presupuesto →</button>
+    <button class="btn-wh" onclick="goTo('presupuesto')">Solicitar presupuesto →</button>
   </div>
+</div><!-- /home -->
 
-</div><!-- /page-home -->
 
-
-<!-- ╔══════════════════════════════════════════╗
-     ║          CATALOG PAGE                   ║
-     ╚══════════════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════════════════════════
+     CATALOG
+═══════════════════════════════════════════════════════ -->
 <div class="page" id="page-catalog">
-  <div class="catalog-hero">
-    <div class="max-w">
-      <span class="s-label">Catálogo</span>
-      <h1 class="s-title" style="color:var(--blanco)" id="cat-page-title">Sanitarios</h1>
-      <p style="color:rgba(255,255,255,.55);font-size:14px;margin-top:6px" id="cat-page-sub">Inodoros, bidés, cisternas y más de las mejores marcas</p>
+  <div class="cat-hero">
+    <div class="mxw">
+      <span class="s-lbl">Catálogo</span>
+      <h1 class="s-ttl" style="color:var(--blanco)" id="cat-page-title">Sanitarios</h1>
+      <p style="color:rgba(255,255,255,.55);font-size:14px;margin-top:6px" id="cat-page-sub">Inodoros, bidés y más</p>
     </div>
   </div>
-  <div class="catalog-layout">
-    <!-- FILTERS PANEL -->
+  <div class="cat-layout">
     <div class="filters">
-      <button class="filters-toggle" onclick="this.classList.toggle('open');document.querySelector('.filters-body').classList.toggle('open');this.querySelector('span').textContent=document.querySelector('.filters-body').classList.contains('open')?'▲':'▼'">
-        🔍 Filtrar productos <span>▼</span>
+      <button class="flt-toggle" id="flt-btn" onclick="toggleFilters()">
+        🔍 Filtrar productos <span class="arr">▼</span>
       </button>
-      <div class="filters-body">
-      <div class="filter-section">
-        <div class="filter-title">Categoría</div>
-        <div id="cat-filter-list"></div>
-      </div>
-      <div class="filter-section">
-        <div class="filter-title">Precio</div>
-        <div class="filter-opt"><input type="checkbox" id="fp1" onchange="applyFilters()"><label for="fp1">Hasta 100€</label></div>
-        <div class="filter-opt"><input type="checkbox" id="fp2" onchange="applyFilters()"><label for="fp2">100€ – 300€</label></div>
-        <div class="filter-opt"><input type="checkbox" id="fp3" onchange="applyFilters()"><label for="fp3">300€ – 600€</label></div>
-        <div class="filter-opt"><input type="checkbox" id="fp4" onchange="applyFilters()"><label for="fp4">Más de 600€</label></div>
-      </div>
-      <div class="filter-section">
-        <div class="filter-title">Marca</div>
-        <div id="brand-filter-list"></div>
-      </div>
-      <div class="filter-section">
-        <div class="filter-title">Color</div>
-        <div class="color-filter" id="color-filter-list"></div>
-      </div>
-      <div class="filter-section">
-        <div class="filter-opt"><input type="checkbox" id="foutlet" onchange="applyFilters()"><label for="foutlet">Solo ofertas</label></div>
-      </div>
-      <button class="btn-outline" style="width:100%;margin-top:8px;border-radius:4px" onclick="clearFilters()">Limpiar filtros</button>
-      </div><!-- /filters-body -->
-    </div>
-    <!-- PRODUCTS -->
-    <div class="catalog-main">
-      <div class="catalog-bar">
-        <div class="catalog-count"><strong id="prod-count">0</strong> productos encontrados</div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <select class="catalog-sort" onchange="sortProds(this.value)">
-            <option value="featured">Destacados</option>
-            <option value="price-asc">Precio: menor a mayor</option>
-            <option value="price-desc">Precio: mayor a menor</option>
-            <option value="name">Nombre A-Z</option>
-          </select>
+      <div class="flt-body" id="flt-body">
+        <div class="flt-sec"><div class="flt-ttl">Categoría</div><div id="cat-flt-list"></div></div>
+        <div class="flt-sec">
+          <div class="flt-ttl">Precio</div>
+          <div class="flt-opt"><input type="checkbox" id="fp1" onchange="applyFilters()"><label for="fp1">Hasta 100 €</label></div>
+          <div class="flt-opt"><input type="checkbox" id="fp2" onchange="applyFilters()"><label for="fp2">100 € – 300 €</label></div>
+          <div class="flt-opt"><input type="checkbox" id="fp3" onchange="applyFilters()"><label for="fp3">300 € – 600 €</label></div>
+          <div class="flt-opt"><input type="checkbox" id="fp4" onchange="applyFilters()"><label for="fp4">Más de 600 €</label></div>
         </div>
+        <div class="flt-sec"><div class="flt-ttl">Marca</div><div id="brand-flt-list"></div></div>
+        <div class="flt-sec"><div class="flt-ttl">Color</div><div class="color-row" id="color-flt"></div></div>
+        <div class="flt-sec"><div class="flt-opt"><input type="checkbox" id="foutlet" onchange="applyFilters()"><label for="foutlet">Solo ofertas / Outlet</label></div></div>
+        <button class="btn-out" style="width:100%;border-radius:var(--r);margin-top:8px" onclick="clearFilters()">Limpiar filtros</button>
+      </div>
+    </div>
+    <div class="cat-main">
+      <div class="cat-bar">
+        <div class="cat-count"><strong id="prod-count">0</strong> productos encontrados</div>
+        <select class="cat-sort" onchange="sortProds(this.value)">
+          <option value="featured">Destacados</option>
+          <option value="price-asc">Precio: menor a mayor</option>
+          <option value="price-desc">Precio: mayor a menor</option>
+          <option value="name">Nombre A-Z</option>
+        </select>
       </div>
       <div class="prod-grid" id="catalog-prods"></div>
     </div>
   </div>
-</div><!-- /page-catalog -->
+</div>
 
 
-<!-- ╔══════════════════════════════════════════╗
-     ║         PRODUCT DETAIL                  ║
-     ╚══════════════════════════════════════════╝ -->
+<!-- ═══════════════════════════════════════════════════════
+     PRODUCT DETAIL
+═══════════════════════════════════════════════════════ -->
 <div class="page" id="page-product">
-  <div class="detail-layout max-w">
-    <div class="detail-gallery">
-      <div class="main-img" id="d-main-img" style="background-image:url('')"></div>
-      <div class="detail-thumbs" id="d-thumbs"></div>
+  <div class="det-layout mxw">
+    <div class="det-gal">
+      <div class="main-img" id="d-main-img"></div>
+      <div class="det-thumbs" id="d-thumbs"></div>
     </div>
-    <div class="detail-info">
+    <div class="det-info">
       <div class="d-crumb">
         <span onclick="goTo('home')">Inicio</span> /
         <span onclick="goTo('catalog',currentCat)" id="d-cat-crumb">–</span>
       </div>
-      <h1 class="d-name" id="d-name">–</h1>
+      <h1 class="d-nm" id="d-nm">–</h1>
       <div class="d-brand" id="d-brand">–</div>
       <div class="d-ref" id="d-ref">REF: –</div>
-      <div class="d-rating"><span style="color:var(--rojo);letter-spacing:2px">★★★★★</span><span style="font-size:12px;color:var(--gris-medio)">4.7 · 8 valoraciones</span></div>
+      <div class="d-rating">
+        <span style="color:var(--rojo);letter-spacing:2px">★★★★★</span>
+        <span style="font-size:12px;color:var(--gris)">4.7 · 8 valoraciones</span>
+      </div>
       <div class="d-price" id="d-price">–</div>
       <div class="d-price-note" id="d-price-note">IVA incluido</div>
       <hr class="d-sep">
       <div class="d-specs" id="d-specs"></div>
       <hr class="d-sep">
+
+      <!-- QUANTITY — m² or ud. -->
       <div class="qty-wrap">
-        <div class="qty-label" id="qty-label">Cantidad (ud.)</div>
+        <div class="qty-label-row">
+          <span class="qty-lbl" id="qty-lbl">Cantidad</span>
+          <span class="qty-unit-badge" id="qty-badge">ud.</span>
+        </div>
+        <!-- m² CALCULATOR — only shows for tile products -->
+        <div class="m2-helper" id="m2-helper">
+          <div style="font-weight:600;margin-bottom:8px;color:var(--negro)">📐 Calculadora de superficie</div>
+          <div class="m2-inputs">
+            <div class="m2-inp-wrap">
+              <label>Ancho (m)</label>
+              <input class="m2-inp" type="number" id="m2-w" placeholder="3.00" step="0.01" min="0" oninput="calcM2()">
+            </div>
+            <div class="m2-inp-wrap">
+              <label>Alto / Largo (m)</label>
+              <input class="m2-inp" type="number" id="m2-h" placeholder="2.40" step="0.01" min="0" oninput="calcM2()">
+            </div>
+          </div>
+          <div class="m2-result" id="m2-result">Introduce las medidas para calcular los m² necesarios</div>
+        </div>
         <div class="qty-box">
           <button class="qty-btn" onclick="changeQty(-1)">−</button>
-          <input class="qty-inp" type="number" id="d-qty" value="1" min="1">
+          <input class="qty-inp" type="number" id="d-qty" value="1" min="1" step="1" oninput="onQtyChange()">
+          <span class="qty-suffix" id="qty-suffix">ud.</span>
           <button class="qty-btn" onclick="changeQty(1)">+</button>
         </div>
       </div>
+
       <div class="d-cta">
-        <button class="btn-add-lg" id="d-add-btn">Añadir al pedido 🛒</button>
+        <button class="btn-addlg" id="d-add-btn">Añadir al pedido 🛒</button>
         <button class="btn-fav">♡</button>
       </div>
       <div class="pickup-info">
-        <div class="pi-icon">🏪</div>
-        <div>
-          <strong>Recogida en tienda gratis</strong><br>
-          Pide aquí y recoge en cualquiera de nuestras 3 tiendas. Te avisamos cuando esté listo. Pago en tienda o con tarjeta online.
+        <div class="pi">🏪</div>
+        <div><strong>Recogida en tienda gratis</strong><br>
+        Pide aquí y recoge en cualquiera de nuestras 3 tiendas. Te avisamos cuando esté listo. Pago en tienda o con tarjeta online.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     CHECKOUT
+═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-checkout">
+  <div style="background:var(--negro);padding:36px var(--pad) 28px">
+    <div class="mxw">
+      <h1 style="font-size:clamp(28px,4vw,40px);font-weight:800;color:var(--blanco)">Confirmar pedido</h1>
+      <p style="color:rgba(255,255,255,.45);font-size:14px;margin-top:6px">Recogida en tienda gratuita · Sin costes adicionales</p>
+    </div>
+  </div>
+  <div class="co-layout">
+    <div>
+      <div class="co-ttl">Resumen del pedido</div>
+      <div class="co-items" id="co-items"></div>
+      <div class="co-ttl">Tus datos</div>
+      <div class="f-row" style="margin-top:14px">
+        <div class="f-grp"><label class="f-lbl">Nombre *</label><input class="f-inp" id="co-name" placeholder="Tu nombre"></div>
+        <div class="f-grp"><label class="f-lbl">Apellidos</label><input class="f-inp" id="co-surname" placeholder="Apellidos"></div>
+      </div>
+      <div class="f-row">
+        <div class="f-grp"><label class="f-lbl">Email *</label><input class="f-inp" id="co-email" type="email" placeholder="tu@email.com"></div>
+        <div class="f-grp"><label class="f-lbl">Teléfono *</label><input class="f-inp" id="co-phone" type="tel" placeholder="6XX XXX XXX"></div>
+      </div>
+      <div class="f-grp"><label class="f-lbl">Tienda de recogida *</label>
+        <select class="f-sel" id="co-store">
+          <option value="">— Selecciona una tienda —</option>
+          <option>C. Pino Central, 21 · Pol. El Pino, Sevilla</option>
+          <option>Av. Dólmenes de Valencina, 7 · Valencina</option>
+          <option>Pol. La Matilla s/n · A-49 Km28 · Carrión de los Céspedes</option>
+        </select>
+      </div>
+      <div class="f-grp"><label class="f-lbl">Forma de pago *</label>
+        <div class="pay-opts">
+          <div class="pay-opt"><input type="radio" id="pay1" name="pay" value="store" checked><label for="pay1">💵 Pago en tienda al recoger (efectivo o tarjeta)</label></div>
+          <div class="pay-opt"><input type="radio" id="pay2" name="pay" value="online"><label for="pay2">💳 Pago online con tarjeta (Stripe)</label></div>
+        </div>
+      </div>
+      <div class="f-grp"><label class="f-lbl">Notas para el almacén</label>
+        <textarea class="f-ta" id="co-notes" rows="3" placeholder="Ej: reforma urgente, necesito formatos específicos..."></textarea>
+      </div>
+    </div>
+    <div class="ord-sum">
+      <div class="os-ttl">Resumen</div>
+      <div id="os-lines"></div>
+      <div class="os-tot"><span>Total</span><span id="os-total">0,00 €</span></div>
+      <div class="os-note"><strong>🏪 Recogida en tienda gratis</strong>Preparamos tu pedido y te avisamos. Sin esperas.</div>
+      <button class="btn-checkout" onclick="submitOrder()">Confirmar pedido →</button>
+      <p style="font-size:11px;color:rgba(255,255,255,.3);text-align:center;margin-top:10px">Al confirmar aceptas los términos y condiciones.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM -->
+<div class="page" id="page-confirm">
+  <div class="confirm-wrap">
+    <div class="conf-ico">✓</div>
+    <h1 class="conf-ttl">¡Pedido confirmado!</h1>
+    <p class="conf-sub">Hemos recibido tu pedido. El equipo de almacén lo preparará y te avisará cuando esté listo para recoger.</p>
+    <div class="conf-box">
+      <div class="conf-num">Número de pedido</div>
+      <div class="conf-id" id="co-order-id">#LE-0001</div>
+      <hr style="border:none;border-top:1px solid var(--gris-cl);margin:14px 0">
+      <div id="co-details" style="font-size:13px;line-height:1.8;color:var(--gris-osc)"></div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn-prim" onclick="goTo('catalog','Sanitarios')">Seguir comprando</button>
+      <button class="btn-out" onclick="goTo('home')">Volver al inicio</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PRESUPUESTO
+═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-presupuesto">
+  <div class="pg-hero">
+    <div class="mxw">
+      <span class="s-lbl">Sin compromiso</span>
+      <h1 class="s-ttl" style="color:var(--blanco)">Solicitar presupuesto</h1>
+      <p style="color:rgba(255,255,255,.55);margin-top:10px;font-size:15px;max-width:500px">Te preparamos un presupuesto personalizado para tu proyecto. Gratis y sin compromiso.</p>
+    </div>
+  </div>
+  <div class="pg-sec">
+    <div class="two-col">
+      <div>
+        <span class="s-lbl">¿Qué incluye?</span>
+        <h2 class="s-ttl">Presupuesto detallado<br>a medida</h2>
+        <p style="font-size:14px;color:var(--gris);line-height:1.75;margin-top:12px;margin-bottom:24px">Analizamos tu proyecto y te preparamos un presupuesto completo con productos, materiales y si lo necesitas, el servicio de instalación incluido.</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--r)">
+            <span style="font-size:22px">✅</span><div><div style="font-weight:600;margin-bottom:2px">Presupuesto gratuito</div><div style="font-size:13px;color:var(--gris)">Sin compromiso, sin coste adicional</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--r)">
+            <span style="font-size:22px">⚡</span><div><div style="font-weight:600;margin-bottom:2px">Respuesta en 24h</div><div style="font-size:13px;color:var(--gris)">Te contactamos por email o teléfono</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--r)">
+            <span style="font-size:22px">📐</span><div><div style="font-weight:600;margin-bottom:2px">Cálculo de materiales</div><div style="font-size:13px;color:var(--gris)">Incluye mediciones y cantidad exacta</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--r)">
+            <span style="font-size:22px">🔧</span><div><div style="font-weight:600;margin-bottom:2px">Montaje opcional</div><div style="font-size:13px;color:var(--gris)">Presupuesto con o sin instalación</div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--negro);padding:clamp(24px,4vw,36px);border-radius:var(--r);color:var(--blanco)">
+          <h3 style="font-size:22px;font-weight:800;margin-bottom:20px">Formulario de presupuesto</h3>
+          <div class="f-row" style="gap:12px;margin-bottom:14px">
+            <div class="f-grp"><label class="f-lbl" style="color:rgba(255,255,255,.5)">Nombre *</label><input class="f-inp" id="pres-name" placeholder="Tu nombre" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--blanco)"></div>
+            <div class="f-grp"><label class="f-lbl" style="color:rgba(255,255,255,.5)">Teléfono *</label><input class="f-inp" id="pres-phone" placeholder="6XX XXX XXX" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--blanco)"></div>
+          </div>
+          <div class="f-grp"><label class="f-lbl" style="color:rgba(255,255,255,.5)">Email</label><input class="f-inp" id="pres-email" type="email" placeholder="tu@email.com" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--blanco)"></div>
+          <div class="f-grp"><label class="f-lbl" style="color:rgba(255,255,255,.5)">Tipo de proyecto *</label>
+            <select class="f-sel" id="pres-type" style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--blanco)">
+              <option>Reforma baño completo</option>
+              <option>Solo azulejos / pavimento</option>
+              <option>Sanitarios y griferías</option>
+              <option>Mampara y accesorios</option>
+              <option>Proyecto de obra nueva</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="f-grp"><label class="f-lbl" style="color:rgba(255,255,255,.5)">¿Necesitas montaje?</label>
+            <div class="pay-opts">
+              <div class="pay-opt" style="border-color:rgba(255,255,255,.15)"><input type="radio" name="pres-mont" value="si" checked><label style="color:var(--blanco)">Sí, con instalación</label></div>
+              <div class="pay-opt" style="border-color:rgba(255,255,255,.15)"><input type="radio" name="pres-mont" value="no"><label style="color:var(--blanco)">No, solo materiales</label></div>
+            </div>
+          </div>
+          <div class="f-grp"><label class="f-lbl" style="color:rgba(255,255,255,.5)">Descripción del proyecto</label>
+            <textarea class="f-ta" id="pres-desc" rows="4" placeholder="Dimensiones aproximadas, productos que necesitas, estilo que buscas..." style="background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.15);color:var(--blanco)"></textarea>
+          </div>
+          <button class="btn-prim" style="width:100%;padding:14px;margin-top:4px" onclick="submitPresupuesto()">Enviar solicitud →</button>
         </div>
       </div>
     </div>
   </div>
-</div><!-- /page-product -->
+</div>
 
 
-<!-- ╔══════════════════════════════════════════╗
-     ║           CHECKOUT                      ║
-     ╚══════════════════════════════════════════╝ -->
-<div class="page" id="page-checkout">
-  <div style="background:var(--negro);padding:36px 32px 28px">
-    <div class="max-w">
-      <h1 style="font-size:36px;font-weight:800;color:var(--blanco)">Confirmar pedido</h1>
-      <p style="color:rgba(255,255,255,.45);font-size:14px;margin-top:6px">Recogida en tienda gratuita · Sin costes adicionales</p>
+<!-- ═══════════════════════════════════════════════════════
+     MONTAJE
+═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-montaje">
+  <div class="pg-hero">
+    <div class="mxw">
+      <span class="s-lbl">Servicio</span>
+      <h1 class="s-ttl" style="color:var(--blanco)">Montaje profesional<br>en toda Sevilla</h1>
+      <p style="color:rgba(255,255,255,.55);margin-top:10px;font-size:15px;max-width:500px">Nuestro equipo de instaladores cualificados se encarga de todo.</p>
     </div>
   </div>
-  <div class="checkout-layout max-w" style="padding-top:36px">
-    <div>
-      <div class="checkout-section-title">Productos del pedido</div>
-      <div class="checkout-items" id="co-items"></div>
-      <div class="checkout-section-title">Tus datos</div>
-      <div style="margin-top:14px">
-        <div class="f-row">
-          <div class="f-group"><label class="f-label">Nombre *</label><input class="f-input" id="co-name" placeholder="Tu nombre"></div>
-          <div class="f-group"><label class="f-label">Apellidos</label><input class="f-input" id="co-surname" placeholder="Apellidos"></div>
+  <div class="pg-sec">
+    <div class="two-col center">
+      <div>
+        <span class="s-lbl">Lo que incluye</span>
+        <h2 class="s-ttl">Instalación completa<br>de principio a fin</h2>
+        <p style="font-size:14px;color:var(--gris);line-height:1.75;margin-top:12px;margin-bottom:24px">Instalamos todos los productos que compres en nuestra tienda: sanitarios, mamparas, griferías, muebles, azulejos y pavimentos.</p>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--r)"><span style="font-size:22px">🔩</span><div><div style="font-weight:700;margin-bottom:3px">Instalación de sanitarios</div><div style="font-size:13px;color:var(--gris)">Inodoros, bidés, lavabos y bañeras.</div></div></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--r)"><span style="font-size:22px">🚿</span><div><div style="font-weight:700;margin-bottom:3px">Colocación de mamparas</div><div style="font-size:13px;color:var(--gris)">Frontales, angulares y a medida. Sellado garantizado.</div></div></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--r)"><span style="font-size:22px">🧱</span><div><div style="font-weight:700;margin-bottom:3px">Alicatado y solado</div><div style="font-size:13px;color:var(--gris)">Azulejos y pavimentos, interior y exterior.</div></div></div>
+          <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--gris-bg);border-radius:var(--r)"><span style="font-size:22px">🪞</span><div><div style="font-weight:700;margin-bottom:3px">Muebles y accesorios</div><div style="font-size:13px;color:var(--gris)">Muebles de baño, espejos LED y accesorios.</div></div></div>
         </div>
-        <div class="f-row">
-          <div class="f-group"><label class="f-label">Email *</label><input class="f-input" id="co-email" type="email" placeholder="tu@email.com"></div>
-          <div class="f-group"><label class="f-label">Teléfono *</label><input class="f-input" id="co-phone" type="tel" placeholder="6XX XXX XXX"></div>
+        <button class="btn-prim" style="margin-top:24px" onclick="goTo('presupuesto')">Solicitar presupuesto de montaje →</button>
+      </div>
+      <div style="aspect-ratio:4/3;background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80') center/cover;border-radius:var(--r);min-height:280px"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- NOSOTROS -->
+<div class="page" id="page-about">
+  <div class="pg-hero">
+    <div class="mxw">
+      <span class="s-lbl">Nuestra historia</span>
+      <h1 class="s-ttl" style="color:var(--blanco)">Desde 1973 siendo<br>tu referencia en Sevilla</h1>
+    </div>
+  </div>
+  <div class="pg-sec">
+    <div class="two-col center">
+      <div>
+        <span class="s-lbl">Quiénes somos</span>
+        <h2 class="s-ttl">Familia, experiencia<br>y confianza</h2>
+        <p style="font-size:14px;color:var(--gris);line-height:1.75;margin-top:12px">Azulejos La Estrella nació en 1973 como un almacén familiar especializado en azulejos y pavimentos. Hoy, más de 50 años después, somos el referente en la provincia de Sevilla en todo lo relacionado con el baño y los revestimientos.</p>
+        <p style="font-size:14px;color:var(--gris);line-height:1.75;margin-top:10px">Tres tiendas en la provincia, un equipo de profesionales especializados y más de 300 referencias en catálogo de las mejores marcas del mercado.</p>
+        <div style="display:flex;gap:28px;margin-top:28px;flex-wrap:wrap">
+          <div><div style="font-size:40px;font-weight:900;color:var(--rojo)">+50</div><div style="font-size:12px;color:var(--gris)">Años experiencia</div></div>
+          <div><div style="font-size:40px;font-weight:900;color:var(--rojo)">3</div><div style="font-size:12px;color:var(--gris)">Tiendas en Sevilla</div></div>
+          <div><div style="font-size:40px;font-weight:900;color:var(--rojo)">300+</div><div style="font-size:12px;color:var(--gris)">Referencias</div></div>
         </div>
-        <div class="f-group"><label class="f-label">Tienda de recogida *</label>
-          <select class="f-select" id="co-store">
-            <option value="">— Selecciona una tienda —</option>
-            <option>C. Pino Central, 21 · Pol. El Pino, Sevilla</option>
-            <option>Av. Dólmenes de Valencina, 7 · Valencina</option>
-            <option>Pol. La Matilla s/n · A-49 Km28 · Carrión de los Céspedes</option>
-          </select>
+      </div>
+      <div style="display:grid;grid-template-rows:1fr 1fr;gap:8px;min-height:320px">
+        <div style="background:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80') center/cover;border-radius:var(--r)"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80') center/cover;border-radius:var(--r)"></div>
+          <div style="background:url('https://images.unsplash.com/photo-1613685703305-dc4e0aadb03d?w=400&q=80') center/cover;border-radius:var(--r)"></div>
         </div>
-        <div class="f-group"><label class="f-label">Forma de pago *</label>
-          <div class="pay-opts">
-            <div class="pay-opt"><input type="radio" id="pay1" name="pay" value="store" checked><label for="pay1">💵 Pago en tienda al recoger (efectivo o tarjeta)</label></div>
-            <div class="pay-opt"><input type="radio" id="pay2" name="pay" value="online"><label for="pay2">💳 Pago online con tarjeta (Stripe)</label></div>
+      </div>
+    </div>
+  </div>
+  <div class="pg-sec-full bg-gr">
+    <div class="mxw">
+      <div class="s-hdr"><span class="s-lbl">Nuestras tiendas</span><h2 class="s-ttl">Dónde encontrarnos</h2></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+        <div style="background:var(--blanco);border:1.5px solid var(--gris-cl);padding:24px;border-radius:var(--r)">
+          <div style="font-size:36px;font-weight:900;color:var(--gris-cl);margin-bottom:4px">01</div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:8px">Polígono El Pino</div>
+          <div style="font-size:13px;color:var(--gris);line-height:1.6">C. Pino Central, 21<br>41016 El Pino, Sevilla</div>
+          <div style="font-size:12px;color:var(--gris);margin-top:12px;padding-top:12px;border-top:1px solid var(--gris-cl)">Lun–Vie: 9:30–13:30 · 16:00–20:00<br>Sáb: 9:30–13:30 · Dom: Cerrado</div>
+        </div>
+        <div style="background:var(--blanco);border:1.5px solid var(--gris-cl);padding:24px;border-radius:var(--r)">
+          <div style="font-size:36px;font-weight:900;color:var(--gris-cl);margin-bottom:4px">02</div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:8px">Valencina de la Concepción</div>
+          <div style="font-size:13px;color:var(--gris);line-height:1.6">Av. Dólmenes de Valencina, 7<br>41907 Valencina, Sevilla</div>
+          <div style="font-size:12px;color:var(--gris);margin-top:12px;padding-top:12px;border-top:1px solid var(--gris-cl)">Lun–Vie: 9:30–13:30 · 16:00–20:00<br>Sáb: 9:30–13:30 · Dom: Cerrado</div>
+        </div>
+        <div style="background:var(--blanco);border:1.5px solid var(--gris-cl);padding:24px;border-radius:var(--r)">
+          <div style="font-size:36px;font-weight:900;color:var(--gris-cl);margin-bottom:4px">03</div>
+          <div style="font-weight:700;font-size:16px;margin-bottom:8px">Carrión de los Céspedes</div>
+          <div style="font-size:13px;color:var(--gris);line-height:1.6">Pol. La Matilla s/n<br>Autopista A-49, Km 28</div>
+          <div style="font-size:12px;color:var(--gris);margin-top:12px;padding-top:12px;border-top:1px solid var(--gris-cl)">Lun–Vie: 9:30–13:30 · 16:00–20:00<br>Sáb: 9:30–13:30 · Dom: Cerrado</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CONTACTO -->
+<div class="page" id="page-contact">
+  <div class="pg-hero">
+    <div class="mxw"><span class="s-lbl">Estamos aquí</span><h1 class="s-ttl" style="color:var(--blanco)">Contacta con nosotros</h1></div>
+  </div>
+  <div class="pg-sec">
+    <div class="two-col">
+      <div>
+        <span class="s-lbl">Llámanos</span>
+        <a href="tel:+34955292129" style="font-size:clamp(28px,4vw,40px);font-weight:800;color:var(--negro);display:block;margin-bottom:6px">955 292 129</a>
+        <a href="https://wa.me/34675083003" style="font-size:18px;font-weight:600;color:#25D366;display:flex;align-items:center;gap:8px;margin-bottom:24px" target="_blank">💬 WhatsApp: 675 083 003</a>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="ft-row"><span>📍</span><span>C. Pino Central, 21 · Pol. El Pino, Sevilla</span></div>
+          <div class="ft-row"><span>🕐</span><span>Lun–Vie: 9:30–13:30 · 16:00–20:00</span></div>
+          <div class="ft-row"><span>🕐</span><span>Sábados: 9:30–13:30 · Dom: Cerrado</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:18px;font-weight:800;margin-bottom:16px">Envíanos un mensaje</div>
+        <div class="f-row"><div class="f-grp"><label class="f-lbl">Nombre</label><input class="f-inp" id="ct-name" placeholder="Tu nombre"></div><div class="f-grp"><label class="f-lbl">Email</label><input class="f-inp" id="ct-email" placeholder="email@ejemplo.com"></div></div>
+        <div class="f-grp"><label class="f-lbl">Teléfono</label><input class="f-inp" id="ct-tel" placeholder="6XX XXX XXX"></div>
+        <div class="f-grp"><label class="f-lbl">Asunto</label>
+          <select class="f-sel"><option>Consulta producto</option><option>Presupuesto obra</option><option>Servicio montaje</option><option>Otro</option></select>
+        </div>
+        <div class="f-grp"><label class="f-lbl">Mensaje</label><textarea class="f-ta" rows="4" placeholder="Escribe tu mensaje..."></textarea></div>
+        <button class="btn-prim" style="width:100%;padding:14px" onclick="showToast('✓ Mensaje enviado. Te contactaremos pronto.')">Enviar mensaje →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     ADMIN
+═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-admin">
+  <div class="adm-layout">
+    <div class="adm-sb">
+      <div class="adm-sb-logo"><div class="adm-sb-nm">Panel de Almacén</div><div class="adm-sb-sub">Azulejos La Estrella</div></div>
+      <div class="adm-sec-lbl">Principal</div>
+      <div class="adm-item active" onclick="showAdm('dash',this)"><span class="ico">📊</span>Dashboard</div>
+      <div class="adm-item" onclick="showAdm('orders',this)"><span class="ico">📦</span>Pedidos</div>
+      <div class="adm-item" onclick="showAdm('prods',this)"><span class="ico">🗂️</span>Productos</div>
+      <div class="adm-sec-lbl">Sistema</div>
+      <div class="adm-item" onclick="goTo('home')"><span class="ico">🌐</span>Ver web</div>
+    </div>
+    <div class="adm-main">
+      <div id="adm-dash">
+        <div class="adm-top"><div class="adm-ttl">Dashboard</div><button class="btn-prim" style="font-size:12px" onclick="showAdm('orders',null)">Ver pedidos →</button></div>
+        <div class="stats-row">
+          <div class="stat-card hl"><div class="stat-lbl">Pedidos hoy</div><div class="stat-v" id="s-today">0</div></div>
+          <div class="stat-card"><div class="stat-lbl">Pendientes</div><div class="stat-v" id="s-pend" style="color:var(--rojo)">0</div></div>
+          <div class="stat-card"><div class="stat-lbl">Listos</div><div class="stat-v" id="s-ready" style="color:#27ae60">0</div></div>
+          <div class="stat-card"><div class="stat-lbl">Facturado</div><div class="stat-v" id="s-rev">0€</div></div>
+        </div>
+        <div class="ord-tbl">
+          <div class="ord-tbl-top"><div class="ord-tbl-ttl">Últimos pedidos</div></div>
+          <table><thead><tr><th>Nº</th><th>Cliente</th><th>Tienda</th><th>Total</th><th>Pago</th><th>Estado</th><th>Cambiar</th></tr></thead><tbody id="adm-tbody"></tbody></table>
+        </div>
+      </div>
+      <div id="adm-orders" style="display:none">
+        <div class="adm-top"><div class="adm-ttl">Todos los pedidos</div><select class="cat-sort" onchange="filterAdmOrders(this.value)"><option value="all">Todos</option><option value="new">Nuevos</option><option value="prep">Preparando</option><option value="ready">Listos</option><option value="done">Entregados</option></select></div>
+        <div class="ord-tbl"><table><thead><tr><th>Nº</th><th>Cliente</th><th>Tel.</th><th>Tienda</th><th>Total</th><th>Pago</th><th>Estado</th><th>Cambiar</th></tr></thead><tbody id="all-orders-body"></tbody></table></div>
+      </div>
+      <div id="adm-prods" style="display:none">
+        <div class="adm-top"><div class="adm-ttl">Productos</div></div>
+        <div class="ord-tbl"><table><thead><tr><th>Img</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Marca</th></tr></thead><tbody id="adm-prods-body"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════ -->
+<footer id="main-footer">
+  <div class="mxw">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo"><span class="fi">★</span>Azulejos La Estrella</div>
+        <p class="ft-desc">Especialistas en productos de baño desde 1973. Tres tiendas en la provincia de Sevilla. Sanitarios, mamparas, griferías, muebles y azulejos.</p>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Catálogo</div>
+        <div class="ft-links">
+          <a onclick="goTo('catalog','Sanitarios')">Sanitarios</a>
+          <a onclick="goTo('catalog','Mamparas')">Mamparas</a>
+          <a onclick="goTo('catalog','Grifería')">Grifería</a>
+          <a onclick="goTo('catalog','Muebles de baño')">Muebles de baño</a>
+          <a onclick="goTo('catalog','Accesorios de baño')">Accesorios</a>
+          <a onclick="goTo('catalog','Azulejos Interior')">Azulejos Interior</a>
+          <a onclick="goTo('catalog','Pavimentos Exterior')">Pavimentos Exterior</a>
+          <a onclick="goTo('catalog','Outlet')" style="color:var(--rojo);font-weight:600">Outlet</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Empresa</div>
+        <div class="ft-links">
+          <a onclick="goTo('about')">Quiénes somos</a>
+          <a onclick="goTo('montaje')">Servicio de montaje</a>
+          <a onclick="goTo('presupuesto')">Solicitar presupuesto</a>
+          <a onclick="goTo('contact')">Contacto</a>
+          <a href="#">Aviso legal</a>
+          <a onclick="goTo('admin')" style="color:var(--gris)">⚙ Panel Admin</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Contacto</div>
+        <div class="ft-row"><span>📞</span><a href="tel:+34955292129">955 292 129</a></div>
+        <div class="ft-row"><span>💬</span><a href="https://wa.me/34675083003" target="_blank">WhatsApp</a></div>
+        <div class="ft-row"><span>📍</span><span>El Pino · Valencina · Carrión</span></div>
+        <div class="ft-row"><span>🕐</span><span>Lun–Sáb: 9:30–20:00</span></div>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2024 Azulejos La Estrella · Todos los derechos reservados</span>
+      <div style="display:flex;gap:14px"><a href="#">Aviso Legal</a><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
           </div>
         </div>
         <div class="f-group"><label class="f-label">Notas para almacén</label><textarea class="f-textarea" id="co-notes" rows="3" placeholder="Ej: necesito formatos 60×120, reforma urgente..."></textarea></div>
@@ -1431,6 +1785,115 @@ footer { background: var(--negro); color: rgba(255,255,255,.55); padding: clamp(
   <button onclick="closeMobile();window.open('https://wa.me/34675083003','_blank')" style="color:#25D366;font-weight:700">💬 WhatsApp</button>
 </div>
 <script>
+// ══════════════════════════════════════════════════
+// SUPABASE CONFIG — Azulejos La Estrella
+// ══════════════════════════════════════════════════
+const SB_URL = 'https://csechaapbpxzcjyznydh.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzZWNoYWFwYnB4emNqeXpueWRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczOTA1MjcsImV4cCI6MjA5Mjk2NjUyN30.U5uui3raXkU2_D_tXWspOzhhhx2NKn2qZUqXC_sfOLk';
+
+const SB_HEADERS = {
+  'apikey': SB_KEY,
+  'Authorization': 'Bearer ' + SB_KEY,
+  'Content-Type': 'application/json',
+};
+
+async function sbGet(table, query = '') {
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/' + table + query, {
+      headers: SB_HEADERS
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+  } catch(e) {
+    console.warn('Supabase GET error:', e);
+    return null;
+  }
+}
+
+async function sbPost(table, data) {
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/' + table, {
+      method: 'POST',
+      headers: { ...SB_HEADERS, 'Prefer': 'return=representation' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+  } catch(e) {
+    console.warn('Supabase POST error:', e);
+    return null;
+  }
+}
+
+async function sbPatch(table, filter, data) {
+  try {
+    const res = await fetch(SB_URL + '/rest/v1/' + table + '?' + filter, {
+      method: 'PATCH',
+      headers: { ...SB_HEADERS, 'Prefer': 'return=representation' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    return await res.json();
+  } catch(e) {
+    console.warn('Supabase PATCH error:', e);
+    return null;
+  }
+}
+
+// Cargar productos desde Supabase (con fallback a los datos locales)
+async function loadProductsFromDB() {
+  const data = await sbGet('productos', '?activo=eq.true&order=categoria.asc,nombre.asc');
+  if (!data || data.length === 0) {
+    console.info('Usando productos locales (BD vacía o sin conexión)');
+    return false;
+  }
+  // Mapear formato Supabase → formato interno
+  PRODUCTS.length = 0;
+  let idCounter = 1;
+  data.forEach(p => {
+    PRODUCTS.push({
+      id: idCounter++,
+      _uuid: p.id,
+      name: p.nombre,
+      category: p.categoria,
+      price: parseFloat(p.precio),
+      unit: p.unidad || 'ud.',
+      ref: p.referencia,
+      brand: p.marca || '',
+      badge: p.badge || null,
+      outlet: p.outlet || false,
+      priceOld: p.precio_outlet ? parseFloat(p.precio) : null,
+      price: p.outlet && p.precio_outlet ? parseFloat(p.precio_outlet) : parseFloat(p.precio),
+      img: p.imagen || 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80',
+      imgs: [p.imagen || 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500&q=80'],
+      specs: p.specs || {},
+    });
+  });
+  console.info('Productos cargados desde Supabase:', PRODUCTS.length);
+  return true;
+}
+
+// Guardar pedido en Supabase
+async function saveOrderToDB(orderData) {
+  return await sbPost('pedidos', orderData);
+}
+
+// Guardar presupuesto en Supabase
+async function savePresupuestoToDB(presData) {
+  return await sbPost('presupuestos', presData);
+}
+
+// Guardar cliente en Supabase (si no existe)
+async function saveClienteToDB(nombre, email, tel) {
+  return await sbPost('clientes', {
+    nombre: nombre,
+    email: email || null,
+    telefono: tel || null,
+    tipo: 'particular'
+  });
+}
+
+
 // ══════════════════════════════════════════════════════
 // PRODUCTOS — 25 por categoría (8 categorías = 200 refs)
 // ══════════════════════════════════════════════════════
@@ -1698,6 +2161,8 @@ let slideIdx = 0;
 // ROUTER
 // ══════════════════════════════════════════════════
 function goTo(page, param) {
+  closeMob();
+  closeSearchDrop();
   closeMobile();
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('#mainnav button').forEach(b => b.classList.remove('active'));
@@ -1851,7 +2316,7 @@ function renderProduct(id) {
   if (!p) return;
   currentCat = p.category;
   document.getElementById('d-cat-crumb').textContent = p.category;
-  document.getElementById('d-name').textContent = p.name;
+  document.getElementById('d-nm').textContent = p.name;
   document.getElementById('d-brand').textContent = p.brand;
   document.getElementById('d-ref').textContent = 'REF: ' + p.ref;
   document.getElementById('d-price').textContent = p.price.toFixed(2).replace('.',',') + ' €';
@@ -1866,12 +2331,46 @@ function renderProduct(id) {
   const thumbs = document.getElementById('d-thumbs');
   thumbs.innerHTML = [p.img].map((img,i)=>`<div class="d-thumb active" style="background-image:url('${img}')"></div>`).join('');
 
+  // m² or unit logic
+  const isM2 = CATS[p.category] && CATS[p.category].m2;
+  document.getElementById('qty-badge').textContent = isM2 ? 'm²' : 'ud.';
+  document.getElementById('qty-badge').className = 'qty-unit-badge' + (isM2 ? ' m2' : '');
+  document.getElementById('qty-suffix').textContent = isM2 ? 'm²' : 'ud.';
+  document.getElementById('qty-lbl').textContent = isM2 ? 'Superficie necesaria' : 'Cantidad';
+  const m2Helper = document.getElementById('m2-helper');
+  if (isM2) {
+    m2Helper.classList.add('show');
+    document.getElementById('m2-w').value = '';
+    document.getElementById('m2-h').value = '';
+    document.getElementById('m2-result').textContent = 'Introduce las medidas para calcular los m² necesarios';
+    document.getElementById('d-qty').step = '0.5';
+    document.getElementById('d-qty').value = '1';
+  } else {
+    m2Helper.classList.remove('show');
+    document.getElementById('d-qty').step = '1';
+    document.getElementById('d-qty').value = '1';
+  }
   document.getElementById('d-add-btn').onclick = () => {
     const qty = parseInt(document.getElementById('d-qty').value)||1;
     addToCart(p.id, qty);
   };
 }
 
+function calcM2() {
+  const w = parseFloat(document.getElementById('m2-w').value) || 0;
+  const h = parseFloat(document.getElementById('m2-h').value) || 0;
+  const res = document.getElementById('m2-result');
+  if (w > 0 && h > 0) {
+    const raw = w * h;
+    const withWaste = raw * 1.10; // +10% merma
+    const qty = Math.ceil(withWaste * 2) / 2; // redondear a 0.5
+    document.getElementById('d-qty').value = qty.toFixed(1);
+    res.innerHTML = `Superficie: <strong>${raw.toFixed(2)} m²</strong> + 10% merma = <strong style="color:var(--rojo)">${qty.toFixed(1)} m²</strong> a pedir`;
+  } else {
+    res.textContent = 'Introduce las medidas para calcular los m² necesarios';
+  }
+}
+function onQtyChange() { /* user manually changed qty */ }
 function changeQty(d) {
   const inp = document.getElementById('d-qty');
   inp.value = Math.max(1, (parseInt(inp.value)||1)+d);
@@ -1879,8 +2378,107 @@ function changeQty(d) {
 
 // ── SEARCH ──
 function handleSearch(q) {
-  if (!q.trim()) return;
+  const drop = document.getElementById('srch-drop');
+  if (!q || q.trim().length < 1) {
+    renderSearchDefault();
+    return;
+  }
+  const term = q.toLowerCase().trim();
+  const results = PRODUCTS.filter(p =>
+    p.name.toLowerCase().includes(term) ||
+    p.brand.toLowerCase().includes(term) ||
+    p.category.toLowerCase().includes(term) ||
+    (p.ref && p.ref.toLowerCase().includes(term))
+  ).slice(0, 8);
+
+  if (!results.length) {
+    drop.innerHTML = `<div class="srch-empty">No se encontraron productos para "<strong>${q}</strong>"</div>
+      <div class="srch-footer" onclick="clearSearch()">Ver todo el catálogo</div>`;
+    drop.classList.add('open');
+    return;
+  }
+
+  drop.innerHTML = `
+    <div class="srch-section-title">Resultados para "${q}"</div>
+    ${results.map(p => `
+      <div class="srch-result-item" onclick="closeSearchDrop();goTo('product',${p.id})">
+        <div class="sri-img" style="background-image:url('${p.img}')"></div>
+        <div class="sri-info">
+          <div class="sri-name">${p.name}</div>
+          <div class="sri-cat">${p.category} · ${p.brand}</div>
+        </div>
+        <div class="sri-price">${p.price.toFixed(2).replace('.',',')} €/${p.unit}</div>
+      </div>`).join('')}
+    <div class="srch-footer" onclick="searchAll('${term}')">Ver todos los resultados →</div>`;
+  drop.classList.add('open');
 }
+
+function renderSearchDefault() {
+  const drop = document.getElementById('srch-drop');
+  const cats = Object.entries(CATS).filter(([k]) => k !== 'Outlet');
+  drop.innerHTML = `
+    <div class="srch-section-title">Explorar por categoría</div>
+    ${cats.map(([name, info]) => `
+      <div class="srch-cat-item" onclick="closeSearchDrop();goTo('catalog','${name}')">
+        <span class="sci-icon">${info.icon}</span>
+        <span class="sci-name">${name}</span>
+        <span class="sci-count">${PRODUCTS.filter(p=>p.category===name).length} productos</span>
+      </div>`).join('')}
+    <div class="drop-sep" style="height:1px;background:var(--gris-cl);margin:4px 0"></div>
+    <div class="srch-cat-item" onclick="closeSearchDrop();goTo('catalog','Outlet')" style="color:var(--rojo)">
+      <span class="sci-icon">🏷️</span>
+      <span class="sci-name" style="font-weight:700;color:var(--rojo)">Outlet — Hasta –40%</span>
+      <span class="sci-count">${PRODUCTS.filter(p=>p.outlet).length} ofertas</span>
+    </div>`;
+  drop.classList.add('open');
+}
+
+function openSearchDrop() {
+  const inp = document.getElementById('srch-input');
+  if (inp && inp.value.trim()) handleSearch(inp.value);
+  else renderSearchDefault();
+}
+
+function closeSearchDrop() {
+  const drop = document.getElementById('srch-drop');
+  if (drop) drop.classList.remove('open');
+}
+
+function clearSearch() {
+  const inp = document.getElementById('srch-input');
+  if (inp) inp.value = '';
+  closeSearchDrop();
+}
+
+function searchAll(term) {
+  closeSearchDrop();
+  // Filter across all categories
+  filteredProds = PRODUCTS.filter(p =>
+    p.name.toLowerCase().includes(term) ||
+    p.brand.toLowerCase().includes(term) ||
+    p.category.toLowerCase().includes(term)
+  );
+  activeCat = 'Sanitarios'; // reset active
+  document.getElementById('cat-page-title').textContent = 'Resultados para "' + term + '"';
+  document.getElementById('cat-page-sub').textContent = filteredProds.length + ' productos encontrados';
+  document.getElementById('prod-count').textContent = filteredProds.length;
+  document.getElementById('catalog-prods').innerHTML = filteredProds.map(prodCardHTML).join('');
+  goTo('catalog');
+}
+
+function handleSearchKey(e) {
+  if (e.key === 'Enter') {
+    const term = e.target.value.trim();
+    if (term) searchAll(term);
+  }
+  if (e.key === 'Escape') closeSearchDrop();
+}
+
+// Close search on outside click
+document.addEventListener('click', function(e) {
+  const wrap = document.getElementById('search-wrap');
+  if (wrap && !wrap.contains(e.target)) closeSearchDrop();
+});
 
 // ══════════════════════════════════════════════════
 // CART
@@ -1925,7 +2523,7 @@ function renderCartBody() {
     return;
   }
   body.innerHTML = cart.map(i=>`
-    <div class="cart-item-d">
+    <div class="ci-row">
       <div class="ci-img" style="background-image:url('${i.img}')"></div>
       <div class="ci-info">
         <div class="ci-name">${i.name}</div>
@@ -1944,8 +2542,8 @@ function renderCartBody() {
   footer.style.display = 'block';
 }
 
-function openCart() { document.getElementById('cart-overlay').classList.add('open'); document.getElementById('cart-drawer').classList.add('open'); }
-function closeCart() { document.getElementById('cart-overlay').classList.remove('open'); document.getElementById('cart-drawer').classList.remove('open'); }
+function openCart() { document.getElementById('cart-ov').classList.add('open'); document.getElementById('cart-drw').classList.add('open'); }
+function closeCart() { document.getElementById('cart-ov').classList.remove('open'); document.getElementById('cart-drw').classList.remove('open'); }
 
 // ══════════════════════════════════════════════════
 // CHECKOUT
@@ -1956,7 +2554,7 @@ function renderCheckout() {
   const tot = document.getElementById('os-total');
   if (!cart.length) { el.innerHTML='<p style="color:var(--gris-medio)">Tu carrito está vacío.</p>'; sl.innerHTML=''; tot.textContent='0,00 €'; return; }
   el.innerHTML = cart.map(i=>`
-    <div class="cart-item-d" style="border-bottom:1px solid var(--gris-claro);padding:12px 0">
+    <div class="ci-row" style="border-bottom:1px solid var(--gris-claro);padding:12px 0">
       <div class="ci-img" style="background-image:url('${i.img}');width:72px;height:72px;border-radius:4px;background-size:cover;flex-shrink:0;border:1px solid var(--gris-claro)"></div>
       <div class="ci-info"><div class="ci-name">${i.name}</div><div class="ci-cat">${i.category} · ${i.qty} ${i.unit}</div></div>
       <div class="ci-price">${(i.price*i.qty).toFixed(2).replace('.',',')} €</div>
@@ -1965,32 +2563,83 @@ function renderCheckout() {
   tot.textContent = cartTotal().toFixed(2).replace('.',',') + ' €';
 }
 
-function submitOrder() {
+async function submitOrder() {
   const name = document.getElementById('co-name').value.trim();
   const email = document.getElementById('co-email').value.trim();
   const phone = document.getElementById('co-phone').value.trim();
   const store = document.getElementById('co-store').value;
   const payment = document.querySelector('input[name=pay]:checked')?.value;
   const notes = document.getElementById('co-notes').value;
-  if (!name||!email||!phone||!store) { showToast('Rellena todos los campos obligatorios.'); return; }
+  if (!name || !phone || !store) { showToast('Rellena todos los campos obligatorios.'); return; }
   if (!cart.length) { showToast('Tu carrito está vacío.'); return; }
-  const oid = '#LE-' + String(Math.floor(Math.random()*9000)+1000);
-  const order = {id:oid, name, email, phone, store, payment, notes, items:[...cart], total:cartTotal(), status:'new', date:new Date().toLocaleString('es-ES')};
+
+  // Generar número único
+  const oid = '#LE-' + Date.now().toString().slice(-6);
+  const total = cartTotal();
+  const orderDate = new Date().toLocaleString('es-ES');
+
+  // Mostrar estado de carga
+  const btn = document.querySelector('.btn-checkout');
+  if (btn) { btn.textContent = 'Enviando pedido...'; btn.disabled = true; }
+
+  // Guardar en Supabase
+  const dbResult = await saveOrderToDB({
+    numero: oid,
+    cliente_nombre: name,
+    cliente_email: email || null,
+    cliente_telefono: phone,
+    tienda: store,
+    forma_pago: payment || 'store',
+    notas: notes || null,
+    items: cart.map(i => ({
+      id: i.id,
+      nombre: i.name,
+      precio: i.price,
+      cantidad: i.qty,
+      unidad: i.unit,
+      categoria: i.category
+    })),
+    total: total,
+    estado: 'new'
+  });
+
+  if (btn) { btn.textContent = 'Hacer pedido →'; btn.disabled = false; }
+
+  if (!dbResult) {
+    // Si Supabase falla, guardar localmente igualmente
+    console.warn('Pedido guardado solo localmente (Supabase no disponible)');
+  } else {
+    // También guardar cliente
+    await saveClienteToDB(name, email, phone);
+    console.info('Pedido guardado en Supabase:', oid);
+  }
+
+  // Estado local (siempre)
+  const order = { id: oid, name, email, phone, store, payment, notes, items: [...cart], total, status: 'new', date: orderDate };
   orders.push(order);
-  cart = []; updateCartUI();
+  cart = [];
+  updateCartUI();
+
+  // Confirmación
   document.getElementById('co-order-id').textContent = oid;
-  document.getElementById('co-details').innerHTML = `<b>Cliente:</b> ${name}<br><b>Email:</b> ${email}<br><b>Teléfono:</b> ${phone}<br><b>Tienda:</b> ${store}<br><b>Pago:</b> ${payment==='store'?'En tienda':'Online'}<br><b>Total:</b> ${order.total.toFixed(2).replace('.',',')} €`;
+  document.getElementById('co-details').innerHTML =
+    `<b>Cliente:</b> ${name}<br>` +
+    `<b>Email:</b> ${email || '—'}<br>` +
+    `<b>Teléfono:</b> ${phone}<br>` +
+    `<b>Tienda:</b> ${store}<br>` +
+    `<b>Pago:</b> ${payment === 'store' ? 'En tienda' : 'Online con tarjeta'}<br>` +
+    `<b>Total:</b> ${total.toFixed(2).replace('.', ',')} €`;
   goTo('confirm');
 }
 
 // ══════════════════════════════════════════════════
 // ADMIN
 // ══════════════════════════════════════════════════
-function showAdmin(sec, el) {
-  ['dashboard','orders','prods'].forEach(s => { const e=document.getElementById('admin-'+s); if(e) e.style.display='none'; });
-  const t = document.getElementById('admin-'+sec);
+function showAdm(sec, el) {
+  ['dash','orders','prods'].forEach(s => { const e=document.getElementById('adm-'+s); if(e) e.style.display='none'; });
+  const t = document.getElementById('adm-'+sec);
   if (t) t.style.display='block';
-  document.querySelectorAll('.admin-nav-item').forEach(i=>i.classList.remove('active'));
+  document.querySelectorAll('.adm-item').forEach(i=>i.classList.remove('active'));
   if (el) el.classList.add('active');
   if (sec==='orders') renderAllOrders();
   if (sec==='prods') renderAdminProds();
@@ -2004,7 +2653,7 @@ function renderAdmin() {
   document.getElementById('s-pend').textContent = pend;
   document.getElementById('s-ready').textContent = ready;
   document.getElementById('s-rev').textContent = rev.toFixed(0)+'€';
-  renderOrdersTable(document.getElementById('admin-tbody'), orders.slice(-5).reverse());
+  renderOrdersTable(document.getElementById('adm-tbody'), orders.slice(-5).reverse());
 }
 
 function renderOrdersTable(tbody, list) {
@@ -2029,13 +2678,13 @@ function updateStatus(id, st) {
   if(o) { o.status=st; showToast(`Pedido ${id} → ${st}`); renderAdmin(); }
 }
 
-function filterOrdersAdmin(val) {
+function filterAdmOrders(val) {
   const list = val==='all' ? orders : orders.filter(o=>o.status===val);
   renderOrdersTable(document.getElementById('all-orders-body'), list.reverse());
 }
 
 function renderAdminProds() {
-  document.getElementById('admin-prods-body').innerHTML = PRODUCTS.slice(0,50).map(p=>`<tr>
+  document.getElementById('adm-prods-body').innerHTML = PRODUCTS.slice(0,50).map(p=>`<tr>
     <td><div style="width:44px;height:44px;background:url('${p.img}') center/cover;border-radius:3px"></div></td>
     <td><strong>${p.name}</strong><br><span style="font-size:11px;color:var(--gris-medio)">${p.ref}</span></td>
     <td>${p.category}</td>
@@ -2185,8 +2834,17 @@ function closeMobile() {
 // ══════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => {
   setTimeout(() => document.getElementById('loader').classList.add('out'), 1200);
+  // Intentar cargar productos desde Supabase
+  const loaded = await loadProductsFromDB();
+  if (loaded) {
+    // Reconstruir CATS con conteos reales
+    Object.keys(CATS).forEach(cat => {
+      const count = PRODUCTS.filter(p => p.category === cat).length;
+      if (count > 0) CATS[cat].count = count;
+    });
+  }
   renderHomeProds();
   // Demo orders
   setTimeout(()=>{
@@ -2196,6 +2854,14 @@ window.addEventListener('load', () => {
 });
 
 // ── FILTER TOGGLE (mobile) ──
+function toggleFilters() {
+  const btn = document.getElementById('flt-btn');
+  const body = document.getElementById('flt-body');
+  if (!btn || !body) return;
+  btn.classList.toggle('open');
+  body.classList.toggle('open');
+  btn.querySelector('.arr').textContent = body.classList.contains('open') ? '▲' : '▼';
+}
 function initFiltersToggle() {
   const btn = document.querySelector('.filters-toggle');
   const body = document.querySelector('.filters-body');
@@ -2207,8 +2873,59 @@ function initFiltersToggle() {
   };
 }
 
+
+// ── MOBILE NAV ──
+function toggleMob() {
+  const mn = document.getElementById('mob-nav');
+  const btn = document.getElementById('mob-btn');
+  if (!mn) return;
+  if (mn.classList.contains('open')) {
+    mn.classList.remove('open');
+    if(btn) btn.textContent = '☰';
+    document.body.style.overflow = '';
+  } else {
+    mn.classList.add('open');
+    if(btn) btn.textContent = '✕';
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeMob() {
+  const mn = document.getElementById('mob-nav');
+  const btn = document.getElementById('mob-btn');
+  if (mn) mn.classList.remove('open');
+  if (btn) btn.textContent = '☰';
+  document.body.style.overflow = '';
+}
+
+// ── PRESUPUESTO ──
+async function submitPresupuesto() {
+  const name = document.getElementById('pres-name');
+  const phone = document.getElementById('pres-phone');
+  const email = document.getElementById('pres-email');
+  const desc = document.getElementById('pres-desc');
+  const tipo = document.getElementById('pres-type');
+  if (!name || !name.value.trim() || !phone || !phone.value.trim()) {
+    showToast('Rellena nombre y teléfono para continuar.');
+    return;
+  }
+  const presNum = '#PRES-' + Date.now().toString().slice(-5);
+  const montaje = document.querySelector('input[name="pres-mont"]:checked')?.value === 'si';
+  await savePresupuestoToDB({
+    numero: presNum,
+    cliente_nombre: name.value.trim(),
+    cliente_telefono: phone.value.trim(),
+    cliente_email: email?.value.trim() || null,
+    tipo_proyecto: tipo?.value || 'Reforma baño completo',
+    incluye_montaje: montaje,
+    descripcion: desc?.value.trim() || null,
+    estado: 'pendiente'
+  });
+  showToast('✓ Solicitud enviada. Te contactaremos en menos de 24h.');
+  ['pres-name','pres-phone','pres-email','pres-desc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
 </script>
-</body>
-</html>
 </body>
 </html>
