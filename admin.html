@@ -513,6 +513,341 @@ tbody tr:hover { background: rgba(255,255,255,.02); }
   .stats-grid{grid-template-columns:1fr}
   .page-header{flex-direction:column}
 }
+
+/* ═══ CONFIGURADOR DE PRODUCTOS ═══ */
+.prod-kanban {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 4px 2px;
+}
+.prod-kanban-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  transition: var(--tr);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.prod-kanban-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,.3);
+}
+.prod-kanban-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg3);
+  position: relative;
+  flex-shrink: 0;
+}
+.prod-kanban-img-placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--bg3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  opacity: .3;
+}
+.prod-kanban-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--rojo);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+.prod-kanban-badge.outlet { background: #FF6B00; }
+.prod-kanban-badge.activo { background: var(--verde); }
+.prod-kanban-body {
+  padding: 14px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.prod-kanban-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+}
+.prod-kanban-sku {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  background: var(--bg3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  width: fit-content;
+}
+.prod-kanban-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.prod-kanban-price {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text);
+}
+.prod-kanban-unit {
+  font-size: 10px;
+  color: var(--text3);
+}
+.prod-kanban-stock {
+  font-size: 11px;
+  font-weight: 600;
+}
+.prod-kanban-actions {
+  display: flex;
+  gap: 4px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--bg3);
+}
+.prod-kanban-actions button {
+  flex: 1;
+  height: 28px;
+  border: none;
+  border-radius: var(--r);
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 600;
+  transition: var(--tr);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.pka-edit { background: var(--bg4); color: var(--text2); }
+.pka-edit:hover { background: var(--azul-dim); color: var(--azul); }
+.pka-toggle { background: var(--bg4); color: var(--text2); }
+.pka-toggle:hover { background: var(--verde-dim); color: var(--verde); }
+.pka-del { background: var(--bg4); color: var(--text2); }
+.pka-del:hover { background: var(--rojo-dim); color: var(--rojo); }
+
+/* ═══ MODAL PRODUCTO AMPLIADO ═══ */
+.modal-lg {
+  width: min(860px, calc(100vw - 32px));
+}
+.prod-form-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.prod-form-left {}
+.prod-form-right {}
+.sku-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  margin-top: 6px;
+}
+.sku-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--azul-dim);
+  color: var(--azul);
+  border: 1px solid rgba(74,158,255,.2);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+}
+.sku-tag button {
+  background: none;
+  border: none;
+  color: var(--azul);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0;
+  opacity: .6;
+  line-height: 1;
+  transition: opacity .15s;
+}
+.sku-tag button:hover { opacity: 1; }
+.sku-add-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+.sku-add-row input {
+  flex: 1;
+}
+.specs-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+}
+.spec-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.spec-row input { flex: 1; }
+.spec-row button {
+  width: 28px; height: 28px;
+  background: var(--rojo-dim); border: none;
+  color: var(--rojo); cursor: pointer;
+  border-radius: var(--r); font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: var(--tr);
+}
+.spec-row button:hover { background: rgba(208,2,27,.25); }
+.img-upload-area {
+  border: 2px dashed var(--border2);
+  border-radius: var(--r);
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--tr);
+  margin-top: 6px;
+  position: relative;
+}
+.img-upload-area:hover { border-color: var(--rojo); background: var(--rojo-dim); }
+.img-upload-area input[type=file] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer;
+}
+.img-upload-area .upload-ico { font-size: 28px; margin-bottom: 6px; opacity: .4; }
+.img-upload-area p { font-size: 12px; color: var(--text3); }
+.img-preview {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--r);
+  border: 1px solid var(--border2);
+  margin-top: 6px;
+  display: none;
+  position: relative;
+}
+.img-preview.show { display: block; }
+.img-preview-rm {
+  position: absolute; top: 8px; right: 8px;
+  background: rgba(0,0,0,.7); color: #fff;
+  border: none; width: 24px; height: 24px;
+  border-radius: 50%; cursor: pointer; font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--tr);
+}
+.img-preview-rm:hover { background: var(--rojo); }
+.medidas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* ═══ INFORMES / REPORTS ═══ */
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.report-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 20px;
+  cursor: pointer;
+  transition: var(--tr);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.report-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+.report-ico {
+  width: 44px; height: 44px;
+  border-radius: var(--r);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.report-info { flex: 1; min-width: 0; }
+.report-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.report-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+.report-meta { font-size: 10px; color: var(--text3); margin-top: 6px; font-weight: 500; letter-spacing: .5px; text-transform: uppercase; }
+.report-detail { display: none; }
+.report-detail.active { display: block; animation: fadeUp .3s ease; }
+.report-back {
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer; color: var(--text3); font-size: 13px;
+  margin-bottom: 20px; padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color .2s;
+}
+.report-back:hover { color: var(--text); }
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.kpi-box {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px 16px;
+}
+.kpi-val { font-size: 22px; font-weight: 800; }
+.kpi-lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
+.kpi-change { font-size: 11px; margin-top: 4px; }
+
+/* ═══ VIEW TOGGLE ═══ */
+.view-toggle {
+  display: flex;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 3px;
+  gap: 3px;
+}
+.view-toggle button {
+  background: none; border: none; cursor: pointer;
+  width: 28px; height: 28px; border-radius: calc(var(--r) - 2px);
+  font-size: 14px; color: var(--text3); transition: var(--tr);
+  display: flex; align-items: center; justify-content: center;
+}
+.view-toggle button.active {
+  background: var(--bg4); color: var(--text);
+}
+
+/* ═══ PRINT ═══ */
+@media print {
+  #sidebar, #topbar, .page-actions, .filter-bar, .prod-kanban-actions { display: none !important; }
+  body { background: white; color: black; }
+  .card { border: 1px solid #ccc; }
+  th, td { color: black; border-color: #ccc; }
+}
+
 </style>
 </head>
 <body>
@@ -574,7 +909,10 @@ tbody tr:hover { background: rgba(255,255,255,.02); }
   <div class="nav-group">
     <div class="nav-group-label">Sistema</div>
     <div class="nav-item" onclick="navTo('productos',this)">
-      <div class="ni">🗂️</div><div class="nl">Productos</div>
+      <div class="ni">🗂️</div><div class="nl">Configurador</div>
+    </div>
+    <div class="nav-item" onclick="navTo('informes',this)">
+      <div class="ni">📑</div><div class="nl">Informes</div>
     </div>
     <div class="nav-item" onclick="navTo('usuarios',this)">
       <div class="ni">🔐</div><div class="nl">Usuarios</div>
@@ -1085,32 +1423,175 @@ tbody tr:hover { background: rgba(255,255,255,.02); }
       </div>
     </div>
 
-    <!-- ════════════════ PRODUCTOS ════════════════ -->
+    <!-- ════════════════ CONFIGURADOR PRODUCTOS ════════════════ -->
     <div class="panel" id="panel-productos">
       <div class="page-header">
         <div>
-          <div class="page-title">Catálogo de Productos</div>
-          <div class="page-sub">Gestión del catálogo completo</div>
+          <div class="page-title">Configurador de Productos</div>
+          <div class="page-sub">Gestiona el catálogo completo de la tienda online</div>
         </div>
         <div class="page-actions">
-          <button class="btn btn-secondary btn-sm" onclick="showToast('info','Importando...','Sube un archivo Excel para importar productos')">📥 Importar</button>
-          <button class="btn btn-primary btn-sm" onclick="openModal('modal-producto')">+ Añadir producto</button>
+          <div class="view-toggle">
+            <button class="active" onclick="setProdView('kanban',this)" title="Vista tarjetas">⊞</button>
+            <button onclick="setProdView('tabla',this)" title="Vista tabla">☰</button>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="exportarProductosCSV()">📊 Exportar CSV</button>
+          <button class="btn btn-secondary btn-sm" onclick="showToast('info','Importar','Próximamente: importación masiva desde Excel')">📥 Importar</button>
+          <button class="btn btn-primary btn-sm" onclick="openModalProducto()">+ Añadir producto</button>
         </div>
       </div>
+
+      <!-- FILTROS -->
       <div class="filter-bar">
-        <input class="f-inp filter-inp" type="text" placeholder="Buscar por nombre, referencia, marca...">
-        <select class="f-sel filter-sel"><option>Todas las categorías</option><option>Sanitarios</option><option>Mamparas</option><option>Grifería</option><option>Muebles de baño</option></select>
-        <select class="f-sel filter-sel"><option>Todas las marcas</option><option>Roca</option><option>Grohe</option><option>Hansgrohe</option><option>Duravit</option></select>
+        <input class="f-inp filter-inp" type="text" id="prod-search" placeholder="Buscar por nombre, referencia, SKU, marca..." oninput="filtrarProductos(this.value)">
+        <select class="f-sel filter-sel" id="prod-filter-cat" onchange="filtrarProductos()">
+          <option value="">Todas las categorías</option>
+          <option>Sanitarios</option>
+          <option>Mamparas</option>
+          <option>Grifería</option>
+          <option>Muebles de baño</option>
+          <option>Accesorios de baño</option>
+          <option>Azulejos Interior</option>
+          <option>Pavimentos Exterior</option>
+          <option>Outlet</option>
+        </select>
+        <select class="f-sel filter-sel" id="prod-filter-marca" onchange="filtrarProductos()">
+          <option value="">Todas las marcas</option>
+          <option>Roca</option>
+          <option>Grohe</option>
+          <option>Hansgrohe</option>
+          <option>Duravit</option>
+          <option>Porcelanosa</option>
+          <option>Villeroy &amp; Boch</option>
+          <option>Geberit</option>
+          <option>Jacob Delafon</option>
+          <option>Tres Grifería</option>
+        </select>
+        <select class="f-sel" id="prod-filter-estado" onchange="filtrarProductos()">
+          <option value="">Todos los estados</option>
+          <option value="activo">Activos</option>
+          <option value="inactivo">Inactivos</option>
+          <option value="outlet">Outlet</option>
+          <option value="stock-bajo">Stock bajo</option>
+        </select>
+        <span style="font-size:12px;color:var(--text3);white-space:nowrap" id="prod-count-label">0 productos</span>
       </div>
-      <div class="card">
-        <div class="card-body np">
-          <div class="tbl-wrap">
-            <table>
-              <thead><tr><th>Img</th><th>Referencia</th><th>Nombre</th><th>Categoría</th><th>Marca</th><th>Precio</th><th>Unidad</th><th>Activo</th><th>Acciones</th></tr></thead>
-              <tbody id="productos-tbody"></tbody>
-            </table>
+
+      <!-- VISTA KANBAN -->
+      <div id="prod-view-kanban">
+        <div class="prod-kanban" id="prod-kanban-grid"></div>
+      </div>
+
+      <!-- VISTA TABLA -->
+      <div id="prod-view-tabla" style="display:none">
+        <div class="card">
+          <div class="card-body np">
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr>
+                  <th>Img</th>
+                  <th>SKU / Referencia</th>
+                  <th>Nombre</th>
+                  <th>Categoría</th>
+                  <th>Marca</th>
+                  <th>Precio</th>
+                  <th>Unidad</th>
+                  <th>Stock</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr></thead>
+                <tbody id="productos-tbody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ════════════════ INFORMES ════════════════ -->
+    <div class="panel" id="panel-informes">
+      <div id="informes-index">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Informes</div>
+            <div class="page-sub">Análisis y exportación de datos del negocio</div>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-secondary btn-sm" onclick="showToast('info','Programado','Informe semanal activado — recibirás el PDF cada lunes')">⏰ Informe automático</button>
+          </div>
+        </div>
+        <div class="report-grid">
+          <div class="report-card" onclick="verInforme('ventas')">
+            <div class="report-ico" style="background:var(--verde-dim)">📈</div>
+            <div class="report-info">
+              <div class="report-title">Informe de Ventas</div>
+              <div class="report-desc">Análisis de facturación, ticket medio, ventas por tienda y categoría.</div>
+              <div class="report-meta">📅 Actualizado hoy</div>
+            </div>
+          </div>
+          <div class="report-card" onclick="verInforme('pedidos')">
+            <div class="report-ico" style="background:var(--azul-dim)">📦</div>
+            <div class="report-info">
+              <div class="report-title">Informe de Pedidos</div>
+              <div class="report-desc">Estado de pedidos, tiempos de preparación y tasa de entrega.</div>
+              <div class="report-meta">📅 Actualizado hoy</div>
+            </div>
+          </div>
+          <div class="report-card" onclick="verInforme('stock')">
+            <div class="report-ico" style="background:var(--amarillo-dim)">🏗️</div>
+            <div class="report-info">
+              <div class="report-title">Informe de Stock</div>
+              <div class="report-desc">Inventario actual, rotación de producto, alertas de stock mínimo.</div>
+              <div class="report-meta">📅 Actualizado hoy</div>
+            </div>
+          </div>
+          <div class="report-card" onclick="verInforme('clientes')">
+            <div class="report-ico" style="background:var(--violeta-dim)">👥</div>
+            <div class="report-info">
+              <div class="report-title">Informe de Clientes</div>
+              <div class="report-desc">Clientes activos, recurrentes, valor de vida del cliente (LTV).</div>
+              <div class="report-meta">📅 Actualizado hoy</div>
+            </div>
+          </div>
+          <div class="report-card" onclick="verInforme('productos')">
+            <div class="report-ico" style="background:var(--rojo-dim)">🗂️</div>
+            <div class="report-info">
+              <div class="report-title">Top Productos</div>
+              <div class="report-desc">Ranking de productos más vendidos, margen y rendimiento por categoría.</div>
+              <div class="report-meta">📅 Este mes</div>
+            </div>
+          </div>
+          <div class="report-card" onclick="verInforme('tiendas')">
+            <div class="report-ico" style="background:var(--bg3)">🏪</div>
+            <div class="report-info">
+              <div class="report-title">Informe por Tienda</div>
+              <div class="report-desc">Comparativa entre puntos de venta: El Pino, Valencina y Carrión.</div>
+              <div class="report-meta">📅 Este mes</div>
+            </div>
+          </div>
+          <div class="report-card" onclick="verInforme('presupuestos')">
+            <div class="report-ico" style="background:var(--bg3)">📋</div>
+            <div class="report-info">
+              <div class="report-title">Informe de Presupuestos</div>
+              <div class="report-desc">Presupuestos enviados, aceptados, rechazados y tasa de conversión.</div>
+              <div class="report-meta">📅 Este mes</div>
+            </div>
+          </div>
+          <div class="report-card" onclick="exportarTodoCSV()">
+            <div class="report-ico" style="background:var(--bg3)">💾</div>
+            <div class="report-info">
+              <div class="report-title">Exportar todo a CSV</div>
+              <div class="report-desc">Descarga un ZIP con todos los datos: pedidos, clientes, productos y stock.</div>
+              <div class="report-meta">📥 Exportación completa</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DETALLE DE CADA INFORME -->
+      <div id="informe-detalle" class="report-detail">
+        <div class="report-back" onclick="volverInformes()">← Volver a informes</div>
+        <div id="informe-content"></div>
       </div>
     </div>
 
@@ -1265,37 +1746,195 @@ tbody tr:hover { background: rgba(255,255,255,.02); }
   </div>
 </div>
 
-<!-- MODAL PRODUCTO -->
+<!-- MODAL PRODUCTO CONFIGURADOR -->
 <div class="modal-ov" id="modal-producto">
-  <div class="modal">
-    <div class="modal-hdr"><div class="modal-ttl">Nuevo producto</div><button class="modal-close" onclick="closeModal('modal-producto')">✕</button></div>
+  <div class="modal modal-lg">
+    <div class="modal-hdr">
+      <div>
+        <div class="modal-ttl" id="modal-prod-titulo">Nuevo producto</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:2px">Los cambios se publican inmediatamente en la tienda online</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-producto')">✕</button>
+    </div>
     <div class="modal-body">
-      <div class="form-grid form-2col">
-        <div class="f-grp"><label class="f-lbl">Nombre *</label><input class="f-inp" placeholder="Nombre del producto"></div>
-        <div class="f-grp"><label class="f-lbl">Referencia *</label><input class="f-inp" placeholder="REF-XXX-000"></div>
-        <div class="f-grp"><label class="f-lbl">Categoría *</label>
-          <select class="f-sel"><option>Sanitarios</option><option>Mamparas</option><option>Grifería</option><option>Muebles de baño</option><option>Accesorios de baño</option><option>Azulejos Interior</option><option>Pavimentos Exterior</option></select>
+      <div class="prod-form-layout">
+
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="prod-form-left">
+          <div class="f-grp" style="margin-bottom:14px">
+            <label class="f-lbl">Nombre del producto *</label>
+            <input class="f-inp" id="mp-nombre" placeholder="Ej: Inodoro Suspendido Gap Compact, Mampara Frontal 80cm...">
+          </div>
+
+          <div class="f-grp" style="margin-bottom:14px">
+            <label class="f-lbl">Descripción del producto</label>
+            <textarea class="f-ta" id="mp-desc" rows="3" placeholder="Descripción detallada del producto. Materiales, características, usos..."></textarea>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+            <div class="f-grp">
+              <label class="f-lbl">Categoría *</label>
+              <select class="f-sel" id="mp-cat">
+                <option value="">— Seleccionar —</option>
+                <option>Sanitarios</option>
+                <option>Mamparas</option>
+                <option>Grifería</option>
+                <option>Muebles de baño</option>
+                <option>Accesorios de baño</option>
+                <option>Azulejos Interior</option>
+                <option>Pavimentos Exterior</option>
+              </select>
+            </div>
+            <div class="f-grp">
+              <label class="f-lbl">Marca *</label>
+              <select class="f-sel" id="mp-marca">
+                <option value="">— Seleccionar —</option>
+                <option>Roca</option>
+                <option>Grohe</option>
+                <option>Hansgrohe</option>
+                <option>Duravit</option>
+                <option>Porcelanosa</option>
+                <option>Villeroy &amp; Boch</option>
+                <option>Geberit</option>
+                <option>Jacob Delafon</option>
+                <option>Tres Grifería</option>
+                <option>Kaldewei</option>
+                <option>Ideal Standard</option>
+                <option>Otra marca</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+            <div class="f-grp">
+              <label class="f-lbl">Precio venta (€) *</label>
+              <input class="f-inp" id="mp-precio" type="number" step="0.01" min="0" placeholder="0.00">
+            </div>
+            <div class="f-grp">
+              <label class="f-lbl">Unidad</label>
+              <select class="f-sel" id="mp-unidad">
+                <option value="ud.">Unidad (ud.)</option>
+                <option value="m²">Metro cuadrado (m²)</option>
+              </select>
+            </div>
+            <div class="f-grp">
+              <label class="f-lbl">Precio outlet (€)</label>
+              <input class="f-inp" id="mp-precio-out" type="number" step="0.01" min="0" placeholder="Vacío = no outlet">
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+            <div class="f-grp">
+              <label class="f-lbl">Stock actual</label>
+              <input class="f-inp" id="mp-stock" type="number" min="0" placeholder="0">
+            </div>
+            <div class="f-grp">
+              <label class="f-lbl">Stock mínimo (alerta)</label>
+              <input class="f-inp" id="mp-stock-min" type="number" min="0" placeholder="5">
+            </div>
+          </div>
+
+          <!-- SKU / REFERENCIAS -->
+          <div class="f-grp" style="margin-bottom:14px">
+            <label class="f-lbl">SKU / Ref. Producto *</label>
+            <input class="f-inp" id="mp-sku-main" placeholder="Referencia principal · Ej: SAR-GAP-SUS" style="font-family:var(--mono);font-size:12px">
+            <label class="f-lbl" style="margin-top:10px">SKUs adicionales / Códigos de despiece</label>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:6px;line-height:1.5">Añade referencias alternativas, SKUs de proveedor o códigos de piezas. Se usan para cruzar el producto con tu sistema de gestión.</div>
+            <div class="sku-list" id="mp-sku-list"></div>
+            <div class="sku-add-row">
+              <input class="f-inp" id="mp-sku-input" placeholder="Ej: _STR13, _PT27, ROC-12345..." style="font-family:var(--mono);font-size:12px" onkeydown="if(event.key==='Enter'){event.preventDefault();addSku()}">
+              <button class="btn btn-secondary btn-sm" onclick="addSku()" style="white-space:nowrap">+ Añadir</button>
+            </div>
+          </div>
+
+          <!-- ESPECIFICACIONES TÉCNICAS -->
+          <div class="f-grp">
+            <label class="f-lbl">Especificaciones técnicas</label>
+            <div style="font-size:11px;color:var(--text3);margin-bottom:6px">Clave → Valor. Aparecerán en la ficha de producto de la tienda.</div>
+            <div class="specs-editor" id="specs-editor">
+              <!-- Filas generadas por JS -->
+            </div>
+            <button class="btn btn-secondary btn-sm" style="margin-top:8px;width:100%" onclick="addSpecRow()">+ Añadir especificación</button>
+          </div>
         </div>
-        <div class="f-grp"><label class="f-lbl">Marca *</label>
-          <select class="f-sel"><option>Roca</option><option>Grohe</option><option>Hansgrohe</option><option>Duravit</option><option>Porcelanosa</option><option>Villeroy & Boch</option><option>Geberit</option></select>
-        </div>
-        <div class="f-grp"><label class="f-lbl">Precio (€) *</label><input class="f-inp" type="number" step="0.01" placeholder="0.00"></div>
-        <div class="f-grp"><label class="f-lbl">Unidad de venta</label>
-          <select class="f-sel"><option>ud.</option><option>m²</option></select>
-        </div>
-        <div class="f-grp"><label class="f-lbl">Stock inicial</label><input class="f-inp" type="number" placeholder="0"></div>
-        <div class="f-grp"><label class="f-lbl">Stock mínimo (alerta)</label><input class="f-inp" type="number" placeholder="5"></div>
-        <div class="f-grp" style="grid-column:span 2"><label class="f-lbl">Descripción</label><textarea class="f-ta" rows="2" placeholder="Descripción breve del producto..."></textarea></div>
-        <div class="f-grp"><label class="f-lbl">Precio outlet (€)</label><input class="f-inp" type="number" step="0.01" placeholder="Dejar vacío si no es outlet"></div>
-        <div class="f-grp" style="align-items:center;flex-direction:row;gap:10px;padding-top:20px">
-          <input type="checkbox" id="chk-activo" style="accent-color:var(--rojo);width:16px;height:16px">
-          <label for="chk-activo" class="f-lbl" style="margin:0">Producto activo en tienda</label>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="prod-form-right">
+          <!-- IMAGEN -->
+          <div class="f-grp" style="margin-bottom:14px">
+            <label class="f-lbl">Imagen del producto</label>
+            <div class="img-upload-area" id="img-upload-area" onclick="document.getElementById('mp-img-file').click()">
+              <input type="file" id="mp-img-file" accept="image/*" style="display:none" onchange="previewImg(this)">
+              <div class="upload-ico">🖼️</div>
+              <p>Haz clic para subir imagen<br><span style="font-size:10px;opacity:.6">JPG, PNG, WebP · Recomendado 600×600px</span></p>
+            </div>
+            <div class="img-preview" id="img-preview">
+              <button class="img-preview-rm" onclick="removeImg()">✕</button>
+            </div>
+            <div style="margin-top:8px">
+              <label class="f-lbl">O pega una URL de imagen</label>
+              <input class="f-inp" id="mp-img-url" placeholder="https://..." oninput="previewImgUrl(this.value)" style="font-size:12px">
+            </div>
+          </div>
+
+          <!-- BADGE / ETIQUETA -->
+          <div class="f-grp" style="margin-bottom:14px">
+            <label class="f-lbl">Etiqueta destacada</label>
+            <select class="f-sel" id="mp-badge">
+              <option value="">Sin etiqueta</option>
+              <option value="Novedad">🆕 Novedad</option>
+              <option value="Más vendido">⭐ Más vendido</option>
+              <option value="Premium">💎 Premium</option>
+              <option value="Outlet">🏷️ Outlet</option>
+              <option value="Tendencia">🔥 Tendencia</option>
+              <option value="Eco">🌿 Eco</option>
+            </select>
+          </div>
+
+          <!-- ESTADO -->
+          <div class="f-grp" style="margin-bottom:14px">
+            <label class="f-lbl">Estado en tienda</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--r);flex:1;transition:var(--tr)" id="lbl-activo">
+                <input type="radio" name="mp-estado" value="activo" id="mp-estado-activo" checked style="accent-color:var(--verde)">
+                <span>✅ Activo (visible en tienda)</span>
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--r);flex:1;transition:var(--tr)" id="lbl-inactivo">
+                <input type="radio" name="mp-estado" value="inactivo" id="mp-estado-inactivo" style="accent-color:var(--text3)">
+                <span>⛔ Inactivo (oculto)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- VISTA PREVIA -->
+          <div class="f-grp">
+            <label class="f-lbl">Vista previa de la tarjeta en tienda</label>
+            <div id="prod-preview-card" style="border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden;margin-top:6px">
+              <div id="prev-img" style="aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:32px;opacity:.3;background-size:cover;background-position:center;position:relative">
+                🖼️
+                <div id="prev-badge" style="position:absolute;top:8px;left:8px;background:var(--rojo);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:100px;display:none"></div>
+              </div>
+              <div style="padding:12px">
+                <div style="font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px" id="prev-cat">Categoría</div>
+                <div style="font-size:13px;font-weight:700;margin-bottom:3px" id="prev-name">Nombre del producto</div>
+                <div style="font-size:11px;color:var(--text3);margin-bottom:8px" id="prev-marca">Marca</div>
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <span style="font-size:17px;font-weight:800" id="prev-price">0,00 €</span>
+                    <span style="font-size:10px;color:var(--text3)" id="prev-unit">/ud.</span>
+                  </div>
+                  <div style="background:var(--rojo);color:#fff;font-size:10px;font-weight:700;padding:5px 10px;border-radius:100px">Añadir</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="modal-ftr">
+      <button class="btn btn-danger btn-sm" id="btn-eliminar-prod" style="margin-right:auto;display:none" onclick="eliminarProducto()">🗑 Eliminar producto</button>
       <button class="btn btn-secondary" onclick="closeModal('modal-producto')">Cancelar</button>
-      <button class="btn btn-primary" onclick="guardarProducto()">Guardar producto</button>
+      <button class="btn btn-primary" onclick="guardarProducto()" id="btn-guardar-prod">Guardar y publicar</button>
     </div>
   </div>
 </div>
@@ -1452,14 +2091,20 @@ async function loadProductosDB() {
     _uuid: p.id,
     ref: p.referencia,
     name: p.nombre,
+    desc: p.descripcion || '',
     cat: p.categoria,
     marca: p.marca || '',
     precio: parseFloat(p.precio),
+    unidad: p.unidad || 'ud.',
     stock: parseInt(p.stock) || 0,
     min: parseInt(p.stock_minimo) || 5,
-    activo: p.activo,
-    outlet: p.outlet,
-    img: p.imagen || 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=80&q=60'
+    activo: p.activo !== false,
+    outlet: p.outlet || false,
+    precio_outlet: p.precio_outlet ? parseFloat(p.precio_outlet) : null,
+    badge: p.badge || null,
+    specs: p.specs || {},
+    skus: p.skus || [],
+    img: p.imagen || null
   }));
   renderStock();
   renderProductos();
@@ -1686,17 +2331,18 @@ function navTo(panel, el) {
 
 function renderPanel(panel) {
   const renderers = {
-    dashboard: () => { loadPedidosDB(); renderDashboard(); },
+    dashboard: () => { loadPedidosDB().then(renderDashboard); },
     pedidos: () => loadPedidosDB(),
     picking: renderPicking,
-    stock: () => loadProductosDB(),
+    stock: () => loadProductosDB().then(filtrarProductos),
     entradas: () => loadMovimientosDB(),
     recuento: renderRecuento,
     encargos: renderEncargos,
     clientes: () => loadClientesDB(),
     presupuestos: () => loadPresupuestosDB(),
     analitycs: renderAnalytics,
-    productos: () => loadProductosDB(),
+    productos: () => loadProductosDB().then(filtrarProductos),
+    informes: () => { document.getElementById('informes-index').style.display='block'; document.getElementById('informe-detalle').classList.remove('active'); },
     usuarios: renderUsuarios,
     tiendas: renderTiendas,
   };
@@ -2277,24 +2923,7 @@ async function crearCliente() {
     showToast('error', 'Error', 'No se pudo guardar en la base de datos');
   }
 }
-async function guardarProducto() {
-  const nombre = document.querySelector('#modal-producto .f-inp[placeholder*="nombre"]')?.value?.trim();
-  const ref = document.querySelector('#modal-producto .f-inp[placeholder*="REF"]')?.value?.trim();
-  const precio = parseFloat(document.querySelector('#modal-producto .f-inp[type="number"]')?.value);
-  if (!nombre || !ref || isNaN(precio)) { showToast('warning', 'Datos incompletos', 'Rellena nombre, referencia y precio'); return; }
-  const res = await dbGuardarProducto({
-    nombre, referencia: ref, precio,
-    categoria: document.querySelector('#modal-producto .f-sel')?.value || 'Sanitarios',
-    unidad: 'ud.', stock: 0, stock_minimo: 5, activo: true
-  });
-  closeModal('modal-producto');
-  if (res) {
-    showToast('success', 'Producto guardado', nombre + ' añadido al catálogo');
-    await loadProductosDB();
-  } else {
-    showToast('error', 'Error', 'No se pudo guardar en la base de datos');
-  }
-}
+// guardarProducto() defined below in configurador section
 function crearUsuario() {
   closeModal('modal-usuario');
   showToast('success', 'Usuario creado', 'Se ha enviado el email de bienvenida con las credenciales');
@@ -2363,6 +2992,760 @@ loadAllData().then(() => {
   renderDashboard();
   renderPedidos();
 });
+
+// ══════════════════════════════════════════════════
+// CONFIGURADOR DE PRODUCTOS
+// ══════════════════════════════════════════════════
+
+let prodViewMode = 'kanban';
+let editingProdUuid = null;
+let prodSkus = [];
+let prodSpecs = [];
+
+function setProdView(mode, btn) {
+  prodViewMode = mode;
+  document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  document.getElementById('prod-view-kanban').style.display = mode === 'kanban' ? 'block' : 'none';
+  document.getElementById('prod-view-tabla').style.display = mode === 'tabla' ? 'block' : 'none';
+  filtrarProductos();
+}
+
+function filtrarProductos(q) {
+  const search = (q || document.getElementById('prod-search')?.value || '').toLowerCase();
+  const cat = document.getElementById('prod-filter-cat')?.value || '';
+  const marca = document.getElementById('prod-filter-marca')?.value || '';
+  const estado = document.getElementById('prod-filter-estado')?.value || '';
+
+  let data = [...STOCK_DATA];
+  if (search) data = data.filter(p =>
+    p.name.toLowerCase().includes(search) ||
+    p.ref.toLowerCase().includes(search) ||
+    (p.marca||'').toLowerCase().includes(search) ||
+    (p.skus||[]).some(s => s.toLowerCase().includes(search))
+  );
+  if (cat) data = data.filter(p => p.cat === cat);
+  if (marca) data = data.filter(p => p.marca === marca);
+  if (estado === 'activo') data = data.filter(p => p.activo !== false);
+  if (estado === 'inactivo') data = data.filter(p => p.activo === false);
+  if (estado === 'outlet') data = data.filter(p => p.outlet);
+  if (estado === 'stock-bajo') data = data.filter(p => p.stock < p.min);
+
+  const lbl = document.getElementById('prod-count-label');
+  if (lbl) lbl.textContent = data.length + ' producto' + (data.length !== 1 ? 's' : '');
+
+  if (prodViewMode === 'kanban') renderKanban(data);
+  else renderTablaProductos(data);
+}
+
+function renderKanban(data) {
+  const grid = document.getElementById('prod-kanban-grid');
+  if (!grid) return;
+  if (!data.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🗂️</div><div class="empty-title">No hay productos</div><p>Añade tu primer producto con el botón de arriba</p></div>';
+    return;
+  }
+  grid.innerHTML = data.map(p => {
+    const stockColor = p.stock === 0 ? 'var(--rojo)' : p.stock < p.min ? 'var(--amarillo)' : 'var(--verde)';
+    const badgeHtml = p.badge ? `<div class="prod-kanban-badge ${p.badge === 'Outlet' ? 'outlet' : ''}">${p.badge}</div>` : '';
+    const activoBadge = p.activo === false ? `<div class="prod-kanban-badge" style="background:var(--text3);top:8px;left:8px">Inactivo</div>` : '';
+
+    const imgHtml = p.img
+      ? `<div class="prod-kanban-img" style="background-image:url('${p.img}');background-size:cover;background-position:center">${badgeHtml}${activoBadge}</div>`
+      : `<div class="prod-kanban-img-placeholder">${activoBadge}${badgeHtml}🛁</div>`;
+
+    const skusTags = (p.skus || []).slice(0, 2).map(s => `<span class="sku-tag" style="font-size:10px;padding:1px 6px">${s}</span>`).join('');
+    const skuMain = p.ref ? `<div class="prod-kanban-sku">${p.ref}</div>` : '';
+
+    return `<div class="prod-kanban-card" id="pkc-${p.ref}">
+      ${imgHtml}
+      <div class="prod-kanban-body">
+        <div class="prod-kanban-name">${p.name}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center">
+          ${skuMain}
+          ${skusTags}
+        </div>
+        <div style="font-size:11px;color:var(--text3)">${p.cat} · ${p.marca||''}</div>
+        <div class="prod-kanban-meta">
+          <div>
+            <span class="prod-kanban-price">${p.precio.toFixed(2).replace('.',',')} €</span>
+            <span class="prod-kanban-unit">/${p.unidad||'ud.'}</span>
+          </div>
+          <div class="prod-kanban-stock" style="color:${stockColor}">
+            ${p.stock} uds${p.stock < p.min ? ' ⚠' : ''}
+          </div>
+        </div>
+      </div>
+      <div class="prod-kanban-actions">
+        <button class="pka-edit" onclick="editarProducto('${p.ref}')">✏️ Editar</button>
+        <button class="pka-toggle" onclick="toggleActivo('${p.ref}')" title="${p.activo === false ? 'Activar' : 'Desactivar'}">${p.activo === false ? '✅' : '⛔'}</button>
+        <button class="pka-del" onclick="confirmarEliminar('${p.ref}')">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderTablaProductos(data) {
+  const tbody = document.getElementById('productos-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = data.map(p => {
+    const stockColor = p.stock === 0 ? 'var(--rojo)' : p.stock < p.min ? 'var(--amarillo)' : 'var(--verde)';
+    return `<tr>
+      <td><div class="prod-thumb" style="background-image:url('${p.img||''}');${!p.img?'display:flex;align-items:center;justify-content:center;font-size:18px;opacity:.3':''}">
+        ${!p.img ? '🛁' : ''}</div></td>
+      <td>
+        <div class="td-mono">${p.ref}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:3px">
+          ${(p.skus||[]).map(s => `<span class="sku-tag" style="font-size:9px;padding:1px 5px">${s}</span>`).join('')}
+        </div>
+      </td>
+      <td class="td-bold">${p.name}</td>
+      <td><span style="font-size:11px;background:var(--bg3);padding:2px 8px;border-radius:100px">${p.cat}</span></td>
+      <td class="td-muted">${p.marca||'—'}</td>
+      <td><strong>${p.precio.toFixed(2).replace('.',',')} €</strong>${p.outlet&&p.precio_outlet?`<br><span style="font-size:10px;color:var(--amarillo)">Outlet: ${p.precio_outlet.toFixed(2).replace('.',',')}€</span>`:''}</td>
+      <td class="td-muted">${p.unidad||'ud.'}</td>
+      <td><strong style="color:${stockColor}">${p.stock}</strong><span style="color:var(--text3);font-size:11px"> / mín ${p.min}</span></td>
+      <td>${p.activo===false ? '<span class="badge badge-cancel">Inactivo</span>' : '<span class="badge badge-stock-ok">Activo</span>'}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-secondary btn-sm btn-icon" onclick="editarProducto('${p.ref}')" title="Editar">✏️</button>
+          <button class="btn btn-${p.activo===false?'success':'warning'} btn-sm btn-icon" onclick="toggleActivo('${p.ref}')" title="${p.activo===false?'Activar':'Desactivar'}">${p.activo===false?'✅':'⛔'}</button>
+          <button class="btn btn-danger btn-sm btn-icon" onclick="confirmarEliminar('${p.ref}')" title="Eliminar">🗑</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function openModalProducto(editRef) {
+  editingProdUuid = null;
+  prodSkus = [];
+  prodSpecs = [];
+  document.getElementById('modal-prod-titulo').textContent = editRef ? 'Editar producto' : 'Nuevo producto';
+  document.getElementById('btn-eliminar-prod').style.display = editRef ? 'block' : 'none';
+  document.getElementById('btn-guardar-prod').textContent = editRef ? 'Guardar cambios' : 'Guardar y publicar';
+
+  // Reset form
+  ['mp-nombre','mp-desc','mp-sku-main','mp-precio','mp-precio-out','mp-stock','mp-img-url'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('mp-stock-min').value = '5';
+  document.getElementById('mp-cat').value = '';
+  document.getElementById('mp-marca').value = '';
+  document.getElementById('mp-unidad').value = 'ud.';
+  document.getElementById('mp-badge').value = '';
+  document.getElementById('mp-estado-activo').checked = true;
+  document.getElementById('mp-sku-list').innerHTML = '';
+  document.getElementById('specs-editor').innerHTML = '';
+  document.getElementById('img-preview').classList.remove('show');
+  document.getElementById('prev-img').style.backgroundImage = '';
+  document.getElementById('prev-img').innerHTML = '🖼️<div id="prev-badge" style="position:absolute;top:8px;left:8px;background:var(--rojo);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:100px;display:none"></div>';
+  updatePreview();
+
+  // Default specs
+  addSpecRow('Marca', '');
+  addSpecRow('Garantía', '');
+
+  openModal('modal-producto');
+}
+
+function editarProducto(ref) {
+  const p = STOCK_DATA.find(x => x.ref === ref);
+  if (!p) return;
+  editingProdUuid = p._uuid || null;
+  prodSkus = [...(p.skus || [])];
+  prodSpecs = p.specs ? Object.entries(p.specs) : [];
+
+  document.getElementById('modal-prod-titulo').textContent = 'Editar producto';
+  document.getElementById('btn-eliminar-prod').style.display = 'block';
+  document.getElementById('btn-guardar-prod').textContent = 'Guardar cambios';
+
+  document.getElementById('mp-nombre').value = p.name || '';
+  document.getElementById('mp-desc').value = p.desc || '';
+  document.getElementById('mp-sku-main').value = p.ref || '';
+  document.getElementById('mp-precio').value = p.precio || '';
+  document.getElementById('mp-precio-out').value = p.precio_outlet || '';
+  document.getElementById('mp-stock').value = p.stock || 0;
+  document.getElementById('mp-stock-min').value = p.min || 5;
+  document.getElementById('mp-img-url').value = p.img || '';
+  document.getElementById('mp-badge').value = p.badge || '';
+  if (p.cat) document.getElementById('mp-cat').value = p.cat;
+  if (p.marca) document.getElementById('mp-marca').value = p.marca;
+  if (p.unidad) document.getElementById('mp-unidad').value = p.unidad;
+  if (p.activo === false) document.getElementById('mp-estado-inactivo').checked = true;
+  else document.getElementById('mp-estado-activo').checked = true;
+
+  // SKUs
+  renderSkuList();
+  // Specs
+  document.getElementById('specs-editor').innerHTML = '';
+  Object.entries(p.specs || {}).forEach(([k,v]) => addSpecRow(k, v));
+  if (!Object.keys(p.specs || {}).length) { addSpecRow('Marca', p.marca||''); addSpecRow('Garantía', ''); }
+
+  // Image preview
+  if (p.img) {
+    const prev = document.getElementById('img-preview');
+    prev.style.backgroundImage = `url('${p.img}')`;
+    prev.classList.add('show');
+    document.getElementById('prev-img').style.backgroundImage = `url('${p.img}')`;
+    document.getElementById('prev-img').style.backgroundSize = 'cover';
+    document.getElementById('prev-img').style.backgroundPosition = 'center';
+  }
+
+  updatePreview();
+  openModal('modal-producto');
+}
+
+function addSku() {
+  const inp = document.getElementById('mp-sku-input');
+  const val = inp.value.trim().toUpperCase().replace(/\s+/g,'');
+  if (!val) return;
+  if (prodSkus.includes(val)) { showToast('warning','SKU duplicado', val + ' ya está en la lista'); return; }
+  prodSkus.push(val);
+  inp.value = '';
+  renderSkuList();
+}
+
+function removeSku(val) {
+  prodSkus = prodSkus.filter(s => s !== val);
+  renderSkuList();
+}
+
+function renderSkuList() {
+  const list = document.getElementById('mp-sku-list');
+  if (!list) return;
+  list.innerHTML = prodSkus.map(s =>
+    `<span class="sku-tag">${s} <button onclick="removeSku('${s}')">✕</button></span>`
+  ).join('');
+}
+
+function addSpecRow(key='', val='') {
+  const ed = document.getElementById('specs-editor');
+  const row = document.createElement('div');
+  row.className = 'spec-row';
+  row.innerHTML = `
+    <input class="f-inp spec-key" placeholder="Ej: Formato, Color, Garantía..." value="${key}" style="font-size:12px">
+    <input class="f-inp spec-val" placeholder="Ej: 60×120 cm, Blanco, 5 años..." value="${val}" style="font-size:12px">
+    <button onclick="this.parentElement.remove()" title="Eliminar">✕</button>
+  `;
+  ed.appendChild(row);
+}
+
+function previewImg(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const url = e.target.result;
+    const prev = document.getElementById('img-preview');
+    prev.style.backgroundImage = `url('${url}')`;
+    prev.classList.add('show');
+    document.getElementById('prev-img').style.backgroundImage = `url('${url}')`;
+    document.getElementById('prev-img').style.backgroundSize = 'cover';
+    document.getElementById('prev-img').style.backgroundPosition = 'center';
+    document.getElementById('prev-img').querySelector('#prev-badge') && null;
+    document.getElementById('mp-img-url').value = url;
+    document.getElementById('img-upload-area').style.display = 'none';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function previewImgUrl(url) {
+  if (!url) { removeImg(); return; }
+  const prev = document.getElementById('img-preview');
+  prev.style.backgroundImage = `url('${url}')`;
+  prev.classList.add('show');
+  const pi = document.getElementById('prev-img');
+  pi.style.backgroundImage = `url('${url}')`;
+  pi.style.backgroundSize = 'cover';
+  pi.style.backgroundPosition = 'center';
+  pi.innerHTML = '<div id="prev-badge" style="position:absolute;top:8px;left:8px;background:var(--rojo);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:100px;display:none"></div>';
+  document.getElementById('img-upload-area').style.display = 'none';
+  updatePreview();
+}
+
+function removeImg() {
+  document.getElementById('img-preview').classList.remove('show');
+  document.getElementById('img-preview').style.backgroundImage = '';
+  document.getElementById('mp-img-url').value = '';
+  document.getElementById('mp-img-file').value = '';
+  document.getElementById('img-upload-area').style.display = 'block';
+  document.getElementById('prev-img').style.backgroundImage = '';
+  document.getElementById('prev-img').style.backgroundSize = '';
+}
+
+function updatePreview() {
+  const nombre = document.getElementById('mp-nombre')?.value || 'Nombre del producto';
+  const cat = document.getElementById('mp-cat')?.value || 'Categoría';
+  const marca = document.getElementById('mp-marca')?.value || 'Marca';
+  const precio = parseFloat(document.getElementById('mp-precio')?.value) || 0;
+  const unidad = document.getElementById('mp-unidad')?.value || 'ud.';
+  const badge = document.getElementById('mp-badge')?.value || '';
+  document.getElementById('prev-name').textContent = nombre;
+  document.getElementById('prev-cat').textContent = cat;
+  document.getElementById('prev-marca').textContent = marca;
+  document.getElementById('prev-price').textContent = precio.toFixed(2).replace('.',',') + ' €';
+  document.getElementById('prev-unit').textContent = '/' + unidad;
+  const pb = document.getElementById('prev-badge');
+  if (pb) { pb.textContent = badge; pb.style.display = badge ? 'block' : 'none'; }
+}
+
+// Live preview update
+['mp-nombre','mp-cat','mp-marca','mp-precio','mp-unidad','mp-badge'].forEach(id => {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updatePreview);
+    if (el) el.addEventListener('change', updatePreview);
+  }, 1000);
+});
+
+async function guardarProducto() {
+  const nombre = document.getElementById('mp-nombre')?.value?.trim();
+  const ref = document.getElementById('mp-sku-main')?.value?.trim().toUpperCase().replace(/\s+/g,'');
+  const precio = parseFloat(document.getElementById('mp-precio')?.value);
+  const cat = document.getElementById('mp-cat')?.value;
+  const marca = document.getElementById('mp-marca')?.value;
+
+  if (!nombre) { showToast('warning','Nombre requerido','Introduce el nombre del producto'); return; }
+  if (!ref) { showToast('warning','SKU requerido','Introduce la referencia principal del producto'); return; }
+  if (!cat) { showToast('warning','Categoría requerida','Selecciona una categoría'); return; }
+  if (isNaN(precio) || precio <= 0) { showToast('warning','Precio inválido','Introduce un precio válido'); return; }
+
+  const unidad = document.getElementById('mp-unidad')?.value || 'ud.';
+  const stock = parseInt(document.getElementById('mp-stock')?.value) || 0;
+  const stockMin = parseInt(document.getElementById('mp-stock-min')?.value) || 5;
+  const desc = document.getElementById('mp-desc')?.value?.trim() || '';
+  const imgUrl = document.getElementById('mp-img-url')?.value?.trim() || '';
+  const badge = document.getElementById('mp-badge')?.value || null;
+  const precioOut = parseFloat(document.getElementById('mp-precio-out')?.value) || null;
+  const activo = document.getElementById('mp-estado-activo')?.checked !== false;
+
+  // Collect specs
+  const specs = {};
+  document.querySelectorAll('#specs-editor .spec-row').forEach(row => {
+    const k = row.querySelector('.spec-key')?.value?.trim();
+    const v = row.querySelector('.spec-val')?.value?.trim();
+    if (k && v) specs[k] = v;
+  });
+
+  const prodData = {
+    referencia: ref,
+    nombre: nombre,
+    categoria: cat,
+    marca: marca || null,
+    precio: precio,
+    unidad: unidad,
+    stock: stock,
+    stock_minimo: stockMin,
+    imagen: imgUrl || null,
+    badge: badge,
+    outlet: !!precioOut,
+    precio_outlet: precioOut,
+    activo: activo,
+    specs: specs,
+    descripcion: desc,
+    skus: prodSkus,
+  };
+
+  const btn = document.getElementById('btn-guardar-prod');
+  if (btn) { btn.textContent = 'Guardando...'; btn.disabled = true; }
+
+  let res;
+  if (editingProdUuid) {
+    // UPDATE
+    res = await sbFetch('productos', {
+      method: 'PATCH',
+      query: `?id=eq.${editingProdUuid}`,
+      body: prodData,
+      prefer: 'return=minimal'
+    });
+    showToast('success', 'Producto actualizado', nombre + ' · ' + ref);
+  } else {
+    // INSERT
+    res = await dbGuardarProducto(prodData);
+    if (res) showToast('success', 'Producto publicado', nombre + ' ya está disponible en la tienda');
+    else showToast('error', 'Error', 'No se pudo guardar. Verifica que la referencia no esté duplicada.');
+  }
+
+  if (btn) { btn.textContent = editingProdUuid ? 'Guardar cambios' : 'Guardar y publicar'; btn.disabled = false; }
+  closeModal('modal-producto');
+  await loadProductosDB();
+  filtrarProductos();
+}
+
+async function toggleActivo(ref) {
+  const p = STOCK_DATA.find(x => x.ref === ref);
+  if (!p) return;
+  const nuevoEstado = p.activo !== false ? false : true;
+  p.activo = nuevoEstado;
+  if (p._uuid) {
+    await sbFetch('productos', { method: 'PATCH', query: `?id=eq.${p._uuid}`, body: { activo: nuevoEstado }, prefer: 'return=minimal' });
+  }
+  showToast(nuevoEstado ? 'success' : 'warning', nuevoEstado ? 'Producto activado' : 'Producto desactivado', p.name);
+  filtrarProductos();
+}
+
+async function confirmarEliminar(ref) {
+  if (!confirm(`¿Seguro que quieres eliminar el producto "${ref}"? Esta acción no se puede deshacer.`)) return;
+  await eliminarProductoPorRef(ref);
+}
+
+async function eliminarProductoPorRef(ref) {
+  const p = STOCK_DATA.find(x => x.ref === ref);
+  if (!p) return;
+  if (p._uuid) {
+    await sbFetch('productos', { method: 'DELETE', query: `?id=eq.${p._uuid}` });
+  }
+  const idx = STOCK_DATA.findIndex(x => x.ref === ref);
+  if (idx >= 0) STOCK_DATA.splice(idx, 1);
+  showToast('success', 'Producto eliminado', ref + ' eliminado del catálogo');
+  filtrarProductos();
+}
+
+async function eliminarProducto() {
+  if (!editingProdUuid) return;
+  const nombre = document.getElementById('mp-nombre')?.value || '';
+  if (!confirm(`¿Seguro que quieres eliminar "${nombre}"? Esta acción no se puede deshacer.`)) return;
+  await sbFetch('productos', { method: 'DELETE', query: `?id=eq.${editingProdUuid}` });
+  closeModal('modal-producto');
+  showToast('success', 'Producto eliminado', nombre + ' eliminado del catálogo');
+  await loadProductosDB();
+  filtrarProductos();
+}
+
+function exportarProductosCSV() {
+  const headers = ['Referencia','Nombre','Categoría','Marca','Precio','Unidad','Stock','Stock Mín','Activo','Outlet','Badge'];
+  const rows = STOCK_DATA.map(p => [
+    p.ref, p.name, p.cat, p.marca||'', p.precio, p.unidad||'ud.',
+    p.stock, p.min, p.activo!==false?'Sí':'No', p.outlet?'Sí':'No', p.badge||''
+  ]);
+  const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'productos-estrella-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  showToast('success', 'CSV exportado', STOCK_DATA.length + ' productos exportados');
+}
+
+// Override renderProductos to use new system
+function renderProductos() { filtrarProductos(); }
+
+// ══════════════════════════════════════════════════
+// INFORMES
+// ══════════════════════════════════════════════════
+
+function verInforme(tipo) {
+  document.getElementById('informes-index').style.display = 'none';
+  const det = document.getElementById('informe-detalle');
+  det.classList.add('active');
+  const content = document.getElementById('informe-content');
+
+  const informes = {
+    ventas: () => renderInformeVentas(content),
+    pedidos: () => renderInformePedidos(content),
+    stock: () => renderInformeStock(content),
+    clientes: () => renderInformeClientes(content),
+    productos: () => renderInformeTopProductos(content),
+    tiendas: () => renderInformeTiendas(content),
+    presupuestos: () => renderInformePresupuestos(content),
+  };
+  if (informes[tipo]) informes[tipo]();
+}
+
+function volverInformes() {
+  document.getElementById('informes-index').style.display = 'block';
+  document.getElementById('informe-detalle').classList.remove('active');
+}
+
+function renderInformeVentas(el) {
+  const totalFact = PEDIDOS.reduce((s,p) => s + p.total, 0);
+  const ticketMedio = PEDIDOS.length ? totalFact / PEDIDOS.length : 0;
+  const entregados = PEDIDOS.filter(p => p.status === 'done').length;
+  const online = PEDIDOS.filter(p => p.pago === 'online').length;
+  const tiendas = { 'El Pino':0, 'Valencina':0, 'Carrión':0 };
+  PEDIDOS.forEach(p => { if (tiendas[p.tienda] !== undefined) tiendas[p.tienda] += p.total; });
+
+  el.innerHTML = `
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">📈 Informe de Ventas</h2>
+    <div class="kpi-row">
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--verde)">${totalFact.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,'.')} €</div><div class="kpi-lbl">Total facturado</div></div>
+      <div class="kpi-box"><div class="kpi-val">${PEDIDOS.length}</div><div class="kpi-lbl">Total pedidos</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--azul)">${ticketMedio.toFixed(2).replace('.',',')} €</div><div class="kpi-lbl">Ticket medio</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--verde)">${entregados}</div><div class="kpi-lbl">Entregados</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--azul)">${online}</div><div class="kpi-lbl">Pagos online</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Facturación por tienda</div>
+        <button class="btn btn-secondary btn-sm" onclick="exportarCSV('ventas')">📄 Exportar</button>
+      </div>
+      <div class="card-body np">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Tienda</th><th>Pedidos</th><th>Facturación</th><th>% del total</th></tr></thead>
+          <tbody>
+            ${Object.entries(tiendas).map(([t,v]) => `<tr>
+              <td class="td-bold">🏪 ${t}</td>
+              <td>${PEDIDOS.filter(p=>p.tienda===t).length}</td>
+              <td><strong>${v.toFixed(2).replace('.',',')} €</strong></td>
+              <td><div style="display:flex;align-items:center;gap:8px">
+                <div class="progress" style="width:80px"><div class="progress-bar red" style="width:${totalFact?((v/totalFact)*100).toFixed(0):0}%"></div></div>
+                <span style="font-size:12px;color:var(--text3)">${totalFact?((v/totalFact)*100).toFixed(1):0}%</span>
+              </div></td>
+            </tr>`).join('')}
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Todos los pedidos</div></div>
+      <div class="card-body np">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Nº</th><th>Cliente</th><th>Tienda</th><th>Total</th><th>Pago</th><th>Estado</th><th>Fecha</th></tr></thead>
+          <tbody>${PEDIDOS.map(p=>`<tr>
+            <td class="td-mono" style="color:var(--rojo)">${p.id}</td>
+            <td class="td-bold">${p.cliente}</td>
+            <td>${p.tienda}</td>
+            <td><strong>${p.total.toFixed(2).replace('.',',')} €</strong></td>
+            <td>${p.pago==='online'?'💳 Online':'💵 Tienda'}</td>
+            <td>${statusBadge(p.status)}</td>
+            <td style="font-size:11px;color:var(--text3)">${p.fecha}</td>
+          </tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+function renderInformePedidos(el) {
+  const byStatus = { new:0, prep:0, ready:0, done:0, cancel:0 };
+  PEDIDOS.forEach(p => { if (byStatus[p.status]!==undefined) byStatus[p.status]++; });
+  el.innerHTML = `
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">📦 Informe de Pedidos</h2>
+    <div class="kpi-row">
+      <div class="kpi-box"><div class="kpi-val">${PEDIDOS.length}</div><div class="kpi-lbl">Total pedidos</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--azul)">${byStatus.new}</div><div class="kpi-lbl">Nuevos</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--amarillo)">${byStatus.prep}</div><div class="kpi-lbl">Preparando</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--verde)">${byStatus.ready + byStatus.done}</div><div class="kpi-lbl">Completados</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--rojo)">${byStatus.cancel}</div><div class="kpi-lbl">Cancelados</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Distribución por estado</div><button class="btn btn-secondary btn-sm" onclick="exportarCSV('pedidos')">📄 Exportar</button></div>
+      <div class="card-body">
+        ${[['new','Nuevos',byStatus.new,'var(--azul)'],['prep','Preparando',byStatus.prep,'var(--amarillo)'],['ready','Listos',byStatus.ready,'var(--verde)'],['done','Entregados',byStatus.done,'var(--text3)'],['cancel','Cancelados',byStatus.cancel,'var(--rojo)']].map(([s,lbl,n,col])=>`
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <div style="min-width:90px;font-size:13px">${lbl}</div>
+            <div class="progress" style="flex:1"><div style="height:100%;border-radius:3px;background:${col};width:${PEDIDOS.length?((n/PEDIDOS.length)*100).toFixed(0):0}%;transition:width .6s"></div></div>
+            <div style="min-width:40px;text-align:right;font-weight:700;font-size:13px;color:${col}">${n}</div>
+            <div style="min-width:36px;text-align:right;font-size:11px;color:var(--text3)">${PEDIDOS.length?((n/PEDIDOS.length)*100).toFixed(1):0}%</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+function renderInformeStock(el) {
+  const sinStock = STOCK_DATA.filter(p=>p.stock===0).length;
+  const bajo = STOCK_DATA.filter(p=>p.stock>0&&p.stock<p.min).length;
+  const ok = STOCK_DATA.filter(p=>p.stock>=p.min).length;
+  const totalUds = STOCK_DATA.reduce((s,p)=>s+p.stock,0);
+  el.innerHTML = `
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">🏗️ Informe de Stock</h2>
+    <div class="kpi-row">
+      <div class="kpi-box"><div class="kpi-val">${STOCK_DATA.length}</div><div class="kpi-lbl">Productos totales</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--verde)">${ok}</div><div class="kpi-lbl">Stock OK</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--amarillo)">${bajo}</div><div class="kpi-lbl">Stock bajo</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--rojo)">${sinStock}</div><div class="kpi-lbl">Sin stock</div></div>
+      <div class="kpi-box"><div class="kpi-val">${totalUds}</div><div class="kpi-lbl">Uds. en almacén</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Inventario completo</div><button class="btn btn-secondary btn-sm" onclick="exportarCSV('stock')">📄 Exportar</button></div>
+      <div class="card-body np">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Referencia</th><th>Producto</th><th>Categoría</th><th>Stock actual</th><th>Mínimo</th><th>Estado</th><th>Precio</th></tr></thead>
+          <tbody>${STOCK_DATA.sort((a,b)=>a.stock-b.stock).map(p=>`<tr>
+            <td class="td-mono">${p.ref}</td>
+            <td class="td-bold">${p.name}</td>
+            <td style="font-size:11px">${p.cat}</td>
+            <td><strong style="color:${p.stock===0?'var(--rojo)':p.stock<p.min?'var(--amarillo)':'var(--verde)'}">${p.stock}</strong></td>
+            <td class="td-muted">${p.min}</td>
+            <td>${p.stock===0?'<span class="badge badge-stock-out">Sin stock</span>':p.stock<p.min?'<span class="badge badge-stock-low">Bajo</span>':'<span class="badge badge-stock-ok">OK</span>'}</td>
+            <td><strong>${p.precio.toFixed(2).replace('.',',')} €</strong></td>
+          </tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+function renderInformeClientes(el) {
+  const totalClientes = CLIENTES_DATA.length;
+  const totalCompras = CLIENTES_DATA.reduce((s,c)=>s+c.total,0);
+  const ltv = totalClientes ? totalCompras / totalClientes : 0;
+  el.innerHTML = `
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">👥 Informe de Clientes</h2>
+    <div class="kpi-row">
+      <div class="kpi-box"><div class="kpi-val">${totalClientes}</div><div class="kpi-lbl">Clientes activos</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--verde)">${totalCompras.toFixed(0)} €</div><div class="kpi-lbl">Facturación total</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--azul)">${ltv.toFixed(0)} €</div><div class="kpi-lbl">LTV medio por cliente</div></div>
+      <div class="kpi-box"><div class="kpi-val">${CLIENTES_DATA.filter(c=>c.pedidos>1).length}</div><div class="kpi-lbl">Clientes recurrentes</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Top clientes por volumen</div><button class="btn btn-secondary btn-sm" onclick="exportarCSV('clientes')">📄 Exportar</button></div>
+      <div class="card-body np">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>#</th><th>Cliente</th><th>Email</th><th>Pedidos</th><th>Total compras</th><th>Último pedido</th></tr></thead>
+          <tbody>${[...CLIENTES_DATA].sort((a,b)=>b.total-a.total).map((c,i)=>`<tr>
+            <td><span style="font-weight:800;color:${i<3?'var(--rojo)':'var(--text3)'}">${i+1}</span></td>
+            <td class="td-bold">${c.nombre}</td>
+            <td class="td-muted">${c.email}</td>
+            <td><span style="background:var(--bg3);padding:2px 8px;border-radius:100px;font-size:11px">${c.pedidos}</span></td>
+            <td><strong style="color:var(--verde)">${c.total.toLocaleString('es-ES')} €</strong></td>
+            <td class="td-muted" style="font-size:11px">${c.ultimo}</td>
+          </tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+function renderInformeTopProductos(el) {
+  el.innerHTML = `
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">🗂️ Top Productos</h2>
+    <div class="kpi-row">
+      <div class="kpi-box"><div class="kpi-val">${STOCK_DATA.length}</div><div class="kpi-lbl">Productos en catálogo</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--verde)">${STOCK_DATA.filter(p=>p.activo!==false).length}</div><div class="kpi-lbl">Activos en tienda</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--amarillo)">${STOCK_DATA.filter(p=>p.outlet).length}</div><div class="kpi-lbl">En outlet</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Catálogo completo por categoría</div><button class="btn btn-secondary btn-sm" onclick="exportarProductosCSV()">📄 Exportar</button></div>
+      <div class="card-body np">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Referencia</th><th>Producto</th><th>Categoría</th><th>Marca</th><th>Precio</th><th>Unidad</th><th>Stock</th><th>Estado</th></tr></thead>
+          <tbody>${STOCK_DATA.map(p=>`<tr>
+            <td class="td-mono">${p.ref}</td>
+            <td class="td-bold">${p.name}</td>
+            <td style="font-size:11px">${p.cat}</td>
+            <td class="td-muted">${p.marca||'—'}</td>
+            <td><strong>${p.precio.toFixed(2).replace('.',',')} €</strong></td>
+            <td class="td-muted">${p.unidad||'ud.'}</td>
+            <td style="color:${p.stock===0?'var(--rojo)':p.stock<p.min?'var(--amarillo)':'var(--verde)'}"><strong>${p.stock}</strong></td>
+            <td>${p.activo===false?'<span class="badge badge-cancel">Inactivo</span>':'<span class="badge badge-stock-ok">Activo</span>'}</td>
+          </tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+function renderInformeTiendas(el) {
+  const tiendas = ['El Pino', 'Valencina', 'Carrión'];
+  el.innerHTML = `
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">🏪 Informe por Tienda</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:20px">
+      ${tiendas.map(t => {
+        const ps = PEDIDOS.filter(p=>p.tienda===t||p.tienda.includes(t.split(' ')[0]));
+        const fact = ps.reduce((s,p)=>s+p.total,0);
+        return `<div class="stat-card" style="margin-bottom:0">
+          <div class="stat-icon blue">🏪</div>
+          <div class="stat-val">${ps.length}</div>
+          <div class="stat-lbl">${t} — pedidos</div>
+          <div class="stat-change neutral">${fact.toFixed(0)} € facturado</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Detalle por tienda</div><button class="btn btn-secondary btn-sm" onclick="exportarCSV('tiendas')">📄 Exportar</button></div>
+      <div class="card-body np">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Tienda</th><th>Nuevos</th><th>Prep.</th><th>Listos</th><th>Entregados</th><th>Total</th><th>Facturación</th></tr></thead>
+          <tbody>${tiendas.map(t => {
+            const ps = PEDIDOS.filter(p=>p.tienda.includes(t.split(' ')[0]));
+            const fact = ps.reduce((s,p)=>s+p.total,0);
+            return `<tr>
+              <td class="td-bold">🏪 ${t}</td>
+              <td style="color:var(--azul)">${ps.filter(p=>p.status==='new').length}</td>
+              <td style="color:var(--amarillo)">${ps.filter(p=>p.status==='prep').length}</td>
+              <td style="color:var(--verde)">${ps.filter(p=>p.status==='ready').length}</td>
+              <td style="color:var(--text3)">${ps.filter(p=>p.status==='done').length}</td>
+              <td><strong>${ps.length}</strong></td>
+              <td><strong style="color:var(--verde)">${fact.toFixed(2).replace('.',',')} €</strong></td>
+            </tr>`;
+          }).join('')}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+function renderInformePresupuestos(el) {
+  const aceptados = PRESUPUESTOS_DATA.filter(p=>p.status==='aceptado').length;
+  const pendientes = PRESUPUESTOS_DATA.filter(p=>p.status==='pendiente').length;
+  const tasa = PRESUPUESTOS_DATA.length ? ((aceptados/PRESUPUESTOS_DATA.length)*100).toFixed(1) : 0;
+  el.innerHTML = `
+    <h2 style="font-size:20px;font-weight:800;margin-bottom:20px">📋 Informe de Presupuestos</h2>
+    <div class="kpi-row">
+      <div class="kpi-box"><div class="kpi-val">${PRESUPUESTOS_DATA.length}</div><div class="kpi-lbl">Total presupuestos</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--verde)">${aceptados}</div><div class="kpi-lbl">Aceptados</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--amarillo)">${pendientes}</div><div class="kpi-lbl">Pendientes</div></div>
+      <div class="kpi-box"><div class="kpi-val" style="color:var(--azul)">${tasa}%</div><div class="kpi-lbl">Tasa conversión</div></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Listado de presupuestos</div><button class="btn btn-secondary btn-sm" onclick="exportarCSV('presupuestos')">📄 Exportar</button></div>
+      <div class="card-body np">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Nº</th><th>Cliente</th><th>Tipo</th><th>Montaje</th><th>Importe</th><th>Fecha</th><th>Estado</th></tr></thead>
+          <tbody>${PRESUPUESTOS_DATA.map(p=>`<tr>
+            <td class="td-mono" style="color:var(--rojo)">${p.num}</td>
+            <td class="td-bold">${p.cliente}</td>
+            <td style="font-size:12px">${p.tipo}</td>
+            <td>${p.montaje==='Sí'?'<span class="badge badge-ready">Sí</span>':'<span class="badge badge-done">No</span>'}</td>
+            <td><strong>${p.importe}</strong></td>
+            <td class="td-muted" style="font-size:11px">${p.fecha}</td>
+            <td>${statusBadge(p.status)}</td>
+          </tr>`).join('')}</tbody>
+        </table></div>
+      </div>
+    </div>`;
+}
+
+function exportarCSV(tipo) {
+  const ts = new Date().toISOString().slice(0,10);
+  let csv = '', filename = '';
+  if (tipo === 'ventas' || tipo === 'pedidos') {
+    csv = 'Numero,Cliente,Telefono,Tienda,Items,Total,Pago,Estado,Fecha\n' +
+      PEDIDOS.map(p => `"${p.id}","${p.cliente}","${p.tel}","${p.tienda}",${p.items},${p.total},"${p.pago}","${p.status}","${p.fecha}"`).join('\n');
+    filename = `informe-${tipo}-${ts}.csv`;
+  } else if (tipo === 'stock') {
+    csv = 'Referencia,Nombre,Categoría,Marca,Precio,Stock,Mínimo,Estado\n' +
+      STOCK_DATA.map(p => `"${p.ref}","${p.name}","${p.cat}","${p.marca||''}",${p.precio},${p.stock},${p.min},"${p.stock===0?'Sin stock':p.stock<p.min?'Bajo':'OK'}"`).join('\n');
+    filename = `informe-stock-${ts}.csv`;
+  } else if (tipo === 'clientes') {
+    csv = 'Nombre,Email,Teléfono,Pedidos,Total,Último pedido\n' +
+      CLIENTES_DATA.map(c => `"${c.nombre}","${c.email}","${c.tel}",${c.pedidos},${c.total},"${c.ultimo}"`).join('\n');
+    filename = `informe-clientes-${ts}.csv`;
+  } else if (tipo === 'presupuestos') {
+    csv = 'Numero,Cliente,Tipo,Montaje,Importe,Fecha,Estado\n' +
+      PRESUPUESTOS_DATA.map(p => `"${p.num}","${p.cliente}","${p.tipo}","${p.montaje}","${p.importe}","${p.fecha}","${p.status}"`).join('\n');
+    filename = `informe-presupuestos-${ts}.csv`;
+  } else if (tipo === 'tiendas') {
+    const tiendas = ['El Pino', 'Valencina', 'Carrión'];
+    csv = 'Tienda,Pedidos,Facturación\n' +
+      tiendas.map(t => { const ps=PEDIDOS.filter(p=>p.tienda.includes(t.split(' ')[0])); return `"${t}",${ps.length},${ps.reduce((s,p)=>s+p.total,0).toFixed(2)}`; }).join('\n');
+    filename = `informe-tiendas-${ts}.csv`;
+  }
+  if (!csv) return;
+  const blob = new Blob(['\uFEFF'+csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = filename; a.click();
+  showToast('success', 'CSV exportado', filename);
+}
+
+function exportarTodoCSV() {
+  showToast('info', 'Exportando todo...', 'Se descargarán los archivos CSV de todos los módulos');
+  setTimeout(() => exportarCSV('pedidos'), 200);
+  setTimeout(() => exportarCSV('stock'), 600);
+  setTimeout(() => exportarCSV('clientes'), 1000);
+  setTimeout(() => exportarCSV('presupuestos'), 1400);
+  setTimeout(() => exportarProductosCSV(), 1800);
+}
+
+// ══ Patch navTo for informes ══
+const _origNavTo = navTo;
+// Override renderPanel to add informes
+const _origRenderPanel = renderPanel;
+
 </script>
 </body>
 </html>
